@@ -1,0 +1,5 @@
+- [ ] add projects
+- [ ] add experience
+- [ ] add resume ? 
+- [ ] add club work (bearcats electric racing)
+- [ ] add blog page ? to blog about each week?  [reminder might be cool to add ?]
