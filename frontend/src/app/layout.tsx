@@ -4,6 +4,9 @@ import "./globals.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+// Remove the localFont import temporarily
+// import localFont from "next/font/local";
+
 import { ThemeProvider } from "../components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -11,6 +14,13 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
+
+
+// Remove this problematic font import
+// const neueHaasGrotesk = localFont({
+//   src: './fonts/neuehass.ttf',  // This path is causing issues
+// });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",

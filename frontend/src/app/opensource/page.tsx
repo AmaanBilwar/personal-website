@@ -2,7 +2,11 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>opensource</div>
+    <main>
+      <div>
+        <h1>PearAI</h1>
+      </div>
+    </main>
   )
 }
 
