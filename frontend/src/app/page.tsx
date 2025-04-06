@@ -9,7 +9,7 @@ const opensans = Open_Sans({
 const page = () => {
   return (
     <main className={opensans.className}>
-      <h1 className="text-center pb-2">hello, i'm amaan. glad you're here!</h1>
+      <h1 className="text-center pb-2">hello, i'm <strong>amaan.</strong> glad you're here!</h1>
       <Alert className="text-center">
         <AlertTitle className="text-center flex justify-center pt-2 pb-2">⚠️this site is a work in progress⚠️</AlertTitle>
         <AlertDescription className="text-center flex justify-center items-center">
