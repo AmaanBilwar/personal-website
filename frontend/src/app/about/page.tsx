@@ -99,9 +99,9 @@ const AboutPage = () => {
           <p className="mb-4 text-muted-foreground text-sm sm:text-base">
             In India, you have to change schools in your sophomore year, and so I did. This was 2019, and early 2020 before the <strong>COVID</strong> pandemic happened. In these 9 months, I met the best people of my life that I still talk to and make sure I see every time I go back home. It changed the way I looked at life (in just 9 months). I found the love of my life in school too. Sadly we broke up that same year (2020) but it's okay (I still miss you btw).
             <br/><br/>
-            We made GREAT memories (we used to aura farm in the lunch break while walking to the washroom). The cafeteria food wasn't great but the company made it worthwhile. I participated in various school activities and events, which helped me develop confidence in public speaking and teamwork. The teachers were supportive and pushed us to excel in our academics while also encouraging creative pursuits.
+            We made GREAT memories (we used to aura farm in the lunch break while walking to the washroom). made a teacher cry once and the principle was the substitue teacher for a week cause the teacher couldn't handle the class. she was nice tho we found out later.
             <br/><br/>
-            During this time, I also discovered my passion for technology and began exploring programming as a hobby. Little did I know that this interest would eventually lead me to pursue computer engineering as my major in college.
+            i remember us not being given "free games periods" cause we were the first science batch & teachers would rather teach us, we didnt like that wrote a letter to the principle and had a subject added as an option "physcial education". everyone was in CS before this (didnt wanna be). asked my mom if i could switch from cs to pe and she said no. here i am, machine learning swe developer and stuff. best decision my mom took for me that year. no regrets. trust people you love, they know you better than you do. 
           </p>
           <div className="clear-both"></div>
         </div>
@@ -124,7 +124,7 @@ const AboutPage = () => {
         <div className="md:w-1/2 lg:w-3/5">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">Gap Year</h1>
           <p className="mb-4 text-muted-foreground text-sm sm:text-base">
-            Things got challenging here. I was lost in life, partly due to a breakup and partly because I didn't want to follow the same path as others. I wanted to pursue different things. Fear of not making it in life kicked in, so I decided to take a gap year (whether by choice or not is up to you to decide). I learned a lot, made money, and made friends while doing it too. By the end of it, I decided it was time for college, but I didn't want to get trapped in the sad system of higher Indian education. So I took the SAT, applied to big schools and small ones, and got into all of them. I decided to go to <strong>University of Cincinnati, USA.</strong>
+            Things got challenging here. I was lost in life, partly due to a breakup and partly because I didn't want to follow the same path as others. I wanted to pursue different things. Fear of not making it in life kicked in, so I decided to take a gap year (whether by choice or not is up to you to decide). I learned a lot, made money, and made friends while doing it too. By the end of it, I decided it was time for college, but I didn't want to get trapped in the sad system of higher education in India. So I took the SAT, applied to big schools and small ones, and got into all of them (berkeley too). I decided to go to <strong>University of Cincinnati, USA.</strong>
           </p>
         </div>
       </div>
@@ -134,7 +134,8 @@ const AboutPage = () => {
         <div className="md:w-1/2 lg:w-3/5 order-2 md:order-1">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">College Life</h1>
           <p className="mb-4 text-muted-foreground text-sm sm:text-base">
-           Work in progress
+           when i got here i was so lost. istg. i knew nothing, had nothing building from  ground up. people hate indians here which didn't help. sad honestly. have to go above and beyond just for people to see you as human and one of them. i was lost didnt enjoy being here at all. <br /><br />
+           a lot has changed since then. work in progres....
           </p>
         </div>
         <div className="md:w-1/2 lg:w-2/5 order-1 md:order-2">
@@ -154,7 +155,10 @@ const AboutPage = () => {
       <div className="mx-auto mb-12 text-center">
         <h1 className="text-2xl sm:text-3xl font-bold mb-4">Current</h1>
         <p className="mb-4 text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
-         Work in progress
+    uncertain what the future holds, especially with the current state of the world. currently surrounded by a lot of good people, especially bearcats electric racing. they humble me, support me. ive completed 2 coop rotations as a swe (ai focused in teh second one).  im learning and building. IM YEARNING. i have a lot to achieve tho. not even 1% of the way there. dont like who i've become tho. its okay sometimes you have to sacrifice what u want and yourself for the 
+    bigger picture. lots to prove wrong, lots to prove. period.
+    no more relationships are being upheld. with any girls(uk the reason for this, im still stuck on someone i broke up with 4 years and 7 months ago), friends, family. just me and work. sadly. 
+     WE WILL SEE WHERE THIS TAKES ME. hopefully where i want to be. be it top or bottom. i will be there.
         </p>
       </div>
     </main>
