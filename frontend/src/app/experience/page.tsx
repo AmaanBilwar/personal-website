@@ -21,12 +21,12 @@ const ExperiencePage = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
           <h1 className="absolute bottom-4 left-4 text-3xl sm:text-4xl font-bold text-white drop-shadow-lg">
-            My Journey
+            The Journey
           </h1>
         </div>
         
         <p className="text-muted-foreground mb-4 italic border-l-4 border-primary/50 pl-3">
-          "Every role I've taken has been a stepping stone, each teaching me something valuable about tech, teamwork, and myself."
+          "The walls between art and engineering exist only in our minds."
         </p>
       </div>
       
@@ -69,19 +69,19 @@ const ExperiencePage = () => {
           <div className="relative mb-8 rounded-lg overflow-hidden max-w-3xl mx-auto">
             <Image 
               src="/images/honeywell-image.png" 
-              alt="Project visualization" 
+              alt="My time at Honeywell" 
               width={600}
               height={300}
               className="w-full h-auto object-cover"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-              <p className="text-sm text-white">Developing intelligent solutions using LLM technology</p>
+              {/* <p className="text-sm text-white">Developing intelligent solutions using LLM technology</p> */}
             </div>
           </div>
           
           <div className="mb-6">
             <h3 className="text-base font-medium mb-2 flex items-center gap-2">
-              <LightbulbIcon className="h-4 w-4 text-yellow-500" /> What I'm working on
+              <LightbulbIcon className="h-4 w-4 text-yellow-500" /> What I'm worked on
             </h3>
             <ul className="list-disc pl-5 space-y-2 text-sm">
               <li>Implementing AI-powered document analysis tools using Langchain and Azure AI services</li>
