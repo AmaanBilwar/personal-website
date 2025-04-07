@@ -81,13 +81,13 @@ const ExperiencePage = () => {
           
           <div className="mb-6">
             <h3 className="text-base font-medium mb-2 flex items-center gap-2">
-              <LightbulbIcon className="h-4 w-4 text-yellow-500" /> What I'm worked on
+              <LightbulbIcon className="h-4 w-4 text-yellow-500" /> What I worked on
             </h3>
             <ul className="list-disc pl-5 space-y-2 text-sm">
-              <li>Implementing AI-powered document analysis tools using Langchain and Azure AI services</li>
-              <li>Developing Python microservices to process and extract insights from technical documentation</li>
-              <li>Building custom LLM solutions to automate internal workflows</li>
-              <li>Collaborating with cross-functional teams to integrate AI capabilities into existing products</li>
+              <li>placeholder</li>
+              <li>placeholder</li>
+              <li>placeholder</li>
+              <li>placeholder</li>
             </ul>
           </div>
           
