@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -139,15 +138,13 @@ const WorkPage = () => {
                   className="block transform transition-all duration-300 hover:scale-[1.02] h-full"
                 >
                   <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-shadow h-full flex flex-col overflow-hidden">
-                    <div className="relative w-full h-48">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    </div>
+                    <div 
+                      className="relative w-full h-48 bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url(${project.image})`,
+                        backgroundColor: 'rgba(0, 0, 0, 0.05)'
+                      }}
+                    ></div>
                     <div className="p-8 flex flex-col flex-grow">
                       <h2 className="text-3xl font-semibold mb-4">{project.title}</h2>
                       <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg flex-grow">{project.description}</p>

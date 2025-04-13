@@ -78,17 +78,15 @@ const ProjectPage = () => {
         </Link>
         
         <article className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-          <div className="relative w-full h-64 md:h-96">
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-            />
-          </div>
+          <div 
+            className="relative w-full h-64 md:h-96 bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${project.image})`,
+              backgroundColor: 'rgba(0, 0, 0, 0.05)'
+            }}
+          ></div>
           
-          <div className="p-6 md:p-8">
+          <div className="p-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">{project.title}</h1>
             
             <div className="flex flex-wrap gap-3 mb-6">
