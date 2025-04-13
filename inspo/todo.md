@@ -1,6 +1,6 @@
-- [ ] add projects section [ need to be hosted somewhere?]
+- [x] add projects section [ need to be hosted somewhere?]
 - [ ] add experience
 - [ ] add resume ? 
 - [ ] add club work (bearcats electric racing)
-- [ ] add blog page ? to blog about each week?  [reminder might be cool to add ?]
+- [x] add blog page ? to blog about each week?  [reminder might be cool to add ?]
 - [ ] add contributions to open source projects ?
