@@ -28,7 +28,7 @@ const ProjectPage = () => {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/api/projects/${params.id}`);
+        const response = await fetch(`https://amaans-domain.onrender.com/api/projects/${params.id}`);
         
         if (!response.ok) {
           throw new Error('Project not found');

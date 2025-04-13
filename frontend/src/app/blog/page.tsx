@@ -34,7 +34,7 @@ const BlogPage = () => {
 
   const fetchBlogPosts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/blogs');
+      const response = await fetch('https://amaans-domain.onrender.com/api/blogs');
       const data = await response.json();
       setBlogPosts(data);
     } catch (error) {
