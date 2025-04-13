@@ -37,7 +37,7 @@ except Exception as e:
     comments_collection = None
 
 # Route to serve the blog creation form
-@app.route('/admin/blog/create', methods=['GET'])
+@app.route('/blogs', methods=['GET'])
 def blog_create_form():
     return render_template('blog.html')
 
@@ -100,6 +100,80 @@ def create_blog():
         print(f"Error creating blog: {str(e)}")
         return jsonify({'error': 'Failed to create blog post'}), 500
 
+# Projects routes
+@app.route('/projects')
+def projects_page():
+    return render_template('projects.html')
+
+@app.route('/api/projects', methods=['GET'])
+def get_projects():
+    try:
+        projects = list(db.projects.find().sort('created_at', -1))
+        
+        # Convert ObjectId to string for JSON serialization
+        for project in projects:
+            project['_id'] = str(project['_id'])
+            # Convert tech string to list if it's a string
+            if isinstance(project.get('tech'), str):
+                project['tech'] = project['tech'].split(',')
+        
+        return jsonify(projects)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/projects/<project_id>', methods=['GET'])
+def get_project(project_id):
+    try:
+        project = db.projects.find_one({'_id': ObjectId(project_id)})
+        
+        if project is None:
+            return jsonify({'error': 'Project not found'}), 404
+        
+        # Convert ObjectId to string for JSON serialization
+        project['_id'] = str(project['_id'])
+        
+        # Convert tech string to list if it's a string
+        if isinstance(project.get('tech'), str):
+            project['tech'] = project['tech'].split(',')
+        
+        return jsonify(project)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/projects', methods=['POST'])
+def create_project():
+    try:
+        title = request.form['title']
+        description = request.form['description']
+        content = request.form['content']
+        status = request.form['status']
+        github_link = request.form['github_link']
+        image = request.form['image']
+        tech = request.form['tech']
+        category = request.form['category']
+        
+        # Create slug from title
+        slug = title.lower().replace(' ', '-')
+        
+        project = {
+            'title': title,
+            'description': description,
+            'content': content,
+            'status': status,
+            'github_link': github_link,
+            'image': image,
+            'tech': tech,
+            'category': category,
+            'slug': slug,
+            'created_at': datetime.utcnow()
+        }
+        
+        result = db.projects.insert_one(project)
+        project['_id'] = str(result.inserted_id)
+        
+        return jsonify({'message': 'Project created successfully', 'id': project['_id']}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
