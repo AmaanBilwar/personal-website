@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Add New Project</h1>
+        
+        <form action="/api/projects" method="POST" class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700 font-medium mb-2">Project Title</label>
+                <input type="text" id="title" name="title" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 font-medium mb-2">Short Description</label>
+                <textarea id="description" name="description" rows="3" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            
+            <div class="mb-4">
+                <label for="content" class="block text-gray-700 font-medium mb-2">Project Content</label>
+                <textarea id="content" name="content" rows="10" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            
+            <div class="mb-4">
+                <label for="status" class="block text-gray-700 font-medium mb-2">Project Status</label>
+                <select id="status" name="status" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="In Progress">In Progress</option>
+                    <option value="Planning">Planning</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            
+            <div class="mb-4">
+                <label for="github_link" class="block text-gray-700 font-medium mb-2">GitHub Link</label>
+                <input type="url" id="github_link" name="github_link" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://github.com/username/repository">
+            </div>
+            
+            <div class="mb-4">
+                <label for="image" class="block text-gray-700 font-medium mb-2">Project Image URL</label>
+                <input type="url" id="image" name="image" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://example.com/image.jpg">
+            </div>
+            
+            <div class="mb-4">
+                <label for="tech" class="block text-gray-700 font-medium mb-2">Technologies Used (comma separated)</label>
+                <input type="text" id="tech" name="tech" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="React, TypeScript, Node.js">
+            </div>
+            
+            <div class="mb-4">
+                <label for="category" class="block text-gray-700 font-medium mb-2">Category</label>
+                <select id="category" name="category" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="my projects">My Projects</option>
+                    <option value="solving a problem">Solving a Problem</option>
+                    <option value="learning">Learning</option>
+                </select>
+            </div>
+            
+            <div class="flex justify-center">
+                <button type="submit" 
+                    class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Add Project
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
