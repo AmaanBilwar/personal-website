@@ -11,6 +11,7 @@ const opensans = Open_Sans({
 const HomePage = () => {
   const isMobile = useIsMobile();
   
+
   return (
     <main className={`${opensans.className} px-4 sm:px-0 animate-fade-in`}>
       <h1 className="text-xl sm:text-2xl md:text-3xl text-center pb-2 mb-4">
