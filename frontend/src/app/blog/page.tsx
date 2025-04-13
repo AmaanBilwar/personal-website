@@ -20,9 +20,10 @@ interface BlogPost {
   date: string;
 }
 
-const categories = ["All", "Web Development", "UI/UX", "Programming"];
-
 const BlogPage = () => {
+  // Define categories array
+  const categories = ['All', 'Machine Learning', 'Programming', 'Books' , 'Music'];
+
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -82,7 +83,7 @@ const BlogPage = () => {
           <div className="w-full">
             <Tabs defaultValue="All" className="w-full">
               <TabsList className="flex w-full">
-                {categories.map((category) => (
+                {categories.map((category: string) => (
                   <TabsTrigger 
                     key={category} 
                     value={category}
