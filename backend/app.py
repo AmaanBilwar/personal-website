@@ -12,6 +12,7 @@ import json
 import base64
 import traceback
 import sys
+import requests
 
 # Load environment variables
 load_dotenv()
@@ -51,6 +52,62 @@ except Exception as e:
     print(f"MongoDB connection error: {str(e)}")
     print(traceback.format_exc())
     sys.exit(1)  # Exit if we can't connect to MongoDB
+
+# Spotify API configuration
+SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
+SPOTIFY_REFRESH_TOKEN = os.getenv('SPOTIFY_REFRESH_TOKEN')
+
+def get_spotify_access_token():
+    auth_header = base64.b64encode(
+        f"{SPOTIFY_CLIENT_ID}:{SPOTIFY_CLIENT_SECRET}".encode()
+    ).decode()
+    
+    response = requests.post(
+        'https://accounts.spotify.com/api/token',
+        headers={
+            'Authorization': f'Basic {auth_header}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data={
+            'grant_type': 'refresh_token',
+            'refresh_token': SPOTIFY_REFRESH_TOKEN
+        }
+    )
+    
+    return response.json()['access_token']
+
+@app.route('/api/spotify', methods=['GET'])
+def get_spotify_now_playing():
+    try:
+        access_token = get_spotify_access_token()
+        
+        response = requests.get(
+            'https://api.spotify.com/v1/me/player/currently-playing',
+            headers={'Authorization': f'Bearer {access_token}'}
+        )
+        
+        if response.status_code == 204:
+            return jsonify({'isPlaying': False})
+            
+        if response.status_code != 200:
+            return jsonify({'isPlaying': False})
+            
+        data = response.json()
+        
+        if not data.get('item'):
+            return jsonify({'isPlaying': False})
+            
+        return jsonify({
+            'isPlaying': data['is_playing'],
+            'title': data['item']['name'],
+            'artist': ', '.join(artist['name'] for artist in data['item']['artists']),
+            'songUrl': data['item']['external_urls']['spotify']
+        })
+        
+    except Exception as e:
+        print(f"Error fetching Spotify data: {str(e)}")
+        return jsonify({'isPlaying': False})
 
 # Route to serve the blog creation form
 @app.route('/blogs', methods=['GET'])

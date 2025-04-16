@@ -106,7 +106,7 @@ function ClientLayoutContent({
                     </li>
                     <li>
                       <Link 
-                        href="/work" 
+                        href="/projects" 
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Projects
