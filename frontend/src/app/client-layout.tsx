@@ -47,7 +47,7 @@ function ClientLayoutContent({
 
   // Determine content width based on the current route
   const getContentMaxWidth = () => {
-    if (pathname === "/experience") {
+    if (pathname === "/projects") {
       return "max-w-4xl"; // Wider content for experience page
     }
     return "max-w-2xl"; // Default width for other pages
@@ -125,7 +125,7 @@ function ClientLayoutContent({
                         href="/opensource" 
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
-                        Open Source
+                        Contributions
                       </Link>
                     </li>
                     <li className="hidden lg:block">
@@ -134,14 +134,6 @@ function ClientLayoutContent({
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Blog
-                      </Link>
-                    </li>
-                    <li className="hidden lg:block">
-                      <Link 
-                        href="/resume" 
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Resume
                       </Link>
                     </li>
                   </ul>
@@ -179,20 +171,11 @@ function ClientLayoutContent({
                     </li>
                     <li>
                       <Link 
-                        href="/work" 
+                        href="/projects" 
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Projects
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/experience" 
-                        className="block py-2 hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Experience
                       </Link>
                     </li>
                     <li>
@@ -210,7 +193,7 @@ function ClientLayoutContent({
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Open Source
+                        Contributions
                       </Link>
                     </li>
                     <li>
@@ -220,15 +203,6 @@ function ClientLayoutContent({
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         Blog
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/resume" 
-                        className="block py-2 hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Resume
                       </Link>
                     </li>
                   </ul>
