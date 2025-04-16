@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Sparkles } from "lucide-react";
 
 import { ThemeProvider } from "../components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -26,7 +26,25 @@ function ClientLayoutContent({
 }>) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+  const [typedKeys, setTypedKeys] = useState("");
   
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      const newTypedKeys = typedKeys + e.key.toLowerCase();
+      setTypedKeys(newTypedKeys.slice(-8)); // Keep last 8 characters
+      
+      if (newTypedKeys.includes("memories")) {
+        setShowHint(true);
+        setTimeout(() => setShowHint(false), 3000);
+        setTypedKeys("");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [typedKeys]);
+
   // Determine content width based on the current route
   const getContentMaxWidth = () => {
     if (pathname === "/experience") {
@@ -43,6 +61,12 @@ function ClientLayoutContent({
         enableSystem
         disableTransitionOnChange
       >
+        {showHint && (
+          <div className="fixed bottom-4 right-4 bg-background/80 backdrop-blur-sm p-4 rounded-lg shadow-lg border animate-fade-in-out flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <p className="text-sm">Try visiting /memories...</p>
+          </div>
+        )}
         <div className="container mx-auto px-4 sm:px-6">
           <header className="py-4 mb-8">
             <div className="flex justify-between items-center">
@@ -85,15 +109,7 @@ function ClientLayoutContent({
                         href="/work" 
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
-                        what I'm workin on
-                      </Link>
-                    </li>
-                    <li>
-                      <Link 
-                        href="/experience" 
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Experience
+                        Projects
                       </Link>
                     </li>
                     <li>
@@ -167,7 +183,7 @@ function ClientLayoutContent({
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        What I'm Working On
+                        Projects
                       </Link>
                     </li>
                     <li>
