@@ -133,7 +133,7 @@ const WorkPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredProjects.map((project: Project) => (
                 <Link 
-                  href={`/work/${project._id}`} 
+                  href={`/projects/${project._id}`} 
                   key={project._id}
                   className="block transform transition-all duration-300 hover:scale-[1.02] h-full"
                 >

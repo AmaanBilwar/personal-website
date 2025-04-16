@@ -60,7 +60,7 @@ const ProjectPage = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-2xl text-red-500 mb-4">{error || 'Project not found'}</div>
-        <Link href="/work" className="text-blue-500 hover:underline">
+        <Link href="/projects" className="text-blue-500 hover:underline">
           Back to Projects
         </Link>
       </div>
@@ -70,7 +70,7 @@ const ProjectPage = () => {
   return (
     <main className="min-h-screen p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <Link href="/work" className="inline-flex items-center text-blue-500 hover:underline mb-8">
+        <Link href="/projects" className="inline-flex items-center text-blue-500 hover:underline mb-8">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-9-9a1 1 0 010-1.414l9-9a1 1 0 011.414 1.414L2.414 7H17a1 1 0 110 2H2.414l7.293 7.293a1 1 0 010 1.414z" clipRule="evenodd" />
           </svg>
