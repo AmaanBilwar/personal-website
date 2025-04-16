@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file
 from flask_cors import CORS
 from pymongo import MongoClient
 from bson import ObjectId
@@ -9,37 +9,58 @@ import jwt
 from functools import wraps
 from flask_sock import Sock
 import json
+import base64
+import traceback
+import sys
 
 # Load environment variables
 load_dotenv()
 print("Environment variables loaded")
 print(f"MONGODB_URI: {'Set' if os.getenv('MONGODB_URI') else 'Not set'}")
-print(f"ADMIN_USER_ID: {'Set' if os.getenv('ADMIN_USER_ID') else 'Not set'}")
 
 app = Flask(__name__)
-CORS(app)
+# Configure CORS to allow all origins for testing
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 sock = Sock(app)
 
 # MongoDB connection
 try:
-    client = MongoClient(os.getenv('MONGODB_URI'))
+    # Add connection timeout
+    client = MongoClient(os.getenv('MONGODB_URI'), serverSelectionTimeoutMS=5000)
     # Test the connection
     client.admin.command('ping')
     print("MongoDB connection successful")
     db = client['personal_website']
     blogs_collection = db['blogs']
     comments_collection = db['comments']
+    
+    # Ensure memories collection exists
+    if 'memories' not in db.list_collection_names():
+        print("Creating memories collection")
+        db.create_collection('memories')
+    
+    memories_collection = db['memories']
+    print("Memories collection initialized")
 except Exception as e:
     print(f"MongoDB connection error: {str(e)}")
-    # Set default values to prevent app from crashing
-    db = None
-    blogs_collection = None
-    comments_collection = None
+    print(traceback.format_exc())
+    sys.exit(1)  # Exit if we can't connect to MongoDB
 
 # Route to serve the blog creation form
 @app.route('/blogs', methods=['GET'])
 def blog_create_form():
     return render_template('blog.html')
+
+# Route to serve the memories upload page
+@app.route('/memories', methods=['GET'])
+def memories_page():
+    return render_template('memories.html')
 
 @app.route('/api/blogs', methods=['GET'])
 def get_blogs():
@@ -175,5 +196,59 @@ def create_project():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Memories/Images routes
+@app.route('/api/memories', methods=['GET'])
+def get_memories():
+    try:
+        memories = list(memories_collection.find().sort('created_at', -1))
+        for memory in memories:
+            memory['_id'] = str(memory['_id'])
+        print(f"Successfully fetched {len(memories)} memories")
+        return jsonify(memories)
+    except Exception as e:
+        print(f"Error fetching memories: {str(e)}")
+        print(traceback.format_exc())
+        return jsonify({'error': f'Failed to fetch memories: {str(e)}'}), 500
+
+@app.route('/api/memories', methods=['POST'])
+def upload_memory():
+    try:
+        if not request.is_json:
+            return jsonify({'error': 'Request must be JSON'}), 400
+            
+        data = request.json
+        print(f"Received memory upload request")
+        
+        if 'image' not in data:
+            return jsonify({'error': 'No image provided'}), 400
+
+        image_data = data['image']  # Base64 encoded image
+        
+        # Check if image data is valid
+        if not isinstance(image_data, str) or not image_data.startswith('data:image/'):
+            return jsonify({'error': 'Invalid image data format'}), 400
+            
+        # Create memory document
+        memory = {
+            'image': image_data,
+            'created_at': datetime.now(),
+            'width': int(data.get('width', 0)),
+            'height': int(data.get('height', 0))
+        }
+        
+        print(f"Inserting memory with dimensions: {memory['width']}x{memory['height']}")
+        
+        # Insert with a timeout
+        result = memories_collection.insert_one(memory)
+        memory['_id'] = str(result.inserted_id)
+        
+        print(f"Memory uploaded successfully with ID: {memory['_id']}")
+        return jsonify(memory), 201
+    except Exception as e:
+        print(f"Error uploading memory: {str(e)}")
+        print(traceback.format_exc())
+        return jsonify({'error': f'Failed to upload memory: {str(e)}'}), 500
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Run the app on all network interfaces
+    app.run(host='0.0.0.0', port=5000, debug=True)
