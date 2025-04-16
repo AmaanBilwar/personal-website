@@ -108,11 +108,8 @@ const HomePage = () => {
             <a href="/about" className="bg-primary/10 rounded-md p-3 text-center hover:bg-primary/20 transition-colors">
               About Me
             </a>
-            <a href="/work" className="bg-primary/10 rounded-md p-3 text-center hover:bg-primary/20 transition-colors">
-              Current Work
-            </a>
-            <a href="/resume" className="bg-primary/10 rounded-md p-3 text-center hover:bg-primary/20 transition-colors">
-              Resume
+            <a href="/projects" className="bg-primary/10 rounded-md p-3 text-center hover:bg-primary/20 transition-colors">
+              Projects
             </a>
           </div>
         </div>
