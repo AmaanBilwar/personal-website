@@ -84,7 +84,7 @@ const WorkPage = () => {
       <div className="max-w-6xl mx-auto">
         <div className="space-y-10">
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold tracking-tight">What I'm Working On</h1>
+            <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
             <p className="text-muted-foreground max-w-[700px] mx-auto">
               Explore my current projects, ongoing work, and learning endeavors.
             </p>
