@@ -24,7 +24,7 @@ app = Flask(__name__)
 CORS(app, resources={
     r"/api/*": {
         "origins": "*",
-        "methods": ["GET", "POST", "OPTIONS"],
+        "methods": ["GET", "POST", "PUT", "OPTIONS"],
         "allow_headers": ["Content-Type"]
     }
 })
@@ -114,6 +114,19 @@ def get_spotify_now_playing():
 def blog_create_form():
     return render_template('blog.html')
 
+# Route to serve the blog edit form
+@app.route('/blogs/<blog_id>/edit', methods=['GET'])
+def blog_edit_form(blog_id):
+    try:
+        blog = blogs_collection.find_one({'_id': ObjectId(blog_id)})
+        if blog:
+            blog['_id'] = str(blog['_id'])
+            return render_template('blog_edit.html', blog=blog)
+        return render_template('error.html', message='Blog not found'), 404
+    except Exception as e:
+        print(f"Error fetching blog for edit: {str(e)}")
+        return render_template('error.html', message='Error fetching blog'), 500
+
 # Route to serve the memories upload page
 @app.route('/memories', methods=['GET'])
 def memories_page():
@@ -133,6 +146,60 @@ def get_blog(blog_id):
         blog['_id'] = str(blog['_id'])
         return jsonify(blog)
     return jsonify({'message': 'Blog not found'}), 404
+
+@app.route('/api/blogs/<blog_id>', methods=['PUT'])
+def update_blog(blog_id):
+    print(f"Received blog update request for ID: {blog_id}")
+    try:
+        if blogs_collection is None:
+            print("MongoDB connection not available")
+            return jsonify({'error': 'Database connection not available'}), 500
+            
+        data = request.json
+        print(f"Request data: {data}")
+        
+        if not data:
+            print("No data provided in request")
+            return jsonify({'error': 'No data provided'}), 400
+
+        # Check if blog exists
+        blog = blogs_collection.find_one({'_id': ObjectId(blog_id)})
+        if not blog:
+            print(f"Blog with ID {blog_id} not found")
+            return jsonify({'error': 'Blog not found'}), 404
+
+        # Update fields that are provided in the request
+        update_fields = {}
+        for field in ['title', 'description', 'content', 'category', 'readTime', 'image', 'author']:
+            if field in data and data[field]:
+                update_fields[field] = data[field]
+        
+        if not update_fields:
+            print("No valid fields to update")
+            return jsonify({'error': 'No valid fields to update'}), 400
+            
+        # Add last updated timestamp
+        update_fields['last_updated'] = datetime.utcnow()
+        
+        # Update the blog
+        result = blogs_collection.update_one(
+            {'_id': ObjectId(blog_id)},
+            {'$set': update_fields}
+        )
+        
+        if result.modified_count > 0:
+            print(f"Blog updated successfully: {blog_id}")
+            # Get the updated blog
+            updated_blog = blogs_collection.find_one({'_id': ObjectId(blog_id)})
+            updated_blog['_id'] = str(updated_blog['_id'])
+            return jsonify(updated_blog), 200
+        else:
+            print(f"No changes made to blog: {blog_id}")
+            return jsonify({'message': 'No changes made to the blog'}), 200
+            
+    except Exception as e:
+        print(f"Error updating blog: {str(e)}")
+        return jsonify({'error': 'Failed to update blog post'}), 500
 
 @app.route('/api/blogs', methods=['POST'])
 def create_blog():
