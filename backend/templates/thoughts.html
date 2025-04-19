@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Blog Post</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-50">
+    <div class="container mx-auto py-8">
+      <h1 class="text-3xl font-bold text-center mb-8">Drop a thought</h1>
+
+      <form
+        action="/api/blogs"
+        method="POST"
+        class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md"
+      >
+        <div class="mb-4">
+          <label
+            for="content"
+            class="block text-sm font-medium text-gray-700 mb-2"
+            >Content</label
+          >
+          <textarea
+            id="content"
+            name="content"
+            required
+            rows="10"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Drop your 🔥 thoughts
+        </button>
+      </form>
+      
+      <!-- Thoughts List with Delete Buttons -->
+      <div class="max-w-2xl mx-auto mt-12">
+        <h2 class="text-2xl font-bold mb-4">Your Thoughts</h2>
+        <div id="thoughts-list" class="space-y-4">
+          <!-- Thoughts will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Function to load thoughts
+      async function loadThoughts() {
+        try {
+          const response = await fetch("/api/thoughts");
+          if (!response.ok) {
+            throw new Error("Failed to fetch thoughts");
+          }
+          const thoughts = await response.json();
+          
+          const thoughtsList = document.getElementById("thoughts-list");
+          thoughtsList.innerHTML = "";
+          
+          if (thoughts.length === 0) {
+            thoughtsList.innerHTML = "<p class='text-center text-gray-500'>No thoughts yet.</p>";
+            return;
+          }
+          
+          thoughts.forEach(thought => {
+            const thoughtElement = document.createElement("div");
+            thoughtElement.className = "bg-white p-4 rounded-lg shadow-md";
+            
+            const content = document.createElement("p");
+            content.className = "mb-2 whitespace-pre-wrap";
+            content.textContent = thought.content;
+            
+            const date = document.createElement("p");
+            date.className = "text-sm text-gray-500 mb-2";
+            const createdDate = new Date(thought.created_at);
+            date.textContent = createdDate.toLocaleString();
+            
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2";
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = () => deleteThought(thought._id);
+            
+            thoughtElement.appendChild(content);
+            thoughtElement.appendChild(date);
+            thoughtElement.appendChild(deleteButton);
+            
+            thoughtsList.appendChild(thoughtElement);
+          });
+        } catch (error) {
+          console.error("Error loading thoughts:", error);
+          document.getElementById("thoughts-list").innerHTML = 
+            "<p class='text-center text-red-500'>Failed to load thoughts. Please try again.</p>";
+        }
+      }
+      
+      // Function to delete a thought
+      async function deleteThought(id) {
+        if (!confirm("Are you sure you want to delete this thought?")) {
+          return;
+        }
+        
+        try {
+          const response = await fetch(`/api/thoughts/${id}`, {
+            method: "DELETE"
+          });
+          
+          if (!response.ok) {
+            throw new Error("Failed to delete thought");
+          }
+          
+          alert("Thought deleted successfully!");
+          loadThoughts(); // Reload the thoughts list
+        } catch (error) {
+          console.error("Error deleting thought:", error);
+          alert("Failed to delete thought. Please try again.");
+        }
+      }
+      
+      // Load thoughts when the page loads
+      document.addEventListener("DOMContentLoaded", loadThoughts);
+      
+      // Form submission handler
+      document
+        .querySelector("form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const formData = new FormData(this);
+          const data = {};
+
+          for (const [key, value] of formData.entries()) {
+            data[key] = value;
+          }
+
+          try {
+            const response = await fetch("/api/thoughts", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+              alert("Thought created successfully!");
+              this.reset(); // Clear the form
+              loadThoughts(); // Reload the thoughts list
+            } else {
+              const errorData = await response.json();
+              alert(
+                `Error: ${errorData.error || "Failed to create thought"}`
+              );
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An unexpected error occurred");
+          }
+        });
+    </script>
+  </body>
+</html>

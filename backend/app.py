@@ -48,6 +48,14 @@ try:
     
     memories_collection = db['memories']
     print("Memories collection initialized")
+    
+    # Ensure thoughts collection exists
+    if 'thoughts' not in db.list_collection_names():
+        print("Creating thoughts collection")
+        db.create_collection('thoughts')
+    
+    thoughts_collection = db['thoughts']
+    print("Thoughts collection initialized")
 except Exception as e:
     print(f"MongoDB connection error: {str(e)}")
     print(traceback.format_exc())
@@ -108,6 +116,13 @@ def get_spotify_now_playing():
     except Exception as e:
         print(f"Error fetching Spotify data: {str(e)}")
         return jsonify({'isPlaying': False})
+
+
+# Route to serve the blog creation form
+@app.route('/thoughts', methods=['GET'])
+def thoughts_create_form():
+    return render_template('thoughts.html')
+
 
 # Route to serve the blog creation form
 @app.route('/blogs', methods=['GET'])
@@ -372,6 +387,92 @@ def upload_memory():
         print(f"Error uploading memory: {str(e)}")
         print(traceback.format_exc())
         return jsonify({'error': f'Failed to upload memory: {str(e)}'}), 500
+
+@app.route('/api/thoughts', methods=['GET'])
+def get_thoughts():
+    try:
+        thoughts = list(thoughts_collection.find().sort('created_at', -1))
+        # Convert ObjectId to string for JSON serialization
+        for thought in thoughts:
+            thought['_id'] = str(thought['_id'])
+        return jsonify(thoughts), 200
+    except Exception as e:
+        print(f"Error getting thoughts: {e}")
+        return jsonify({"error": "Failed to get thoughts"}), 500
+
+@app.route('/api/thoughts/<thought_id>', methods=['GET'])
+def get_thought(thought_id):
+    try:
+        thought = thoughts_collection.find_one({'_id': ObjectId(thought_id)})
+        if thought:
+            thought['_id'] = str(thought['_id'])
+            return jsonify(thought), 200
+        return jsonify({"error": "Thought not found"}), 404
+    except Exception as e:
+        print(f"Error getting thought: {e}")
+        return jsonify({"error": "Failed to get thought"}), 500
+
+@app.route('/api/thoughts', methods=['POST'])
+def create_thought():
+    try:
+        data = request.json
+        if not data or 'content' not in data:
+            return jsonify({"error": "Content is required"}), 400
+        
+        thought = {
+            'content': data['content'],
+            'created_at': datetime.now(),
+            'updated_at': datetime.now()
+        }
+        
+        result = thoughts_collection.insert_one(thought)
+        thought['_id'] = str(result.inserted_id)
+        
+        return jsonify(thought), 201
+    except Exception as e:
+        print(f"Error creating thought: {e}")
+        return jsonify({"error": "Failed to create thought"}), 500
+
+@app.route('/api/thoughts/<thought_id>', methods=['PUT'])
+def update_thought(thought_id):
+    try:
+        data = request.json
+        if not data or 'content' not in data:
+            return jsonify({"error": "Content is required"}), 400
+        
+        result = thoughts_collection.update_one(
+            {'_id': ObjectId(thought_id)},
+            {
+                '$set': {
+                    'content': data['content'],
+                    'updated_at': datetime.now()
+                }
+            }
+        )
+        
+        if result.matched_count == 0:
+            return jsonify({"error": "Thought not found"}), 404
+        
+        updated_thought = thoughts_collection.find_one({'_id': ObjectId(thought_id)})
+        updated_thought['_id'] = str(updated_thought['_id'])
+        
+        return jsonify(updated_thought), 200
+    except Exception as e:
+        print(f"Error updating thought: {e}")
+        return jsonify({"error": "Failed to update thought"}), 500
+
+@app.route('/api/thoughts/<thought_id>', methods=['DELETE'])
+def delete_thought(thought_id):
+    try:
+        result = thoughts_collection.delete_one({'_id': ObjectId(thought_id)})
+        
+        if result.deleted_count == 0:
+            return jsonify({"error": "Thought not found"}), 404
+        
+        return jsonify({"message": "Thought deleted successfully"}), 200
+    except Exception as e:
+        print(f"Error deleting thought: {e}")
+        return jsonify({"error": "Failed to delete thought"}), 500
 
 if __name__ == '__main__':
     # Run the app on all network interfaces
