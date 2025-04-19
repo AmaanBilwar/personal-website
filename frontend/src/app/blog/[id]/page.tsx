@@ -23,7 +23,7 @@ const BlogPostPage = () => {
 
   useEffect(() => {
     // Fetch blog post
-    fetch(`https://amaans-domain.onrender.com/api/blogs/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${id}`)
       .then(res => res.json())
       .then(data => {
         setBlog(data);
