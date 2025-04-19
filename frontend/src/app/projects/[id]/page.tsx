@@ -28,7 +28,7 @@ const ProjectPage = () => {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${process.env.PUBLIC_API_URL}/api/projects/${params.id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/${params.id}`);
         
         if (!response.ok) {
           throw new Error('Project not found');

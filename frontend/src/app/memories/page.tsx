@@ -21,7 +21,7 @@ export default function MemoriesGrid() {
   useEffect(() => {
     const fetchMemories = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_API_URL}/api/memories`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/memories`);
         if (!response.ok) throw new Error('Failed to fetch memories');
         const data = await response.json();
         setImages(data);

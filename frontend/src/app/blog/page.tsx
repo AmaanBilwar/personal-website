@@ -34,7 +34,7 @@ const BlogPage = () => {
 
   const fetchBlogPosts = async () => {
     try {
-      const response = await fetch(`${process.env.PUBLIC_API_URL}/api/blogs`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
       const data = await response.json();
       setBlogPosts(data);
     } catch (error) {

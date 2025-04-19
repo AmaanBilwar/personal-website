@@ -13,7 +13,7 @@ export default function SpotifyNowPlaying() {
   useEffect(() => {
     const fetchSpotifyData = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_API_URL}/api/spotify`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/spotify`);
         const data = await response.json();
         setSpotifyData(data);
       } catch (error) {

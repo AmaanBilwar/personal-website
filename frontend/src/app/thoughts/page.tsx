@@ -23,7 +23,8 @@ export default function ThoughtsPage() {
   const fetchThoughts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${process.env.PUBLIC_API_URL}/api/thoughts`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/thoughts`);
+      console.log(response);
       if (!response.ok) {
         throw new Error('Failed to fetch thoughts');
       }

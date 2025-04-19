@@ -215,8 +215,8 @@
                         
                         // Upload to backend
                         showProgress(`Uploading ${file.name}...`);
-                        debugLog(`Sending request to ${process.env.PUBLIC_API_URL}/api/memories`);
-                        const response = await fetch(`${process.env.PUBLIC_API_URL}/api/memories`, {
+                        debugLog(`Sending request to ${process.env.NEXT_PUBLIC_API_URL}/api/memories`);
+                        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/memories`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -333,7 +333,7 @@
             async function fetchMemories() {
                 try {
                     debugLog('Fetching memories from backend...');
-                    const response = await fetch(`${process.env.PUBLIC_API_URL}/api/memories`);
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/memories`);
                     
                     const responseData = await response.json();
                     

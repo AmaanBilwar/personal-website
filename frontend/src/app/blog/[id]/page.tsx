@@ -23,7 +23,7 @@ const BlogPostPage = () => {
 
   useEffect(() => {
     // Fetch blog post
-    fetch(`${process.env.PUBLIC_API_URL}/api/blogs/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${id}`)
       .then(res => res.json())
       .then(data => {
         setBlog(data);
