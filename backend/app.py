@@ -335,6 +335,72 @@ def create_project():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/projects/<project_id>/edit', methods=['GET'])
+def project_edit_form(project_id):
+    try:
+        project = db.projects.find_one({'_id': ObjectId(project_id)})
+        if project:
+            project['_id'] = str(project['_id'])
+            return render_template('project_edit.html', project=project)
+        return render_template('error.html', message='Project not found'), 404
+    except Exception as e:
+        print(f"Error fetching project for edit: {str(e)}")
+        return render_template('error.html', message='Error fetching project'), 500
+
+@app.route('/api/projects/<project_id>', methods=['PUT'])
+def update_project(project_id):
+    print(f"Received project update request for ID: {project_id}")
+    try:
+        if db.projects is None:
+            print("MongoDB connection not available")
+            return jsonify({'error': 'Database connection not available'}), 500
+            
+        data = request.json
+        print(f"Request data: {data}")
+        
+        if not data:
+            print("No data provided in request")
+            return jsonify({'error': 'No data provided'}), 400
+
+        # Check if project exists
+        project = db.projects.find_one({'_id': ObjectId(project_id)})
+        if not project:
+            print(f"Project with ID {project_id} not found")
+            return jsonify({'error': 'Project not found'}), 404
+
+        # Update fields that are provided in the request
+        update_fields = {}
+        for field in ['title', 'description', 'content', 'status', 'github_link', 'image', 'tech', 'category']:
+            if field in data and data[field]:
+                update_fields[field] = data[field]
+        
+        if not update_fields:
+            print("No valid fields to update")
+            return jsonify({'error': 'No valid fields to update'}), 400
+            
+        # Add last updated timestamp
+        update_fields['last_updated'] = datetime.utcnow()
+        
+        # Update the project
+        result = db.projects.update_one(
+            {'_id': ObjectId(project_id)},
+            {'$set': update_fields}
+        )
+        
+        if result.modified_count > 0:
+            print(f"Project updated successfully: {project_id}")
+            # Get the updated project
+            updated_project = db.projects.find_one({'_id': ObjectId(project_id)})
+            updated_project['_id'] = str(updated_project['_id'])
+            return jsonify(updated_project), 200
+        else:
+            print(f"No changes made to project: {project_id}")
+            return jsonify({'message': 'No changes made to the project'}), 200
+            
+    except Exception as e:
+        print(f"Error updating project: {str(e)}")
+        return jsonify({'error': 'Failed to update project'}), 500
+
 # Memories/Images routes
 @app.route('/api/memories', methods=['GET'])
 def get_memories():
