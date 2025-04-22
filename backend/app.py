@@ -402,20 +402,7 @@ def update_project(project_id):
         return jsonify({'error': 'Failed to update project'}), 500
 
 # Memories/Images routes
-@app.route('/api/memories', methods=['GET'])
-def get_memories():
-    try:
-        memories = list(memories_collection.find().sort('created_at', -1))
-        for memory in memories:
-            memory['_id'] = str(memory['_id'])
-        print(f"Successfully fetched {len(memories)} memories")
-        return jsonify(memories)
-    except Exception as e:
-        print(f"Error fetching memories: {str(e)}")
-        print(traceback.format_exc())
-        return jsonify({'error': f'Failed to fetch memories: {str(e)}'}), 500
-
-@app.route('/api/memories', methods=['POST'])
+@app.route('/memories', methods=['POST'])
 def upload_memory():
     try:
         if not request.is_json:
@@ -465,6 +452,19 @@ def upload_memory():
         print(f"Error uploading memory: {str(e)}")
         print(traceback.format_exc())
         return jsonify({'error': f'Failed to upload memory: {str(e)}'}), 500
+
+@app.route('/api/memories', methods=['GET'])
+def get_memories():
+    try:
+        memories = list(memories_collection.find().sort('created_at', -1))
+        for memory in memories:
+            memory['_id'] = str(memory['_id'])
+        print(f"Successfully fetched {len(memories)} memories")
+        return jsonify(memories)
+    except Exception as e:
+        print(f"Error fetching memories: {str(e)}")
+        print(traceback.format_exc())
+        return jsonify({'error': f'Failed to fetch memories: {str(e)}'}), 500
 
 @app.route('/api/thoughts', methods=['GET'])
 def get_thoughts():
