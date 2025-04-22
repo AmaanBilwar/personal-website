@@ -402,7 +402,7 @@ def update_project(project_id):
         return jsonify({'error': 'Failed to update project'}), 500
 
 # Memories/Images routes
-@app.route('/memories', methods=['POST'])
+@app.route('/memories/upload', methods=['POST'])
 def upload_memory():
     try:
         if not request.is_json:
@@ -424,12 +424,12 @@ def upload_memory():
         try:
             # Remove the data:image/xxx;base64, prefix
             image_data = image_data.split(',')[1]
-            # Decode base64
+            # Decode base64 to verify it's valid
             image_bytes = base64.b64decode(image_data)
             
-            # Create memory document
+            # Create memory document with the original base64 string
             memory = {
-                'image': image_data,  # Store the base64 string
+                'image': data['image'],  # Store the complete data URL
                 'created_at': datetime.utcnow(),
                 'width': int(data.get('width', 0)),
                 'height': int(data.get('height', 0))
@@ -459,6 +459,9 @@ def get_memories():
         memories = list(memories_collection.find().sort('created_at', -1))
         for memory in memories:
             memory['_id'] = str(memory['_id'])
+            # Ensure the image data is complete
+            if 'image' in memory and not memory['image'].startswith('data:image/'):
+                memory['image'] = f"data:image/jpeg;base64,{memory['image']}"
         print(f"Successfully fetched {len(memories)} memories")
         return jsonify(memories)
     except Exception as e:

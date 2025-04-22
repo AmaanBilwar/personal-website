@@ -179,6 +179,35 @@
                 }, 5000);
             }
             
+            // Fetch existing memories
+            async function fetchMemories() {
+                try {
+                    debugLog('Fetching memories from backend...');
+                    const response = await fetch('/api/memories');
+                    if (!response.ok) throw new Error('Failed to fetch memories');
+                    const memories = await response.json();
+                    
+                    // Clear existing grid
+                    imageGrid.innerHTML = '';
+                    
+                    // Add each memory to the grid
+                    memories.forEach(memory => {
+                        const div = document.createElement('div');
+                        div.className = 'image-item';
+                        const img = document.createElement('img');
+                        img.src = memory.image;
+                        img.alt = 'Memory';
+                        div.appendChild(img);
+                        imageGrid.appendChild(div);
+                    });
+                    
+                    debugLog(`Loaded ${memories.length} memories`);
+                } catch (error) {
+                    debugLog(`Error fetching memories: ${error.message}`);
+                    showStatus('Error loading memories: ' + error.message, true);
+                }
+            }
+            
             // Handle file uploads
             async function handleFiles(files) {
                 if (files.length === 0) return;
@@ -198,177 +227,73 @@
                     }
                     
                     debugLog(`Processing image: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`);
-                    showProgress(`Processing ${file.name}...`);
                     
                     try {
-                        // Resize image if it's too large
-                        const resizedImage = await resizeImageIfNeeded(file);
-                        debugLog(`Image resized: ${resizedImage.name} (${(resizedImage.size / 1024).toFixed(2)} KB)`);
-                        
-                        // Convert file to base64
-                        const base64 = await fileToBase64(resizedImage);
-                        debugLog(`Image converted to base64`);
+                        // Read file as base64
+                        const base64Data = await readFileAsBase64(file);
                         
                         // Get image dimensions
-                        const dimensions = await getImageDimensions(base64);
-                        debugLog(`Image dimensions: ${dimensions.width}x${dimensions.height}`);
+                        const dimensions = await getImageDimensions(base64Data);
                         
-                        // Upload to backend
                         showProgress(`Uploading ${file.name}...`);
-                        debugLog(`Sending request to ${process.env.NEXT_PUBLIC_API_URL}/api/memories`);
-                        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/memories`, {
+                        
+                        // Upload to server
+                        const response = await fetch('/memories/upload', {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/json',
+                                'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                image: base64,
+                                image: base64Data,
                                 width: dimensions.width,
-                                height: dimensions.height,
-                            }),
+                                height: dimensions.height
+                            })
                         });
                         
-                        debugLog(`Response status: ${response.status}`);
-                        
-                        const responseData = await response.json();
-                        
                         if (!response.ok) {
-                            throw new Error(responseData.error || 'Failed to upload image');
+                            throw new Error(`Upload failed: ${response.statusText}`);
                         }
                         
-                        debugLog(`Upload successful, image ID: ${responseData._id}`);
                         successCount++;
+                        debugLog(`Successfully uploaded: ${file.name}`);
                     } catch (error) {
                         errorCount++;
-                        debugLog(`Error uploading image: ${error.message}`);
-                        console.error('Error uploading image:', error);
+                        debugLog(`Error uploading ${file.name}: ${error.message}`);
                     }
                 }
                 
+                // Update UI
                 dropZone.classList.remove('uploading');
                 hideProgress();
                 
-                // Show status message
+                // Show final status
                 if (successCount > 0) {
-                    showStatus(`Successfully uploaded ${successCount} image${successCount > 1 ? 's' : ''}`);
+                    showStatus(`Successfully uploaded ${successCount} image${successCount !== 1 ? 's' : ''}`);
                     // Refresh the grid
                     fetchMemories();
                 }
-                
                 if (errorCount > 0) {
-                    showStatus(`Failed to upload ${errorCount} image${errorCount > 1 ? 's' : ''}`, true);
+                    showStatus(`Failed to upload ${errorCount} image${errorCount !== 1 ? 's' : ''}`, true);
                 }
             }
             
-            // Resize image if it's too large
-            async function resizeImageIfNeeded(file) {
-                // If file is less than 1MB, return as is
-                if (file.size < 1024 * 1024) {
-                    return file;
-                }
-                
-                debugLog(`Resizing large image: ${file.name}`);
-                
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
-                        
-                        // Calculate new dimensions (max 800px on longest side)
-                        const maxSize = 800;
-                        if (width > height && width > maxSize) {
-                            height = Math.round((height * maxSize) / width);
-                            width = maxSize;
-                        } else if (height > maxSize) {
-                            width = Math.round((width * maxSize) / height);
-                            height = maxSize;
-                        }
-                        
-                        canvas.width = width;
-                        canvas.height = height;
-                        
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        
-                        // Convert to blob
-                        canvas.toBlob((blob) => {
-                            const resizedFile = new File([blob], file.name, {
-                                type: file.type,
-                                lastModified: Date.now()
-                            });
-                            resolve(resizedFile);
-                        }, file.type, 0.8);
-                    };
-                    img.src = URL.createObjectURL(file);
-                });
-            }
-            
-            // Convert file to base64
-            function fileToBase64(file) {
+            // Helper function to read file as base64
+            function readFileAsBase64(file) {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onload = () => resolve(reader.result);
-                    reader.onerror = reject;
+                    reader.onerror = () => reject(new Error('Failed to read file'));
                     reader.readAsDataURL(file);
                 });
             }
             
-            // Get image dimensions
-            function getImageDimensions(base64) {
-                return new Promise((resolve) => {
+            // Helper function to get image dimensions
+            function getImageDimensions(base64Data) {
+                return new Promise((resolve, reject) => {
                     const img = new Image();
-                    img.onload = () => {
-                        resolve({
-                            width: img.width,
-                            height: img.height,
-                        });
-                    };
-                    img.src = base64;
-                });
-            }
-            
-            // Fetch memories from backend
-            async function fetchMemories() {
-                try {
-                    debugLog('Fetching memories from backend...');
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/memories`);
-                    
-                    const responseData = await response.json();
-                    
-                    if (!response.ok) {
-                        throw new Error(responseData.error || 'Failed to fetch memories');
-                    }
-                    
-                    debugLog(`Fetched ${responseData.length} memories`);
-                    displayMemories(responseData);
-                } catch (error) {
-                    debugLog(`Error fetching memories: ${error.message}`);
-                    console.error('Error fetching memories:', error);
-                    showStatus('Error loading memories: ' + error.message, true);
-                }
-            }
-            
-            // Display memories in the grid
-            function displayMemories(memories) {
-                imageGrid.innerHTML = '';
-                
-                if (memories.length === 0) {
-                    imageGrid.innerHTML = '<p class="text-center text-gray-500 col-span-full">No memories uploaded yet. Upload some images to get started!</p>';
-                    return;
-                }
-                
-                memories.forEach(memory => {
-                    const imageItem = document.createElement('div');
-                    imageItem.className = 'image-item';
-                    
-                    const img = document.createElement('img');
-                    img.src = memory.image;
-                    img.alt = 'Memory';
-                    
-                    imageItem.appendChild(img);
-                    imageGrid.appendChild(imageItem);
+                    img.onload = () => resolve({ width: img.width, height: img.height });
+                    img.onerror = () => reject(new Error('Failed to load image'));
+                    img.src = base64Data;
                 });
             }
         });
