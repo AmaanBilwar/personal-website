@@ -433,22 +433,34 @@ def upload_memory():
         if not isinstance(image_data, str) or not image_data.startswith('data:image/'):
             return jsonify({'error': 'Invalid image data format'}), 400
             
-        # Create memory document
-        memory = {
-            'image': image_data,
-            'created_at': datetime.now(),
-            'width': int(data.get('width', 0)),
-            'height': int(data.get('height', 0))
-        }
-        
-        print(f"Inserting memory with dimensions: {memory['width']}x{memory['height']}")
-        
-        # Insert with a timeout
-        result = memories_collection.insert_one(memory)
-        memory['_id'] = str(result.inserted_id)
-        
-        print(f"Memory uploaded successfully with ID: {memory['_id']}")
-        return jsonify(memory), 201
+        # Extract image format and data
+        try:
+            # Remove the data:image/xxx;base64, prefix
+            image_data = image_data.split(',')[1]
+            # Decode base64
+            image_bytes = base64.b64decode(image_data)
+            
+            # Create memory document
+            memory = {
+                'image': image_data,  # Store the base64 string
+                'created_at': datetime.utcnow(),
+                'width': int(data.get('width', 0)),
+                'height': int(data.get('height', 0))
+            }
+            
+            print(f"Inserting memory with dimensions: {memory['width']}x{memory['height']}")
+            
+            # Insert with a timeout
+            result = memories_collection.insert_one(memory)
+            memory['_id'] = str(result.inserted_id)
+            
+            print(f"Memory uploaded successfully with ID: {memory['_id']}")
+            return jsonify(memory), 201
+            
+        except Exception as e:
+            print(f"Error processing image: {str(e)}")
+            return jsonify({'error': 'Failed to process image data'}), 400
+            
     except Exception as e:
         print(f"Error uploading memory: {str(e)}")
         print(traceback.format_exc())
