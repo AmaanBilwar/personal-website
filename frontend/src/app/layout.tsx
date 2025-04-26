@@ -8,6 +8,10 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs'
+import { Inter } from 'next/font/google'
+
+
+const inter = Inter({ subsets: ['latin'], weight: ['500']})
 
 export { metadata };
 
@@ -18,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body className={inter.className} suppressHydrationWarning>
           <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
