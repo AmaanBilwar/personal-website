@@ -1,6 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface BlogPost {
   _id: string;
@@ -70,8 +72,8 @@ const BlogPage = () => {
             onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'popular')}
             className="bg-neutral-900 text-white px-4 py-2 rounded-lg border border-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-600 dark:bg-background/80 dark:text-white appearance-none text-center w-48"
           >
-            <option className="dark:bg-background/80 dark:text-white " value="newest">Sort by Newest</option>
-            <option className="dark:bg-background/80 dark:text-white "   value="oldest">Sort by Oldest</option>
+            <option className="dark:bg-background/80 dark:text-white" value="newest">Sort by Newest</option>
+            <option className="dark:bg-background/80 dark:text-white" value="oldest">Sort by Oldest</option>
             <option className="dark:bg-background/80 dark:text-white" value="popular">Sort by Popular</option>
           </select>
         </div>
@@ -92,7 +94,20 @@ const BlogPage = () => {
                     <span>{post.views}k</span>
                   </div>
                 </div>
-                <p className="text-neutral-400 line-clamp-2">{post.description}</p>
+                <div className="text-neutral-400 prose dark:prose-invert max-w-none">
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      h1: ({node, ...props}) => <h1 className="text-2xl font-bold mb-2 line-clamp-2" {...props} />,
+                      h2: ({node, ...props}) => <h2 className="text-xl font-bold mb-2 line-clamp-2" {...props} />,
+                      h3: ({node, ...props}) => <h3 className="text-lg font-bold mb-2 line-clamp-2" {...props} />,
+                      p: ({node, ...props}) => <p className="line-clamp-2" {...props} />,
+                      a: ({node, ...props}) => <a className="text-blue-500 hover:text-blue-600" {...props} />
+                    }}
+                  >
+                    {post.description}
+                  </ReactMarkdown>
+                </div>
               </article>
             </Link>
           ))}

@@ -87,8 +87,29 @@
             </div>
         </div>
 
-        <!-- Memories Section -->
         <div class="dashboard-card rounded-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-2xl font-mono">Thoughts</h2>
+                    <button onclick="toggleSection('thoughts')" class="toggle-icon text-neutral-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+                <a href="/thoughts" class="action-button px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    New Thought
+                </a>
+            </div>
+            <div id="thoughtsContent" class="collapsible-content">
+                <div id="thoughtsList" class="space-y-4">
+                    <!-- Thoughts will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Memories Section -->
+        <div class="dashboard-card rounded-lg p-6 mb-8">
             <div class="flex justify-between items-center mb-6">
                 <div class="flex items-center space-x-4">
                     <h2 class="text-2xl font-mono">Memories</h2>
@@ -108,6 +129,9 @@
                 </div>
             </div>
         </div>
+
+        <!-- Thoughts Section -->
+        
     </div>
 
     <script>
@@ -176,6 +200,23 @@
             `;
         }
 
+        // Function to create a card for thoughts
+        function createThoughtCard(thought) {
+            return `
+                <div class="bg-neutral-800 rounded-lg p-4 flex justify-between items-center">
+                    <div>
+                        <p class="text-neutral-400 text-sm whitespace-pre-wrap">${thought.content}</p>
+                        <p class="text-neutral-500 text-xs mt-2">${new Date(thought.created_at).toLocaleString()}</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="deleteThought('${thought._id}')" class="action-button px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
         // Function to load projects
         async function loadProjects() {
             try {
@@ -227,6 +268,23 @@
             }
         }
 
+        // Function to load thoughts
+        async function loadThoughts() {
+            try {
+                const response = await fetch('/api/thoughts');
+                const thoughts = await response.json();
+                const thoughtsList = document.getElementById('thoughtsList');
+                thoughtsList.innerHTML = thoughts.map(createThoughtCard).join('');
+                // Expand the section if there are thoughts
+                if (thoughts.length > 0) {
+                    document.getElementById('thoughtsContent').classList.add('expanded');
+                    document.querySelector('#thoughtsContent').previousElementSibling.querySelector('.toggle-icon').classList.add('expanded');
+                }
+            } catch (error) {
+                console.error('Error loading thoughts:', error);
+            }
+        }
+
         // Delete functions
         async function deleteProject(id) {
             if (confirm('Are you sure you want to delete this project?')) {
@@ -273,11 +331,28 @@
             }
         }
 
+        // Function to delete a thought
+        async function deleteThought(id) {
+            if (confirm('Are you sure you want to delete this thought?')) {
+                try {
+                    const response = await fetch(`/api/thoughts/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        loadThoughts();
+                    }
+                } catch (error) {
+                    console.error('Error deleting thought:', error);
+                }
+            }
+        }
+
         // Load all content when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             loadProjects();
             loadBlogs();
             loadMemories();
+            loadThoughts();
         });
     </script>
 </body>
