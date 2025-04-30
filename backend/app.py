@@ -123,6 +123,9 @@ def get_spotify_now_playing():
 def thoughts_create_form():
     return render_template('thoughts.html')
 
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('index.html')
 
 # Route to serve the blog creation form
 @app.route('/blogs', methods=['GET'])
@@ -185,7 +188,7 @@ def update_blog(blog_id):
 
         # Update fields that are provided in the request
         update_fields = {}
-        for field in ['title', 'description', 'content', 'category', 'readTime', 'image', 'author']:
+        for field in ['title', 'description', 'content', 'category', 'readTime', 'author']:
             if field in data and data[field]:
                 update_fields[field] = data[field]
         
@@ -232,7 +235,7 @@ def create_blog():
             return jsonify({'error': 'No data provided'}), 400
 
         # Validate required fields
-        required_fields = ['title', 'description', 'content', 'category', 'readTime', 'image', 'author']
+        required_fields = ['title', 'description', 'content', 'category', 'readTime', 'author']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
         if missing_fields:
             print(f"Missing fields: {missing_fields}")
@@ -244,7 +247,6 @@ def create_blog():
             'content': data['content'],
             'category': data['category'],
             'readTime': data['readTime'],
-            'image': data['image'],
             'author': data['author'],
             'date': datetime.utcnow(),
             'comments': []
@@ -303,27 +305,49 @@ def get_project(project_id):
 @app.route('/api/projects', methods=['POST'])
 def create_project():
     try:
-        title = request.form['title']
-        description = request.form['description']
-        content = request.form['content']
-        status = request.form['status']
-        github_link = request.form['github_link']
-        image = request.form['image']
-        tech = request.form['tech']
-        category = request.form['category']
+        # Initialize images array
+        images = []
+        
+        # Handle file uploads
+        if 'images' in request.files:
+            for file in request.files.getlist('images'):
+                if file and file.filename:
+                    # Read file as base64
+                    file_data = base64.b64encode(file.read()).decode('utf-8')
+                    images.append(f"data:image/{file.content_type.split('/')[1]};base64,{file_data}")
+        
+        # Handle image URLs
+        image_urls = request.form.getlist('image_urls[]')
+        if image_urls:
+            images.extend([url for url in image_urls if url.strip()])
+        
+        # Get other form data
+        data = {
+            'title': request.form.get('title'),
+            'description': request.form.get('description'),
+            'content': request.form.get('content'),
+            'tech': request.form.get('tech'),
+            'github_link': request.form.get('github_link'),
+            'category': request.form.get('category')
+        }
+        
+        # Validate required fields
+        required_fields = ['title', 'description', 'content', 'tech', 'github_link', 'category']
+        missing_fields = [field for field in required_fields if not data[field]]
+        if missing_fields:
+            return jsonify({'error': f'Missing required fields: {", ".join(missing_fields)}'}), 400
         
         # Create slug from title
-        slug = title.lower().replace(' ', '-')
+        slug = data['title'].lower().replace(' ', '-')
         
         project = {
-            'title': title,
-            'description': description,
-            'content': content,
-            'status': status,
-            'github_link': github_link,
-            'image': image,
-            'tech': tech,
-            'category': category,
+            'title': data['title'],
+            'description': data['description'],
+            'content': data['content'],
+            'tech': data['tech'].split(',') if isinstance(data['tech'], str) else data['tech'],
+            'github_link': data['github_link'],
+            'category': data['category'],
+            'images': images,
             'slug': slug,
             'created_at': datetime.utcnow()
         }
@@ -331,8 +355,10 @@ def create_project():
         result = db.projects.insert_one(project)
         project['_id'] = str(result.inserted_id)
         
-        return jsonify({'message': 'Project created successfully', 'id': project['_id']}), 201
+        return jsonify(project), 201
     except Exception as e:
+        print(f"Error creating project: {str(e)}")
+        print(traceback.format_exc())
         return jsonify({'error': str(e)}), 500
 
 @app.route('/projects/<project_id>/edit', methods=['GET'])
@@ -400,6 +426,17 @@ def update_project(project_id):
     except Exception as e:
         print(f"Error updating project: {str(e)}")
         return jsonify({'error': 'Failed to update project'}), 500
+
+@app.route('/api/projects/<project_id>', methods=['DELETE'])
+def delete_project(project_id):
+    try:
+        result = db.projects.delete_one({'_id': ObjectId(project_id)})
+        if result.deleted_count > 0:
+            return jsonify({'message': 'Project deleted successfully'}), 200
+        return jsonify({'error': 'Project not found'}), 404
+    except Exception as e:
+        print(f"Error deleting project: {e}")
+        return jsonify({'error': 'Failed to delete project'}), 500
 
 # Memories/Images routes
 @app.route('/memories/upload', methods=['POST'])
@@ -554,6 +591,74 @@ def delete_thought(thought_id):
     except Exception as e:
         print(f"Error deleting thought: {e}")
         return jsonify({"error": "Failed to delete thought"}), 500
+
+@app.route('/api/blogs/<blog_id>', methods=['DELETE'])
+def delete_blog(blog_id):
+    try:
+        result = blogs_collection.delete_one({'_id': ObjectId(blog_id)})
+        if result.deleted_count > 0:
+            return jsonify({'message': 'Blog post deleted successfully'}), 200
+        return jsonify({'error': 'Blog post not found'}), 404
+    except Exception as e:
+        print(f"Error deleting blog: {e}")
+        return jsonify({'error': 'Failed to delete blog post'}), 500
+
+@app.route('/api/memories/<memory_id>', methods=['DELETE'])
+def delete_memory(memory_id):
+    try:
+        result = memories_collection.delete_one({'_id': ObjectId(memory_id)})
+        if result.deleted_count > 0:
+            return jsonify({'message': 'Memory deleted successfully'}), 200
+        return jsonify({'error': 'Memory not found'}), 404
+    except Exception as e:
+        print(f"Error deleting memory: {e}")
+        return jsonify({'error': 'Failed to delete memory'}), 500
+
+# GitHub API configuration
+GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
+
+def get_github_repo_stats(repo_url):
+    try:
+        # Extract owner and repo name from GitHub URL
+        parts = repo_url.replace('https://github.com/', '').split('/')
+        if len(parts) != 2:
+            return None
+            
+        owner, repo = parts
+        
+        headers = {
+            'Authorization': f'token {GITHUB_TOKEN}',
+            'Accept': 'application/vnd.github.v3+json'
+        }
+        
+        # Fetch repository data
+        response = requests.get(
+            f'https://api.github.com/repos/{owner}/{repo}',
+            headers=headers
+        )
+        
+        if response.status_code != 200:
+            return None
+            
+        data = response.json()
+        
+        return {
+            'stars': data['stargazers_count'],
+            'forks': data['forks_count'],
+            'last_updated': data['updated_at'],
+            'open_issues': data['open_issues_count'],
+            'watchers': data['watchers_count']
+        }
+    except Exception as e:
+        print(f"Error fetching GitHub stats: {str(e)}")
+        return None
+
+@app.route('/api/github-stats/<path:repo_url>', methods=['GET'])
+def get_github_stats(repo_url):
+    stats = get_github_repo_stats(repo_url)
+    if stats:
+        return jsonify(stats)
+    return jsonify({'error': 'Could not fetch GitHub stats'}), 404
 
 if __name__ == '__main__':
     # Run the app on all network interfaces
