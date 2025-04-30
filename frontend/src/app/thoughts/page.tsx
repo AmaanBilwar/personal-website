@@ -61,15 +61,15 @@ export default function ThoughtsPage() {
         /* Thoughts List */
         <div className="space-y-4">
           {thoughts.length === 0 ? (
-            <p className="text-center text-gray-500">No thoughts yet.</p>
+            <p className="text-center text-white">No thoughts yet.</p>
           ) : (
             thoughts.map((thought) => (
-              <Card key={thought._id} className="border-b hover:bg-gray-50 transition-colors">
+              <Card key={thought._id} className="border-b transition-colors">
                 <CardContent className="pt-6">
-                  <div className="whitespace-pre-wrap text-gray-800 text-lg mb-3">
+                  <div className="whitespace-pre-wrap dark:text-white text-black text-lg mb-3">
                     {thought.content}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm dark:text-white text-black">
                     {format(new Date(thought.created_at), 'MMM d, yyyy • h:mm a')}
                     {thought.updated_at !== thought.created_at && (
                       <span className="text-xs"> (edited)</span>

@@ -47,7 +47,7 @@ export default function MemoriesGrid() {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="min-h-screen bg-background">
       {showEntrance ? (
         <div className="fixed inset-0 flex items-center justify-center bg-background z-50 animate-fade-out">
           <div className="text-center">
@@ -57,8 +57,8 @@ export default function MemoriesGrid() {
           </div>
         </div>
       ) : (
-        <>
-          <h1 className="text-4xl font-bold text-center mb-8">
+        <div className="px-2 py-8">
+          <h1 className="text-4xl font-bold text-center mb-12">
             <span className="inline-flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-primary" />
               Memories
@@ -69,34 +69,48 @@ export default function MemoriesGrid() {
           {images.length === 0 ? (
             <p className="text-center text-gray-500">No memories uploaded yet.</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px]">
-              {images.map((image) => {
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 px-0 sm:px-4">
+              {images.map((image, index) => {
                 const aspectRatio = image.width / image.height;
-                let spanClass = '';
                 
-                // Determine grid span based on aspect ratio
-                if (aspectRatio > 1.5) spanClass = 'sm:col-span-2';
-                if (aspectRatio > 2) spanClass = 'sm:col-span-3';
-                if (image.height > image.width * 1.5) spanClass = 'row-span-2';
-
                 return (
                   <div
                     key={image._id}
-                    className={`relative rounded-lg overflow-hidden ${spanClass} transition-transform duration-300 hover:scale-105`}
+                    className="relative group w-full h-auto"
                   >
-                    <Image
-                      src={image.image}
-                      alt="Memory"
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                    />
+                    <div 
+                      className="relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.02]"
+                      style={{ 
+                        width: '100%',
+                        paddingTop: `${(1 / aspectRatio) * 100}%`,
+                      }}
+                    >
+                      <Image
+                        src={image.image}
+                        alt="Memory"
+                        fill
+                        className="object-cover absolute top-0 left-0 w-full h-full"
+                        sizes="(max-width: 640px) 98vw, (max-width: 1024px) 48vw, (max-width: 1536px) 32vw, 24vw"
+                        priority={index < 4}
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                          <p className="text-sm">
+                            {new Date(image.created_at).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 );
               })}
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

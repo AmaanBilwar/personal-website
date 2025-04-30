@@ -1,11 +1,5 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Link from 'next/link';
 
 interface BlogPost {
@@ -13,20 +7,13 @@ interface BlogPost {
   title: string;
   description: string;
   content: string;
-  category: string;
-  readTime: string;
-  image: string;
-  author: string;
   date: string;
+  views: number;
 }
 
 const BlogPage = () => {
-  // Define categories array
-  const categories = ['All', 'Machine Learning', 'Programming', 'Books' , 'Music'];
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'popular'>('newest');
 
   useEffect(() => {
     fetchBlogPosts();
@@ -36,130 +23,79 @@ const BlogPage = () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`);
       const data = await response.json();
-      setBlogPosts(data);
+      let sortedPosts = [...data];
+      
+      switch (sortBy) {
+        case 'newest':
+          sortedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          break;
+        case 'oldest':
+          sortedPosts.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+          break;
+        case 'popular':
+          sortedPosts.sort((a, b) => b.views - a.views);
+          break;
+      }
+      
+      setBlogPosts(sortedPosts);
     } catch (error) {
       console.error('Error fetching blog posts:', error);
     }
   };
 
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = activeCategory === 'All' || post.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+  useEffect(() => {
+    fetchBlogPosts();
+  }, [sortBy]);
 
   return (
-    <div className="container mx-auto py-12 px-4 md:px-6">
-      <div className="space-y-10">
-        <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-bold tracking-tight">Blog</h1>
-          <p className="text-muted-foreground max-w-[700px] mx-auto">
-            Thoughts, stories, and ideas on tech, design, and development.
-          </p>
+    <div className="min-h-screen bg-white dark:bg-background/80 text-black dark:text-white">
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-mono mb-2">Amaan's blog</h1>
+          <p className="text-neutral-500">woah, nerd!</p>
         </div>
 
-        <div className="max-w-md mx-auto w-full">
-          <Input
-            placeholder="Search articles..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
-          />
+        <div className="flex justify-center gap-4 mb-8">
+          <Link href="/" className="hover:opacity-80">
+            <span className="text-2xl">⌂</span>
+          </Link>
+          {/* <Link href="/" className="hover:opacity-80">
+            <span className="text-2xl">↓</span>
+          </Link> */}
         </div>
 
-        <div className="w-full max-w-3xl flex flex-col sm:flex-row gap-4 items-center">
-          <Select defaultValue="newest">
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="newest">Newest First</SelectItem>
-              <SelectItem value="oldest">Oldest First</SelectItem>
-              <SelectItem value="popular">Most Popular</SelectItem>
-            </SelectContent>
-          </Select>
-          
-          <div className="w-full">
-            <Tabs defaultValue="All" className="w-full">
-              <TabsList className="flex w-full">
-                {categories.map((category: string) => (
-                  <TabsTrigger 
-                    key={category} 
-                    value={category}
-                    onClick={() => setActiveCategory(category)}
-                    className="flex-1 px-2 py-1.5 text-sm whitespace-nowrap"
-                  >
-                    {category}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-          </div>
+        <div className="max-w-4xl mx-auto mb-8">
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest' | 'popular')}
+            className="bg-neutral-900 text-white px-4 py-2 rounded-lg border border-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-600 dark:bg-background/80 dark:text-white appearance-none text-center w-48"
+          >
+            <option className="dark:bg-background/80 dark:text-white " value="newest">Sort by Newest</option>
+            <option className="dark:bg-background/80 dark:text-white "   value="oldest">Sort by Oldest</option>
+            <option className="dark:bg-background/80 dark:text-white" value="popular">Sort by Popular</option>
+          </select>
         </div>
 
-        {filteredPosts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPosts.map((post) => (
-              <Link href={`/blog/${post._id}`} key={post._id}>
-                <Card className="overflow-hidden transition-all hover:shadow-lg flex flex-col h-full cursor-pointer">
-                  <div className="aspect-video relative overflow-hidden">
-                    <div 
-                      className="h-full w-full bg-muted bg-cover bg-center"
-                      style={{ 
-                        backgroundImage: `url(${post.image})`,
-                        backgroundColor: 'rgba(0, 0, 0, 0.05)'
-                      }}
-                    ></div>
+        <div className="max-w-4xl mx-auto grid grid-cols-1 gap-4">
+          {blogPosts.map((post) => (
+            <Link href={`/blog/${post._id}`} key={post._id} className="block group">
+              <article className="border border-neutral-800 rounded-lg p-6 hover:bg-neutral-900 hover:text-white transition-colors">
+                <div className="flex justify-between items-start mb-4">
+                  <h2 className="text-xl font-mono">{post.title}</h2>
+                  <div className="flex items-center gap-2 text-neutral-500">
+                    <span>{new Date(post.date).toLocaleDateString('en-US', { 
+                      day: '2-digit',
+                      month: 'numeric',
+                      year: 'numeric'
+                    })}</span>
+                    <span className="text-xs">•</span>
+                    <span>{post.views}k</span>
                   </div>
-                  
-                  <CardHeader className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <span>{new Date(post.date).toLocaleDateString()}</span>
-                      <span>•</span>
-                      <span>{post.readTime}</span>
-                    </div>
-                    <CardTitle className="text-xl">
-                      <span className="line-clamp-2 hover:underline">
-                        {post.title}
-                      </span>
-                    </CardTitle>
-                    <CardDescription>
-                      <span className="line-clamp-2">
-                        {post.description}
-                      </span>
-                    </CardDescription>
-                  </CardHeader>
-                  
-                  <CardFooter className="flex justify-between items-center mt-auto pt-4">
-                    <div className="text-sm font-medium">By {post.author}</div>
-                    <Badge variant="secondary">{post.category}</Badge>
-                  </CardFooter>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <h3 className="text-xl font-medium">No blog posts found</h3>
-            <p className="text-muted-foreground mt-2">
-              Try adjusting your search or filter to find what you're looking for.
-            </p>
-            <Button 
-              variant="outline" 
-              className="mt-4"
-              onClick={() => {
-                setSearchTerm('');
-                setActiveCategory('All');
-              }}
-            >
-              Reset filters
-            </Button>
-          </div>
-        )}
-
-        <div className="flex justify-center mt-8">
-          <Button variant="outline">Load More</Button>
+                </div>
+                <p className="text-neutral-400 line-clamp-2">{post.description}</p>
+              </article>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

@@ -1,194 +1,148 @@
-'use client'
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import React from 'react';
+import Link from 'next/link';
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Project {
   _id: string;
   title: string;
   description: string;
-  content: string;
-  status: string;
   tech: string[];
-  slug: string;
-  image: string;
   github_link: string;
-  category: string;
   created_at: string;
+  views: number;
+  github_stats?: {
+    stars: number;
+    forks: number;
+    watchers: number;
+  };
 }
 
-const WorkPage = () => {
-  // Define categories
-  const categories = ['all', 'my projects', 'solving a problem', 'learning'];
+async function getProjects(): Promise<Project[]> {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`, {
+    cache: 'no-store'
+  });
   
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch projects');
+  if (!response.ok) {
+    throw new Error('Failed to fetch projects');
+  }
+  
+  const data = await response.json();
+  
+  // Fetch GitHub stats for each project
+  const projectsWithStats = await Promise.all(
+    data.map(async (project: Project) => {
+      if (project.github_link) {
+        try {
+          const statsResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/github-stats/${encodeURIComponent(project.github_link)}`
+          );
+          if (statsResponse.ok) {
+            const stats = await statsResponse.json();
+            return { ...project, github_stats: stats };
+          }
+        } catch (err) {
+          console.error('Error fetching GitHub stats:', err);
+        }
       }
-      
-      const data = await response.json();
-      setProjects(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
-      console.error('Error fetching projects:', err);
-    } finally {
-      setLoading(false);
-    }
+      return project;
+    })
+  );
+  
+  return projectsWithStats;
+}
+
+export default async function ProjectsPage() {
+  const projects = await getProjects();
+
+  const formatDate = (date: string) => {
+    const d = new Date(date);
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = d.toLocaleString('default', { month: 'short' }).toUpperCase();
+    const year = d.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
-  const filteredProjects = projects.filter(project => {
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = activeCategory === 'all' || project.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl">Loading projects...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-2xl text-red-500 mb-4">{error}</div>
-        <Button onClick={fetchProjects}>Try Again</Button>
-      </div>
-    );
-  }
-
   return (
-    <main className="min-h-screen p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="space-y-10">
-          <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
-            <p className="text-muted-foreground max-w-[700px] mx-auto">
-              Explore my current projects, ongoing work, and learning endeavors.
-            </p>
-          </div>
+    <main className="min-h-screen max-w-4xl mx-auto p-8">
+      <div className="space-y-8">
+        <div className="text-center space-y-1">
+          <h1 className="text-4xl font-mono font-bold">Amaan&apos;s projects</h1>
+          <p className="text-muted-foreground">stuff I&apos;ve built</p>
+        </div>
 
-          <div className="max-w-md mx-auto w-full">
-            <Input
-              placeholder="Search projects..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full"
-            />
-          </div>
+        <div className="flex justify-center space-x-6">
+          <button className="hover:opacity-80 flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+          <button className="hover:opacity-80 flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+              <path d="M9 18c-4.51 2-5-2-7-2"/>
+            </svg>
+          </button>
+        </div>
 
-          <div className="w-full max-w-3xl flex flex-col sm:flex-row gap-4 items-center">
-            <Select defaultValue="newest">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="oldest">Oldest First</SelectItem>
-                <SelectItem value="status">By Status</SelectItem>
-              </SelectContent>
-            </Select>
-            
-            <div className="w-full">
-              <Tabs defaultValue="all" className="w-full">
-                <TabsList className="flex w-full">
-                  {categories.map((category: string) => (
-                    <TabsTrigger 
-                      key={category} 
-                      value={category}
-                      onClick={() => setActiveCategory(category)}
-                      className="flex-1 px-2 py-1.5 text-sm whitespace-nowrap"
-                    >
-                      {category.charAt(0).toUpperCase() + category.slice(1)}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
-            </div>
-          </div>
-
-          {filteredProjects.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {filteredProjects.map((project: Project) => (
-                <Link 
-                  href={`/projects/${project._id}`} 
-                  key={project._id}
-                  className="block transform transition-all duration-300 hover:scale-[1.02] h-full"
-                >
-                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-shadow h-full flex flex-col overflow-hidden">
-                    <div 
-                      className="relative w-full h-48 bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url(${project.image})`,
-                        backgroundColor: 'rgba(0, 0, 0, 0.05)'
-                      }}
-                    ></div>
-                    <div className="p-8 flex flex-col flex-grow">
-                      <h2 className="text-3xl font-semibold mb-4">{project.title}</h2>
-                      <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg flex-grow">{project.description}</p>
-                      <div className="flex flex-wrap gap-3 mb-6">
-                        {project.tech.map((tech: string, techIndex: number) => (
-                          <span key={techIndex} className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-4 py-2 rounded-full text-base">
-                            {tech}
-                          </span>
-                        ))}
+        <div className="space-y-4">
+          {projects.map((project) => (
+            <Link 
+              href={`/projects/${project._id}`} 
+              key={project._id} 
+              className="block group"
+            >
+              <article className="border border-neutral-800 rounded-lg p-6 transition-colors hover:bg-neutral-900 hover:text-white">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-mono font-semibold">{project.title}</h2>
+                  <div className="flex items-center space-x-4 text-sm text-neutral-500">
+                    {project.github_stats && (
+                      <div className="flex items-center space-x-2">
+                        <span className="flex items-center">
+                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                          </svg>
+                          {project.github_stats.watchers}
+                        </span>
+                        <span className="flex items-center">
+                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                          </svg>
+                          {project.github_stats.stars}
+                        </span>
+                        <span className="flex items-center">
+                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                          </svg>
+                          {project.github_stats.forks}
+                        </span>
                       </div>
-                      <div className="text-lg font-medium text-green-600 dark:text-green-400">
-                        Status: {project.status}
-                      </div>
-                    </div>
+                    )}
+                    <span>{project.views}</span>
                   </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <h3 className="text-xl font-medium">No projects found</h3>
-              <p className="text-muted-foreground mt-2">
-                Try adjusting your search or filter to find what you're looking for.
-              </p>
-              <Button 
-                variant="outline" 
-                className="mt-4"
-                onClick={() => {
-                  setSearchTerm('');
-                  setActiveCategory('all');
-                }}
-              >
-                Reset filters
-              </Button>
-            </div>
-          )}
-
-          <div className="flex justify-center mt-8">
-            <Button variant="outline">Load More</Button>
-          </div>
+                </div>
+                <p className="text-neutral-400 mb-4">{project.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech, index) => (
+                    <Badge 
+                      key={index} 
+                      variant="secondary" 
+                      className="bg-neutral-800 text-neutral-300 hover:bg-neutral-700"
+                    >
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+                <div className="flex justify-between items-center mt-4 text-sm text-neutral-500">
+                  <span>{formatDate(project.created_at)}</span>
+                  <span>{project.github_link.replace('https://github.com/', '')}</span>
+                </div>
+              </article>
+            </Link>
+          ))}
         </div>
       </div>
     </main>
-  )
+  );
 }
-
-export default WorkPage
