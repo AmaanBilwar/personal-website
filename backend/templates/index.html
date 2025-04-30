@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .dashboard-card {
+            background-color: #171717;
+            border: 1px solid #262626;
+        }
+        .action-button {
+            transition: all 0.2s;
+        }
+        .action-button:hover {
+            transform: translateY(-1px);
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .collapsible-content.expanded {
+            max-height: 2000px; /* Adjust based on your content */
+        }
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .toggle-icon.expanded {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-mono font-bold mb-2">Dashboard</h1>
+            <p class="text-neutral-500">Manage your content</p>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="dashboard-card rounded-lg p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-2xl font-mono">Projects</h2>
+                    <button onclick="toggleSection('projects')" class="toggle-icon text-neutral-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+                <a href="/projects/new" class="action-button px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    New Project
+                </a>
+            </div>
+            <div id="projectsContent" class="collapsible-content">
+                <div id="projectsList" class="space-y-4">
+                    <!-- Projects will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Blogs Section -->
+        <div class="dashboard-card rounded-lg p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-2xl font-mono">Blog Posts</h2>
+                    <button onclick="toggleSection('blogs')" class="toggle-icon text-neutral-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+                <a href="/blogs" class="action-button px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    New Blog Post
+                </a>
+            </div>
+            <div id="blogsContent" class="collapsible-content">
+                <div id="blogsList" class="space-y-4">
+                    <!-- Blogs will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Memories Section -->
+        <div class="dashboard-card rounded-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-4">
+                    <h2 class="text-2xl font-mono">Memories</h2>
+                    <button onclick="toggleSection('memories')" class="toggle-icon text-neutral-400 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                </div>
+                <a href="/memories" class="action-button px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Upload Memory
+                </a>
+            </div>
+            <div id="memoriesContent" class="collapsible-content">
+                <div id="memoriesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Memories will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle section visibility
+        function toggleSection(section) {
+            const content = document.getElementById(`${section}Content`);
+            const icon = document.querySelector(`#${section}Content`).previousElementSibling.querySelector('.toggle-icon');
+            
+            content.classList.toggle('expanded');
+            icon.classList.toggle('expanded');
+        }
+
+        // Function to create a card for projects
+        function createProjectCard(project) {
+            return `
+                <div class="bg-neutral-800 rounded-lg p-4 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg font-medium">${project.title}</h3>
+                        <p class="text-neutral-400 text-sm">${project.category}</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="/projects/${project._id}/edit" class="action-button px-3 py-1 bg-neutral-700 text-white rounded hover:bg-neutral-600">
+                            Edit
+                        </a>
+                        <button onclick="deleteProject('${project._id}')" class="action-button px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to create a card for blogs
+        function createBlogCard(blog) {
+            return `
+                <div class="bg-neutral-800 rounded-lg p-4 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg font-medium">${blog.title}</h3>
+                        <p class="text-neutral-400 text-sm">${blog.category}</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <a href="/blogs/${blog._id}/edit" class="action-button px-3 py-1 bg-neutral-700 text-white rounded hover:bg-neutral-600">
+                            Edit
+                        </a>
+                        <button onclick="deleteBlog('${blog._id}')" class="action-button px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to create a card for memories
+        function createMemoryCard(memory) {
+            return `
+                <div class="bg-neutral-800 rounded-lg overflow-hidden">
+                    <img src="${memory.image}" alt="Memory" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-end space-x-2">
+                            <button onclick="deleteMemory('${memory._id}')" class="action-button px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to load projects
+        async function loadProjects() {
+            try {
+                const response = await fetch('/api/projects');
+                const projects = await response.json();
+                const projectsList = document.getElementById('projectsList');
+                projectsList.innerHTML = projects.map(createProjectCard).join('');
+                // Expand the section if there are projects
+                if (projects.length > 0) {
+                    document.getElementById('projectsContent').classList.add('expanded');
+                    document.querySelector('#projectsContent').previousElementSibling.querySelector('.toggle-icon').classList.add('expanded');
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        // Function to load blogs
+        async function loadBlogs() {
+            try {
+                const response = await fetch('/api/blogs');
+                const blogs = await response.json();
+                const blogsList = document.getElementById('blogsList');
+                blogsList.innerHTML = blogs.map(createBlogCard).join('');
+                // Expand the section if there are blogs
+                if (blogs.length > 0) {
+                    document.getElementById('blogsContent').classList.add('expanded');
+                    document.querySelector('#blogsContent').previousElementSibling.querySelector('.toggle-icon').classList.add('expanded');
+                }
+            } catch (error) {
+                console.error('Error loading blogs:', error);
+            }
+        }
+
+        // Function to load memories
+        async function loadMemories() {
+            try {
+                const response = await fetch('/api/memories');
+                const memories = await response.json();
+                const memoriesList = document.getElementById('memoriesList');
+                memoriesList.innerHTML = memories.map(createMemoryCard).join('');
+                // Expand the section if there are memories
+                if (memories.length > 0) {
+                    document.getElementById('memoriesContent').classList.add('expanded');
+                    document.querySelector('#memoriesContent').previousElementSibling.querySelector('.toggle-icon').classList.add('expanded');
+                }
+            } catch (error) {
+                console.error('Error loading memories:', error);
+            }
+        }
+
+        // Delete functions
+        async function deleteProject(id) {
+            if (confirm('Are you sure you want to delete this project?')) {
+                try {
+                    const response = await fetch(`/api/projects/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        loadProjects();
+                    }
+                } catch (error) {
+                    console.error('Error deleting project:', error);
+                }
+            }
+        }
+
+        async function deleteBlog(id) {
+            if (confirm('Are you sure you want to delete this blog post?')) {
+                try {
+                    const response = await fetch(`/api/blogs/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        loadBlogs();
+                    }
+                } catch (error) {
+                    console.error('Error deleting blog:', error);
+                }
+            }
+        }
+
+        async function deleteMemory(id) {
+            if (confirm('Are you sure you want to delete this memory?')) {
+                try {
+                    const response = await fetch(`/api/memories/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        loadMemories();
+                    }
+                } catch (error) {
+                    console.error('Error deleting memory:', error);
+                }
+            }
+        }
+
+        // Load all content when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProjects();
+            loadBlogs();
+            loadMemories();
+        });
+    </script>
+</body>
+</html>

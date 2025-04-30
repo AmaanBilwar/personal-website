@@ -67,11 +67,15 @@
             </div>
 
             <div class="flex space-x-4">
+                <button type="button" id="deleteButton"
+                    class="flex-1 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                    Delete Blog Post
+                </button>
                 <button type="submit"
                     class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                     Update Blog Post
                 </button>
-                <a href="/blogs" 
+                <a href="/" 
                     class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 text-center">
                     Cancel
                 </a>
@@ -110,6 +114,28 @@
             } catch (error) {
                 console.error('Error:', error);
                 alert('An unexpected error occurred');
+            }
+        });
+
+        document.getElementById('deleteButton').addEventListener('click', async function() {
+            if (confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+                const blogId = document.getElementById('blogId').value;
+                
+                try {
+                    const response = await fetch(`/api/blogs/${blogId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        window.location.href = '/blogs';
+                    } else {
+                        const errorData = await response.json();
+                        alert(`Error: ${errorData.error || 'Failed to delete blog post'}`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred');
+                }
             }
         });
     </script>
