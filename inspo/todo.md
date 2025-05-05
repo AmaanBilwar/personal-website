@@ -1,4 +1,6 @@
 - [x] add projects section [ need to be hosted somewhere?]
-- [ ] add club work (bearcats electric racing)
+- [x] add club work (bearcats electric racing)
 - [x] add blog page ? to blog about each week?  [reminder might be cool to add ?]
 - [x] add opensource contributions to contributions page ?
+- [ ] make necessary changes to blog + project backend pages to post. 
+- [ ] make '/' route on mobile better 

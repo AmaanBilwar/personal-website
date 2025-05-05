@@ -8,20 +8,39 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+        .dashboard-card {
+            background-color: #171717;
+            border: 1px solid #262626;
+        }
+        .action-button {
+            transition: all 0.2s;
+        }
+        .action-button:hover {
+            transform: translateY(-1px);
+        }
+    </style>
   </head>
-  <body class="bg-gray-50">
-    <div class="container mx-auto py-8">
-      <h1 class="text-3xl font-bold text-center mb-8">Drop a thought</h1>
+  <body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-mono font-bold mb-2">Drop a thought</h1>
+        <p class="text-neutral-500">Share your thoughts with the world</p>
+      </div>
 
       <form
-        action="/api/blogs"
+        action="/api/thoughts"
         method="POST"
-        class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md"
+        class="max-w-2xl mx-auto p-6 dashboard-card rounded-lg"
       >
         <div class="mb-4">
           <label
             for="content"
-            class="block text-sm font-medium text-gray-700 mb-2"
+            class="block text-sm font-medium text-neutral-400 mb-2"
             >Content</label
           >
           <textarea
@@ -29,21 +48,21 @@
             name="content"
             required
             rows="10"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-3 py-2 bg-white border border-neutral-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
           ></textarea>
         </div>
 
         <button
           type="submit"
-          class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          class="w-full action-button bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          Drop your 🔥 thoughts
+          Strictly for Amaan's thoughts
         </button>
       </form>
       
       <!-- Thoughts List with Delete Buttons -->
       <div class="max-w-2xl mx-auto mt-12">
-        <h2 class="text-2xl font-bold mb-4">Your Thoughts</h2>
+        <h2 class="text-2xl font-mono font-bold mb-4">Your Thoughts</h2>
         <div id="thoughts-list" class="space-y-4">
           <!-- Thoughts will be loaded here -->
         </div>
@@ -64,25 +83,25 @@
           thoughtsList.innerHTML = "";
           
           if (thoughts.length === 0) {
-            thoughtsList.innerHTML = "<p class='text-center text-gray-500'>No thoughts yet.</p>";
+            thoughtsList.innerHTML = "<p class='text-center text-neutral-500'>No thoughts yet.</p>";
             return;
           }
           
           thoughts.forEach(thought => {
             const thoughtElement = document.createElement("div");
-            thoughtElement.className = "bg-white p-4 rounded-lg shadow-md";
+            thoughtElement.className = "dashboard-card p-4 rounded-lg";
             
             const content = document.createElement("p");
-            content.className = "mb-2 whitespace-pre-wrap";
+            content.className = "mb-2 whitespace-pre-wrap text-neutral-400";
             content.textContent = thought.content;
             
             const date = document.createElement("p");
-            date.className = "text-sm text-gray-500 mb-2";
+            date.className = "text-sm text-neutral-500 mb-2";
             const createdDate = new Date(thought.created_at);
             date.textContent = createdDate.toLocaleString();
             
             const deleteButton = document.createElement("button");
-            deleteButton.className = "bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2";
+            deleteButton.className = "action-button bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2";
             deleteButton.textContent = "Delete";
             deleteButton.onclick = () => deleteThought(thought._id);
             

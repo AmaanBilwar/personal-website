@@ -188,7 +188,7 @@ def update_blog(blog_id):
 
         # Update fields that are provided in the request
         update_fields = {}
-        for field in ['title', 'description', 'content', 'category', 'readTime', 'author']:
+        for field in ['title', 'description', 'content']:
             if field in data and data[field]:
                 update_fields[field] = data[field]
         
@@ -235,7 +235,7 @@ def create_blog():
             return jsonify({'error': 'No data provided'}), 400
 
         # Validate required fields
-        required_fields = ['title', 'description', 'content', 'category', 'readTime', 'author']
+        required_fields = ['title', 'description', 'content']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
         if missing_fields:
             print(f"Missing fields: {missing_fields}")
@@ -245,10 +245,7 @@ def create_blog():
             'title': data['title'],
             'description': data['description'],
             'content': data['content'],
-            'category': data['category'],
-            'readTime': data['readTime'],
-            'author': data['author'],
-            'date': datetime.utcnow(),
+            'date': datetime.now(),
             'comments': []
         }
 
