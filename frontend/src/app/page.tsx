@@ -3,6 +3,7 @@ import React from "react";
 import { Open_Sans } from "next/font/google";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 import SpotifyNowPlaying from "@/components/SpotifyNowPlaying";
+import { Badge } from "@/components/ui/badge";
 
 const opensans = Open_Sans({
   subsets: ["latin"],
@@ -14,6 +15,10 @@ const HomePage = () => {
 
   return (
     <main className={`${opensans.className} px-4 sm:px-0 animate-fade-in`}>
+      <div className="flex justify-center mb-4">
+      <Badge variant="destructive" className="bg-gradient-to-r from-purple-500 to-purple-300">The backend takes a second to spin up, please be patient!</Badge>
+
+      </div>
       <h1 className="text-xl sm:text-2xl md:text-3xl text-center pb-2 mb-4">
         hello, i'm <i><strong>Amaan.</strong></i> glad you could made it!
       </h1>
