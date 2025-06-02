@@ -1,7 +1,7 @@
-'use client'
-import React from 'react'
-import Link from 'next/link'
-import { Badge } from "@/components/ui/badge"
+"use client";
+import React from "react";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 interface Organization {
   name: string;
@@ -10,16 +10,28 @@ interface Organization {
   tech?: string[];
   link?: string;
   blogId?: string;
+  technicalPrompt?: string;
 }
 
 const organizations: Organization[] = [
   {
+    name: "ACM @ UC",
+    role: "Software",
+    description:
+      "Web dev lead for the largest student led hackathon in the Midwest.",
+    tech: ["Next.js", "Astro"],
+    blogId: process.env.NEXT_PUBLIC_ACM_BLOG_ID,
+    technicalPrompt: "So that just happened",
+  },
+  {
     name: "Bearcats Electric Racing",
     role: "Powertrain and Controls",
-    description: "Currently building the telemetry system for our FSAE racecar.",
+    description:
+      "Currently building the telemetry system for our FSAE racecar.",
     tech: ["Python", "Rust", "CAN", "Websockets", "Telemetry"],
-    blogId: process.env.NEXT_PUBLIC_TELEMETRY_BLOG_ID
-  }
+    blogId: process.env.NEXT_PUBLIC_TELEMETRY_BLOG_ID,
+    technicalPrompt: "wanna get technical?",
+  },
 ];
 
 const OrganizationsPage = () => {
@@ -39,25 +51,28 @@ const OrganizationsPage = () => {
 
         <div className="grid grid-cols-1 gap-4">
           {organizations.map((org, index) => (
-            <article 
+            <article
               key={index}
               className="border border-neutral-800 rounded-lg p-6 transition-colors hover:bg-neutral-900 hover:text-white"
             >
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-mono font-semibold">{org.name}</h2>
-                <Badge variant="secondary" className="bg-neutral-800 text-neutral-300">
+                <Badge
+                  variant="secondary"
+                  className="bg-neutral-800 text-neutral-300"
+                >
                   {org.role}
                 </Badge>
               </div>
-              
+
               <p className="text-neutral-400 mb-4">{org.description}</p>
-              
+
               {org.tech && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {org.tech.map((tech, techIndex) => (
-                    <Badge 
-                      key={techIndex} 
-                      variant="secondary" 
+                    <Badge
+                      key={techIndex}
+                      variant="secondary"
                       className="bg-neutral-800 text-neutral-300 hover:bg-neutral-700"
                     >
                       {tech}
@@ -68,7 +83,13 @@ const OrganizationsPage = () => {
 
               {org.blogId && (
                 <div className="text-sm text-neutral-500">
-                  wanna get technical? <Link href={`/blog/${org.blogId}`} className="text-blue-500 hover:text-blue-400">read more.</Link>
+                  {org.technicalPrompt || "wanna get technical?"}{" "}
+                  <Link
+                    href={`/blog/${org.blogId}`}
+                    className="text-blue-500 hover:text-blue-400"
+                  >
+                    read more.
+                  </Link>
                 </div>
               )}
             </article>
@@ -76,7 +97,7 @@ const OrganizationsPage = () => {
         </div>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default OrganizationsPage
+export default OrganizationsPage;
