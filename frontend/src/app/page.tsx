@@ -52,7 +52,7 @@ const HomePage = () => {
             >
               - building an ai video editor [cursor for video editing]
             </a>
-            <br />- web dev lead's of the largest hackathon in the Midwest
+            <br />- web dev lead of the largest hackathon in the Midwest
           </span>
         </p>
         <br />
