@@ -50,7 +50,7 @@ const HomePage = () => {
               target="_blank"
               className="relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
             >
-              - building an ai video editor [cursor for video editor]
+              - building an ai video editor [cursor for video editing]
             </a>
             <br />- web dev lead's of the largest hackathon in the Midwest
           </span>
