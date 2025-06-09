@@ -264,6 +264,10 @@ def create_blog():
 def projects_page():
     return render_template('projects.html')
 
+@app.route('/projects/create', methods=['GET'])
+def project_create_form():
+    return render_template('project_create.html')
+
 @app.route('/api/projects', methods=['GET'])
 def get_projects():
     try:
