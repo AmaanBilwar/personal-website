@@ -14,20 +14,12 @@ const HomePage = () => {
 
   return (
     <main className={`${opensans.className} px-4 sm:px-0 animate-fade-in`}>
-      <div className="flex justify-center mb-4">
-        <Badge
-          variant="destructive"
-          className="bg-gradient-to-r from-purple-500 to-purple-300"
-        >
-          The backend takes a second to spin up, please be patient!
-        </Badge>
-      </div>
       <h1 className="text-xl sm:text-2xl md:text-3xl text-center pb-2 mb-4">
         hello, i'm{" "}
         <i>
           <strong>Amaan.</strong>
         </i>{" "}
-        glad you could made it!
+        glad you could make it :)
       </h1>
 
       <div className="max-w-lg mx-auto">
@@ -60,6 +52,9 @@ const HomePage = () => {
         <p>
           <i className="underline">previously:</i>
           <span className="block mt-2 text-xs sm:text-sm">
+            - built data acquisition + telemetry device for a Formula Electric
+            SAE car
+            <br />
             - co-op'ed at Honeywell twice
             <br />
             - participated in my first ever hackathon
