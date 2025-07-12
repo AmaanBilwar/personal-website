@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+html {
+    background-color: #000000;
+    color: #fff;
+}
+
+.nav-links a {
+    color: #fff;
+}
+
+@theme {
+    --font-louize: 'louize', 'sans-serif';
+  }
