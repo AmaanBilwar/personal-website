@@ -28,12 +28,12 @@ function ClientLayoutContent({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [typedKeys, setTypedKeys] = useState("");
-  
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       const newTypedKeys = typedKeys + e.key.toLowerCase();
       setTypedKeys(newTypedKeys.slice(-8)); // Keep last 8 characters
-      
+
       if (newTypedKeys.includes("memories")) {
         setShowHint(true);
         setTimeout(() => setShowHint(false), 3000);
@@ -72,7 +72,7 @@ function ClientLayoutContent({
             <div className="flex justify-between items-center">
               {/* Left side - Mobile menu button */}
               <div className="flex items-center md:w-24 flex-shrink-0">
-                <button 
+                <button
                   className="md:hidden p-2 rounded-md"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
@@ -89,79 +89,87 @@ function ClientLayoutContent({
                 <nav className="flex justify-center">
                   <ul className="flex space-x-4 lg:space-x-6">
                     <li>
-                      <Link 
-                        href="/" 
+                      <Link
+                        href="/"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Home
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/about" 
+                      <Link
+                        href="/about"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         About
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/projects" 
+                      <Link
+                        href="/projects"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Projects
                       </Link>
                     </li>
                     <li className="hidden lg:block">
-                      <Link 
-                        href="/blog" 
+                      <Link
+                        href="/blog"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Blog
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/organizations" 
+                      <Link
+                        href="/organizations"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Organizations
                       </Link>
                     </li>
                     <li className="hidden lg:block">
-                      <Link 
-                        href="/opensource" 
+                      <Link
+                        href="/opensource"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Contributions
                       </Link>
                     </li>
                     <li className="hidden lg:block">
-                      <Link 
-                        href="/thoughts" 
+                      <Link
+                        href="/thoughts"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
                         Thoughts
                       </Link>
                     </li>
+                    <li className="hidden lg:block">
+                      <Link
+                        href="/resume"
+                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                      >
+                        Resume
+                      </Link>
+                    </li>
                   </ul>
                 </nav>
               </div>
-              
+
               {/* Right side - Theme toggle */}
               <div className="md:w-auto flex justify-end flex-shrink-0 items-center gap-2">
                 <ThemeToggle />
               </div>
             </div>
-            
+
             {/* Mobile menu */}
             {mobileMenuOpen && (
               <div className="md:hidden mt-4 animate-slide-down">
                 <nav className="bg-background border rounded-lg shadow-md p-4">
                   <ul className="space-y-2">
                     <li>
-                      <Link 
-                        href="/" 
+                      <Link
+                        href="/"
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -169,8 +177,8 @@ function ClientLayoutContent({
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/about" 
+                      <Link
+                        href="/about"
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -178,8 +186,8 @@ function ClientLayoutContent({
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/projects" 
+                      <Link
+                        href="/projects"
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -187,8 +195,8 @@ function ClientLayoutContent({
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/organizations" 
+                      <Link
+                        href="/organizations"
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -196,8 +204,8 @@ function ClientLayoutContent({
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/opensource" 
+                      <Link
+                        href="/opensource"
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -205,8 +213,8 @@ function ClientLayoutContent({
                       </Link>
                     </li>
                     <li>
-                      <Link 
-                        href="/blog" 
+                      <Link
+                        href="/blog"
                         className="block py-2 hover:text-primary"
                         onClick={() => setMobileMenuOpen(false)}
                       >
@@ -218,7 +226,7 @@ function ClientLayoutContent({
               </div>
             )}
           </header>
-          
+
           {/* Content container with dynamic width based on route */}
           <div className={`mx-auto px-0 sm:px-4 ${getContentMaxWidth()}`}>
             {children}
@@ -235,4 +243,4 @@ export default function ClientLayout({
   children: React.ReactNode;
 }>) {
   return <ClientLayoutContent>{children}</ClientLayoutContent>;
-} 
+}
