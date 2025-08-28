@@ -104,14 +104,6 @@ function ClientLayoutContent({
                         About
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        href="/projects"
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Projects
-                      </Link>
-                    </li>
                     <li className="hidden lg:block">
                       <Link
                         href="/blog"
@@ -133,7 +125,7 @@ function ClientLayoutContent({
                         href="/opensource"
                         className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                       >
-                        Contributions
+                        Open source
                       </Link>
                     </li>
                     <li className="hidden lg:block">
@@ -183,15 +175,6 @@ function ClientLayoutContent({
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         About
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/projects"
-                        className="block py-2 hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Projects
                       </Link>
                     </li>
                     <li>

@@ -8,7 +8,7 @@ interface Project {
   content: string;
   tech: string[];
   github_link: string;
-  text: string;
+  text?: string;
   category: string;
   created_at: string;
   views?: number;
@@ -19,53 +19,66 @@ interface Project {
     open_issues: number;
     watchers: number;
   };
+  issue_url?: string;
 }
 
+
+const repoConfigs = [
+  {
+    repoUrl: "https://api.github.com/repos/AmaanBilwar/wisk",
+    issueUrl: "https://github.com/sohzm/wisk/issues/40",
+    text: "another contribution"
+  },
+  {
+    repoUrl: "https://api.github.com/repos/AmaanBilwar/pearai-app",
+    issueUrl: "https://github.com/trypear/pearai-app/issues/33",
+    text: "the feature i'm working on"
+  }
+];
+
 const OpenSourcePage = () => {
-  const [project, setProject] = useState<Project | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProject();
+    fetchProjects();
   }, []);
 
-  const fetchProject = async () => {
+  const fetchProjects = async () => {
     try {
       setLoading(true);
-      const repoUrl = "https://api.github.com/repos/AmaanBilwar/pearai-app";
-
-      const response = await fetch(repoUrl);
-      if (!response.ok) {
-        throw new Error("Failed to fetch project from GitHub");
+      const fetchedProjects: Project[] = [];
+      for (const config of repoConfigs) {
+        const response = await fetch(config.repoUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch project from GitHub: ${config.repoUrl}`);
+        }
+        const data = await response.json();
+        fetchedProjects.push({
+          _id: data.id.toString(),
+          title: data.name,
+          description: data.description || "",
+          content: "",
+          tech: [],
+          text: config.text,
+          github_link: data.html_url,
+          category: "opensource",
+          created_at: data.created_at,
+          github_stats: {
+            stars: data.stargazers_count,
+            forks: data.forks_count,
+            last_updated: data.updated_at,
+            open_issues: data.open_issues_count,
+            watchers: data.watchers_count,
+          },
+          issue_url: config.issueUrl,
+        });
       }
-
-      const data = await response.json();
-
-      // Transform GitHub API response to match our Project interface
-      const projectData: Project = {
-        _id: data.id.toString(),
-        title: data.name,
-        description: data.description || "",
-        content: "",
-        tech: [], // You might want to get this from a different source
-        text: data.text,
-        github_link: data.html_url,
-        category: "opensource",
-        created_at: data.created_at,
-        github_stats: {
-          stars: data.stargazers_count,
-          forks: data.forks_count,
-          last_updated: data.updated_at,
-          open_issues: data.open_issues_count,
-          watchers: data.watchers_count,
-        },
-      };
-
-      setProject(projectData);
+      setProjects(fetchedProjects);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
-      console.error("Error fetching project:", err);
+      console.error("Error fetching projects:", err);
     } finally {
       setLoading(false);
     }
@@ -74,7 +87,7 @@ const OpenSourcePage = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-2xl">Loading project...</div>
+        <div className="text-2xl">Loading projects...</div>
       </div>
     );
   }
@@ -84,7 +97,7 @@ const OpenSourcePage = () => {
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-2xl text-red-500 mb-4">{error}</div>
         <button
-          onClick={fetchProject}
+          onClick={fetchProjects}
           className="text-blue-500 hover:text-blue-600"
         >
           Try Again
@@ -93,10 +106,10 @@ const OpenSourcePage = () => {
     );
   }
 
-  if (!project) {
+  if (!projects.length) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-2xl text-yellow-500 mb-4">Project not found</div>
+        <div className="text-2xl text-yellow-500 mb-4">No projects found</div>
       </div>
     );
   }
@@ -114,77 +127,79 @@ const OpenSourcePage = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          <article className="border border-neutral-800 rounded-lg p-6 transition-colors hover:bg-neutral-900 hover:text-white">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-mono font-semibold">
-                {project.title}
-              </h2>
-              <div className="flex items-center space-x-4 text-sm text-neutral-500">
-                {project.github_stats && (
-                  <div className="flex items-center space-x-2">
-                    <span className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      {project.github_stats.watchers}
-                    </span>
-                    <span className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      {project.github_stats.stars}
-                    </span>
-                    <span className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      {project.github_stats.forks}
-                    </span>
-                  </div>
-                )}
+          {projects.map((project) => (
+            <article key={project._id} className="border border-neutral-800 rounded-lg p-6 transition-colors hover:bg-neutral-900 hover:text-white">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-mono font-semibold">
+                  {project.title}
+                </h2>
+                <div className="flex items-center space-x-4 text-sm text-neutral-500">
+                  {project.github_stats && (
+                    <div className="flex items-center space-x-2">
+                      <span className="flex items-center">
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                          <path
+                            fillRule="evenodd"
+                            d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        {project.github_stats.watchers}
+                      </span>
+                      <span className="flex items-center">
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        {project.github_stats.stars}
+                      </span>
+                      <span className="flex items-center">
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        {project.github_stats.forks}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            <p className="text-neutral-400 mb-4">{project.description}</p>
-            <div className="flex items-center space-x-2">
-              <a
-                href="https://github.com/trypear/pearai-app/issues/33"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:text-blue-600"
-              >
-                <span className="text-sm text-neutral-300">
-                  {project.text || "the feature i'm working on"}
-                </span>
-                <br />
-                View on GitHub
-              </a>
-            </div>
-          </article>
+              <p className="text-neutral-400 mb-4">{project.description}</p>
+              <div className="flex items-center space-x-2">
+                <a
+                  href={project.issue_url || project.github_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-600"
+                >
+                  <span className="text-sm text-neutral-300">
+                    {project.text || "the feature i'm working on"}
+                  </span>
+                  <br />
+                  View on GitHub
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </main>

@@ -3,7 +3,6 @@ import React from "react";
 import { Open_Sans } from "next/font/google";
 import { useIsMobile } from "@/hooks/useMediaQuery";
 import SpotifyNowPlaying from "@/components/SpotifyNowPlaying";
-import { Badge } from "@/components/ui/badge";
 
 const opensans = Open_Sans({
   subsets: ["latin"],
@@ -35,15 +34,11 @@ const HomePage = () => {
         <p>
           <i className="underline">currently:</i>
           <span className="block mt-2 mb-2 text-xs sm:text-sm">
-            - learning Rust + machine learning + cloud
+            - building Kite - A personal assistant for <span className="underline underline-offset-2">Git</span> Actions
             <br />
-            <a
-              href="https://tryreduct.vercel.app"
-              target="_blank"
-              className="relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full"
-            >
-              - building an ai video editor [cursor for video editing]
-            </a>
+              - building Scene AI - an AI video editor
+              <br />
+              - building an AI browser (cuz im bored)
             <br />- web dev lead of the largest hackathon in the Midwest
           </span>
         </p>
