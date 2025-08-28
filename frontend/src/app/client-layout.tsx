@@ -4,10 +4,13 @@ import "./globals.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X, Sparkles, Construction } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { ThemeProvider } from "../components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
+import CautionTape from "@/components/CautionTape";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -84,9 +87,9 @@ function ClientLayoutContent({
                 </button>
               </div>
 
-              {/* Center - Navigation links */}
+              {/* Center - Navigation: keep only Home, then caution tape */}
               <div className="hidden md:block flex-grow">
-                <nav className="flex justify-center">
+                <nav className="flex flex-col items-center gap-3">
                   <ul className="flex space-x-4 lg:space-x-6">
                     <li>
                       <Link
@@ -96,55 +99,15 @@ function ClientLayoutContent({
                         Home
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        href="/about"
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        About
-                      </Link>
-                    </li>
-                    <li className="hidden lg:block">
-                      <Link
-                        href="/blog"
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Blog
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/organizations"
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Organizations
-                      </Link>
-                    </li>
-                    <li className="hidden lg:block">
-                      <Link
-                        href="/opensource"
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Open source
-                      </Link>
-                    </li>
-                    <li className="hidden lg:block">
-                      <Link
-                        href="/thoughts"
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Thoughts
-                      </Link>
-                    </li>
-                    <li className="hidden lg:block">
-                      <Link
-                        href="/resume"
-                        className="relative px-2 py-1 transition-colors duration-300 hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                      >
-                        Resume
-                      </Link>
-                    </li>
                   </ul>
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="w-[min(56rem,92vw)]"
+                  >
+                    <CautionTape />
+                  </motion.div>
                 </nav>
               </div>
 
@@ -169,40 +132,7 @@ function ClientLayoutContent({
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        href="/about"
-                        className="block py-2 hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        About
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/organizations"
-                        className="block py-2 hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Organizations
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/opensource"
-                        className="block py-2 hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Contributions
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/blog"
-                        className="block py-2 hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Blog
-                      </Link>
+                      <CautionTape className="mt-2" height={30} />
                     </li>
                   </ul>
                 </nav>
@@ -210,6 +140,23 @@ function ClientLayoutContent({
             )}
           </header>
 
+          {/* Always-visible tasteful construction alert */}
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6"
+          >
+            <Alert className="bg-yellow-50 text-yellow-900 dark:bg-yellow-950/50 dark:text-yellow-100 border-yellow-300 dark:border-yellow-800 text-center flex flex-col items-center">
+              <Construction className="col-start-1 row-span-2 self-center mx-auto" />
+              <AlertTitle className="w-full text-center">
+                Website under construction
+              </AlertTitle>
+              <AlertDescription className="w-full flex justify-center items-center text-center">
+                Amaan is cooking and will be with you shortly.
+              </AlertDescription>
+            </Alert>
+          </motion.div>
           {/* Content container with dynamic width based on route */}
           <div className={`mx-auto px-0 sm:px-4 ${getContentMaxWidth()}`}>
             {children}
