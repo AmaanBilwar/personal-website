@@ -1,13 +1,12 @@
 import React from "react";
+
 const page = () => {
   return (
     <>
-      <main className="relative z-0">
-        <div className="text-white text-4xl font-bold">
-          <h1>Hello world</h1>
+      <main className="relative z-0 w-full">
+        <div className="h-screen flex items-center justify-center">
+          <h1 className="text-white">hi</h1>
         </div>
-
-        <div className="h-dvh w-full" />
       </main>
     </>
   );
