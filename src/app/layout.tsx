@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import { AsciiNoiseEffect } from "@/components/asciifilter";
-
+import NavigationMenu from "@/components/navigation-menu";
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -10,6 +10,11 @@ const inter = Inter({
 const spaceMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
+});
+
+const pixelify = Pixelify_Sans({
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -23,11 +28,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${spaceMono.className} antialiased`}>
-        <div className="fixed inset-0 z-[-1] pointer-events-none">
+      <body className={`${pixelify.className} antialiased`}>
+        {/* ASCII Filter Background */}
+        <div className="fixed inset-0 z-[-1]">
           <AsciiNoiseEffect className="h-full w-full" />
         </div>
-        {children}
+
+        {/* Navigation Menu */}
+        <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+          <div className="pointer-events-auto">
+            <NavigationMenu />
+          </div>
+        </div>
+
+        {/* Page Content */}
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );

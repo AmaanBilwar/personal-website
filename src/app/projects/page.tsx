@@ -1,0 +1,169 @@
+"use client";
+
+import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import Link from "next/link";
+
+const page = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const projects = [
+    {
+      title: "Personal Website",
+      description:
+        "A modern personal portfolio website built with Next.js, featuring ASCII art effects and responsive design.",
+      tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+      status: "Live",
+      link: "https://www.google.com",
+    },
+    {
+      title: "Task Management App",
+      description:
+        "A full-stack task management application with real-time updates and collaborative features.",
+      tech: ["React", "Node.js", "MongoDB"],
+      status: "In Development",
+      link: "https://www.google.com",
+    },
+    {
+      title: "Weather Dashboard",
+      description:
+        "A responsive weather dashboard that displays current conditions and forecasts with beautiful animations.",
+      tech: ["Vue.js", "Chart.js", "API Integration"],
+      status: "Completed",
+      link: "https://www.google.com",
+    },
+    {
+      title: "E-commerce Platform",
+      description:
+        "A complete e-commerce solution with payment integration, inventory management, and admin panel.",
+      tech: ["Next.js", "Stripe", "PostgreSQL"],
+      status: "Planning",
+      link: "https://www.google.com",
+    },
+    {
+      title: "Social Media Analytics",
+      description:
+        "Analytics dashboard for tracking social media performance with interactive charts and insights.",
+      tech: ["React", "D3.js", "Express"],
+      status: "In Development",
+      link: "https://www.google.com",
+    },
+    {
+      title: "AI Chatbot",
+      description:
+        "An intelligent chatbot powered by machine learning for customer support and engagement.",
+      tech: ["Python", "TensorFlow", "FastAPI"],
+      status: "Research",
+      link: "https://www.google.com",
+    },
+  ];
+
+  return (
+    <main className="relative w-full min-h-screen pt-20 pb-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold mb-4 text-white">Projects</h1>
+          <p className="text-lg text-white/90 max-w-2xl mx-auto">
+            A collection of my side-quests. I love building things.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+          {projects.map((project, index) => (
+            <Card
+              key={index}
+              className={`group bg-white/10 backdrop-blur-[2px] border-white/20 transition-all duration-300 rounded-none relative ${
+                hoveredIndex === null
+                  ? "hover:bg-white/15 hover:scale-102"
+                  : hoveredIndex === index
+                    ? "bg-white/15 scale-102"
+                    : "opacity-50"
+              }`}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {index === 0 && (
+                <div className="absolute -top-2 -left-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
+                  +
+                </div>
+              )}
+              {index === 2 && (
+                <div className="absolute -bottom-2 -right-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
+                  +
+                </div>
+              )}
+              {index === 4 && (
+                <>
+                  <div className="absolute -top-2 -left-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
+                    +
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
+                    +
+                  </div>
+                </>
+              )}
+              <CardHeader>
+                <CardTitle className="text-white text-xl">
+                  {project.title}
+                </CardTitle>
+                <CardDescription className="text-white/70">
+                  {project.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tech.map((tech, techIndex) => (
+                    <span
+                      key={techIndex}
+                      className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs border border-blue-400/30 rounded-none"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter>
+                <div className="flex items-center justify-between w-full">
+                  <div className="relative">
+                    <Link
+                      href={project.link}
+                      className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                    >
+                      Status: {project.status}
+                    </Link>
+                    {/* Animated underline */}
+                    <span
+                      className="absolute bottom-0 left-0 h-0.5 bg-white transform scale-x-0 transition-transform duration-300 ease-in-out origin-left w-full group-hover:scale-x-100"
+                      style={{
+                        backgroundImage: `repeating-linear-gradient(
+                           90deg,
+                           transparent 0px,
+                           transparent 1px,
+                           white 1px,
+                           white 2px,
+                           transparent 2px,
+                           transparent 3px
+                         )`,
+                        imageRendering: "pixelated",
+                      }}
+                    />
+                  </div>
+                  <div className="w-2 h-2 bg-green-700 rounded-none"></div>
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default page;

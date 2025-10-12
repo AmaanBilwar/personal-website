@@ -285,7 +285,7 @@ const quad = (gl: Gl) => {
   gl.bufferData(
     gl.ARRAY_BUFFER,
     new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-    gl.STATIC_DRAW
+    gl.STATIC_DRAW,
   );
   gl.enableVertexAttribArray(0);
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
@@ -392,7 +392,7 @@ export const AsciiNoiseEffect = ({
       0,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      null
+      null,
     );
 
     const fbScene = gl.createFramebuffer()!;
@@ -402,7 +402,7 @@ export const AsciiNoiseEffect = ({
       gl.COLOR_ATTACHMENT0,
       gl.TEXTURE_2D,
       texScene,
-      0
+      0,
     );
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.bindTexture(gl.TEXTURE_2D, null);
@@ -510,7 +510,7 @@ export const AsciiNoiseEffect = ({
       vignette,
       vignetteSoftness,
       zRate,
-    ]
+    ],
   );
 
   useEffect(() => {
@@ -544,7 +544,7 @@ export const AsciiNoiseEffect = ({
         0,
         gl.RGBA,
         gl.UNSIGNED_BYTE,
-        null
+        null,
       );
       gl.bindTexture(gl.TEXTURE_2D, null);
     };
