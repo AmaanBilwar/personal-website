@@ -134,26 +134,26 @@ const page = () => {
                   <div className="relative">
                     <Link
                       href={project.link}
-                      className="text-sm text-white/60 hover:text-white transition-colors duration-300"
+                      className="text-sm text-white/60 hover:text-white transition-colors duration-300 relative"
                     >
                       Status: {project.status}
+                      {/* Animated underline */}
+                      <span
+                        className="absolute bottom-0 left-0 h-0.5 bg-white transform scale-x-0 transition-transform duration-300 ease-in-out origin-left w-full hover:scale-x-100"
+                        style={{
+                          backgroundImage: `repeating-linear-gradient(
+                             90deg,
+                             transparent 0px,
+                             transparent 1px,
+                             white 1px,
+                             white 2px,
+                             transparent 2px,
+                             transparent 3px
+                           )`,
+                          imageRendering: "pixelated",
+                        }}
+                      />
                     </Link>
-                    {/* Animated underline */}
-                    <span
-                      className="absolute bottom-0 left-0 h-0.5 bg-white transform scale-x-0 transition-transform duration-300 ease-in-out origin-left w-full group-hover:scale-x-100"
-                      style={{
-                        backgroundImage: `repeating-linear-gradient(
-                           90deg,
-                           transparent 0px,
-                           transparent 1px,
-                           white 1px,
-                           white 2px,
-                           transparent 2px,
-                           transparent 3px
-                         )`,
-                        imageRendering: "pixelated",
-                      }}
-                    />
                   </div>
                   <div className="w-2 h-2 bg-green-700 rounded-none"></div>
                 </div>
