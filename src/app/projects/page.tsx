@@ -16,52 +16,46 @@ const page = () => {
 
   const projects = [
     {
-      title: "Personal Website",
-      description:
-        "A modern personal portfolio website built with Next.js, featuring ASCII art effects and responsive design.",
-      tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-      status: "Live",
-      link: "https://www.google.com",
+      title: "placeholder",
+      description: "placeholder",
+      tech: ["placeholder"],
+      status: "placeholder",
+      link: "placeholder",
     },
     {
-      title: "Task Management App",
-      description:
-        "A full-stack task management application with real-time updates and collaborative features.",
-      tech: ["React", "Node.js", "MongoDB"],
-      status: "In Development",
-      link: "https://www.google.com",
+      title: "placeholder",
+      description: "placeholder",
+      tech: ["placeholder"],
+      status: "placeholder",
+      link: "placeholder",
     },
     {
-      title: "Weather Dashboard",
-      description:
-        "A responsive weather dashboard that displays current conditions and forecasts with beautiful animations.",
-      tech: ["Vue.js", "Chart.js", "API Integration"],
-      status: "Completed",
-      link: "https://www.google.com",
+      title: "placeholder",
+      description: "placeholder",
+      tech: ["placeholder"],
+      status: "placeholder",
+      link: "placeholder",
     },
     {
-      title: "E-commerce Platform",
-      description:
-        "A complete e-commerce solution with payment integration, inventory management, and admin panel.",
-      tech: ["Next.js", "Stripe", "PostgreSQL"],
-      status: "Planning",
-      link: "https://www.google.com",
+      title: "placeholder",
+      description: "placeholder",
+      tech: ["placeholder"],
+      status: "placeholder",
+      link: "placeholder",
     },
     {
-      title: "Social Media Analytics",
-      description:
-        "Analytics dashboard for tracking social media performance with interactive charts and insights.",
-      tech: ["React", "D3.js", "Express"],
-      status: "In Development",
-      link: "https://www.google.com",
+      title: "placeholder",
+      description: "placeholder",
+      tech: ["placeholder"],
+      status: "placeholder",
+      link: "placeholder",
     },
     {
-      title: "AI Chatbot",
-      description:
-        "An intelligent chatbot powered by machine learning for customer support and engagement.",
-      tech: ["Python", "TensorFlow", "FastAPI"],
-      status: "Research",
-      link: "https://www.google.com",
+      title: "placeholder",
+      description: "placeholder",
+      tech: ["placeholder"],
+      status: "placeholder",
+      link: "placeholder",
     },
   ];
 
