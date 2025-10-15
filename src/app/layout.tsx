@@ -4,6 +4,7 @@ import { Inter, JetBrains_Mono, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import { AsciiNoiseEffect } from "@/components/asciifilter";
 import NavigationMenu from "@/components/navigation-menu";
+// import { Footer } from "@/components/ui/footer";
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -38,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${ari.className} antialiased`}>
         {/* ASCII Filter Background */}
         <div className="fixed inset-0 z-[-1]">
@@ -54,6 +55,7 @@ export default function RootLayout({
 
         {/* Page Content */}
         <div className="relative z-10">{children}</div>
+        {/* <Footer /> */}
       </body>
     </html>
   );
