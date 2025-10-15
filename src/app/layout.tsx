@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { Inter, JetBrains_Mono, Pixelify_Sans } from "next/font/google";
 import "./globals.css";
 import { AsciiNoiseEffect } from "@/components/asciifilter";
 import NavigationMenu from "@/components/navigation-menu";
 const inter = Inter({
   subsets: ["latin"],
+});
+
+const ari = localFont({
+  src: [
+    {
+      path: "../fonts/ari-w9500.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
 });
 
 const spaceMono = JetBrains_Mono({
@@ -28,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pixelify.className} antialiased`}>
+      <body className={`${ari.className} antialiased`}>
         {/* ASCII Filter Background */}
         <div className="fixed inset-0 z-[-1]">
           <AsciiNoiseEffect className="h-full w-full" />
