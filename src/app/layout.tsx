@@ -1,12 +1,21 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Inter, JetBrains_Mono, Pixelify_Sans } from "next/font/google";
+import {
+  Inter,
+  JetBrains_Mono,
+  Pixelify_Sans,
+  Instrument_Sans,
+} from "next/font/google";
 import "./globals.css";
-import { AsciiNoiseEffect } from "@/components/asciifilter";
-import NavigationMenu from "@/components/navigation-menu";
-// import { Footer } from "@/components/ui/footer";
+import { AnimationProvider } from "@/contexts/AnimationContext";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 const inter = Inter({
   subsets: ["latin"],
+});
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 const ari = localFont({
@@ -30,7 +39,7 @@ const pixelify = Pixelify_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "hi :)",
+  title: "amaan",
 };
 
 export default function RootLayout({
@@ -40,22 +49,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${ari.className} antialiased`}>
-        {/* ASCII Filter Background */}
-        <div className="fixed inset-0 z-[-1]">
-          <AsciiNoiseEffect className="h-full w-full" />
-        </div>
-
-        {/* Navigation Menu */}
-        <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
-          <div className="pointer-events-auto">
-            <NavigationMenu />
+      <body className={`${instrumentSans.className} antialiased`}>
+        <AnimationProvider>
+          {/* ASCII Filter Background */}
+          <div className="fixed inset-0 z-[-1]">
+            <AnimatedBackground />
           </div>
-        </div>
 
-        {/* Page Content */}
-        <div className="relative z-10">{children}</div>
-        {/* <Footer /> */}
+          {/* Navigation Menu */}
+          {/* <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+            <div className="pointer-events-auto">
+              <NavigationMenu />
+            </div>
+          </div> */}
+
+          {/* Page Content */}
+          <div className="relative z-10">{children}</div>
+          {/* <Footer /> */}
+        </AnimationProvider>
       </body>
     </html>
   );

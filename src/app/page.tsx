@@ -1,145 +1,181 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-  motion,
-} from "motion/react";
-import Image from "next/image";
-
+  Github,
+  Linkedin,
+  Mail,
+  MoveUpRight,
+  Twitter,
+  Eye,
+  EyeOff,
+} from "lucide-react";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { useAnimation } from "@/contexts/AnimationContext";
 const page = () => {
-  const [text, setText] = useState("hi");
-  const { scrollY } = useScroll();
+  const { animationEnabled, toggleAnimation } = useAnimation();
+  const [showDialog, setShowDialog] = useState(false);
 
-  // Create opacity transforms for each image section based on scroll position
-  const childImageOpacity = useTransform(scrollY, [0, 300, 600], [0, 1, 0]);
-  const leftImageOpacity = useTransform(scrollY, [600, 900, 1200], [0, 1, 0]);
-  const rightImageOpacity = useTransform(scrollY, [600, 900, 1200], [0, 1, 0]);
-  const smirkImageOpacity = useTransform(
-    scrollY,
-    [1200, 1500, 1800],
-    [0, 1, 0]
-  );
-
-  // Floating/dancing animation variants
-  const floatingAnimation = {
-    y: [0, -15, 0],
-    rotate: [-3, 3, -3],
-    transition: {
-      duration: 2.5,
-      repeat: Number.POSITIVE_INFINITY,
-      repeatType: "reverse" as const,
-    },
-  };
-
-  const wavingAnimation = {
-    rotate: [-10, 10, -10],
-    y: [0, -10, 0],
-    transition: {
-      duration: 2,
-      repeat: Number.POSITIVE_INFINITY,
-      repeatType: "reverse" as const,
-    },
-  };
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    console.log("Page scroll: ", latest);
-
-    // Change text based on scroll position
-    if (latest > 2400) {
-      setText("wip");
-    } else if (latest > 1800) {
-      setText("Anyways");
-    } else if (latest > 1200) {
-      setText("hows it going?!?");
-    } else if (latest > 600) {
-      setText("welcome to my corner of the internet");
-    } else {
-      setText("hi");
+  useEffect(() => {
+    // Check if dialog has been shown before
+    const hasSeenDialog = localStorage.getItem("hasSeenAnimationDialog");
+    if (!hasSeenDialog) {
+      setShowDialog(true);
     }
-  });
+  }, []);
+
+  const handleCloseDialog = () => {
+    setShowDialog(false);
+    localStorage.setItem("hasSeenAnimationDialog", "true");
+  };
 
   return (
     <>
+      <Dialog open={showDialog} onOpenChange={handleCloseDialog}>
+        <DialogContent onClose={handleCloseDialog}>
+          <DialogHeader>
+            <DialogTitle>Accessibility Notice</DialogTitle>
+            <DialogDescription>
+              If you have difficulty reading this page due to the animated
+              background, you can disable it using the eye icon button in the
+              top-right corner. Your preference will be saved for future visits.
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       <main className="relative w-full min-h-screen">
-        <div className="flex flex-col items-center justify-center gap-8 h-screen text-white text-center sticky top-0">
-          {/* Main content container with images */}
-          <div className="relative flex items-center justify-center w-full max-w-6xl px-4">
-            {/* Left image for "welcome" section */}
-            <motion.div
-              className="absolute left-0 w-48 h-48 md:w-64 md:h-64"
-              style={{ opacity: leftImageOpacity }}
-              animate={floatingAnimation}
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src="/smirk.png"
-                  alt="left decoration"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </motion.div>
-
-            {/* Center content with text and conditional images */}
-            <div className="flex flex-col items-center gap-6 z-10">
-              {/* Childhood image for "hi" section */}
-              <motion.div
-                className="w-48 h-48 md:w-64 md:h-64"
-                style={{ opacity: childImageOpacity }}
-                animate={wavingAnimation}
-              >
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/smirk.png"
-                    alt="childhood wave"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </motion.div>
-
-              <h1 className="text-2xl font-bold">{text}</h1>
-
-              {/* Smirk image for "hows it going" section */}
-              <motion.div
-                className="w-48 h-48 md:w-64 md:h-64"
-                style={{ opacity: smirkImageOpacity }}
-                animate={floatingAnimation}
-              >
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/smirk.png"
-                    alt="hows it going"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </motion.div>
+        <div className="fixed top-4 right-4 z-50">
+          <button
+            onClick={toggleAnimation}
+            className="group/card w-12 h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
+            aria-label={
+              animationEnabled
+                ? "Disable background animation"
+                : "Enable background animation"
+            }
+            title={
+              animationEnabled
+                ? "Disable background animation"
+                : "Enable background animation"
+            }
+          >
+            {animationEnabled ? (
+              <Eye className="w-5 h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+            ) : (
+              <EyeOff className="w-5 h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+            )}
+          </button>
+        </div>
+        <div className="flex flex-row items-center justify-center gap-2 h-screen text-white text-center sticky top-0">
+          <div className="flex-1">
+            <h1 className="text-4xl font-bold">hi im amaan</h1>
+            <p className="mt-6 text-lg">i love building, music and dancing.</p>
+            <div className="flex flex-row items-center justify-center gap-4 mt-6">
+              {[
+                {
+                  href: "https://github.com/amaanbilwar",
+                  label: "GitHub",
+                  Icon: Github,
+                },
+                {
+                  href: "https://www.linkedin.com/in/amaanbilwar/",
+                  label: "LinkedIn",
+                  Icon: Linkedin,
+                },
+                {
+                  href: "https://twitter.com/bilwaramaan",
+                  label: "Twitter",
+                  Icon: Twitter,
+                },
+                {
+                  href: "mailto:bilwarad@mail.uc.edu",
+                  label: "Email",
+                  Icon: Mail,
+                },
+              ].map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/card w-12 h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
+                  aria-label={label}
+                >
+                  <Icon className="w-5 h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+                </a>
+              ))}
             </div>
-
-            {/* Right image for "welcome" section */}
-            <motion.div
-              className="absolute right-0 w-48 h-48 md:w-64 md:h-64"
-              style={{ opacity: rightImageOpacity }}
-              animate={floatingAnimation}
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src="/smirk.png"
-                  alt="right decoration"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </motion.div>
+          </div>
+          <div className="flex-1 ">
+            <div className="flex flex-col items-center gap-4">
+              <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                    Scene AI
+                    <MoveUpRight
+                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
+                      aria-hidden="true"
+                    />
+                  </CardTitle>
+                  <CardDescription>
+                    ai powered video editor, upload your videos and let your
+                    prompts dictate the edit for you. No technical burden. Now
+                    there's no excuse for not posting.
+                    <span className="font-bold underline underline-offset-2">
+                      {" "}
+                      my biggest project yet.
+                    </span>
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                    Soar AI Labs
+                    <MoveUpRight
+                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
+                      aria-hidden="true"
+                    />
+                  </CardTitle>
+                  <CardDescription>
+                    context engine for your version control. it learns your git
+                    habits and helps you with issues like merge conflicts.
+                    <span className="font-bold underline underline-offset-2">
+                      {" "}
+                      fine-tuned models, mcps and agents. the whole jazz.
+                    </span>
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+              {/* <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                    Pollen
+                    <MoveUpRight
+                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
+                      aria-hidden="true"
+                    />
+                  </CardTitle>
+                  <CardDescription>
+                    a social media platform for sharing your thoughts and ideas.
+                  </CardDescription>
+                </CardHeader>
+              </Card> */}
+            </div>
           </div>
         </div>
-
-        {/* Add scrollable content */}
-        <div className="h-[500vh] bg-gradient-to-b from-transparent"></div>
       </main>
     </>
   );

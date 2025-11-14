@@ -27,6 +27,7 @@ interface AsciiNoiseEffectProps {
   vignetteSoftness?: number;
   glyphSharpness?: number;
   bg?: [number, number, number];
+  disabled?: boolean;
 }
 
 const vs = `#version 300 es
@@ -285,7 +286,7 @@ const quad = (gl: Gl) => {
   gl.bufferData(
     gl.ARRAY_BUFFER,
     new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-    gl.STATIC_DRAW,
+    gl.STATIC_DRAW
   );
   gl.enableVertexAttribArray(0);
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
@@ -317,6 +318,7 @@ export const AsciiNoiseEffect = ({
   glyphSharpness = 0.094,
   bg = [0.03994025662535364, 0.047821383331736037, 0.03257825743448097],
   className,
+  disabled = false,
 }: AsciiNoiseEffectProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const resRef = useRef<{
@@ -392,7 +394,7 @@ export const AsciiNoiseEffect = ({
       0,
       gl.RGBA,
       gl.UNSIGNED_BYTE,
-      null,
+      null
     );
 
     const fbScene = gl.createFramebuffer()!;
@@ -402,7 +404,7 @@ export const AsciiNoiseEffect = ({
       gl.COLOR_ATTACHMENT0,
       gl.TEXTURE_2D,
       texScene,
-      0,
+      0
     );
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     gl.bindTexture(gl.TEXTURE_2D, null);
@@ -424,7 +426,7 @@ export const AsciiNoiseEffect = ({
     (tMs: number) => {
       const res = resRef.current;
       const canvas = canvasRef.current;
-      if (!res || !canvas) return;
+      if (!res || !canvas || disabled) return;
       const {
         gl,
         vao,
@@ -496,6 +498,7 @@ export const AsciiNoiseEffect = ({
       cell,
       charset,
       contrast,
+      disabled,
       distortAmp,
       frequency,
       gamma,
@@ -510,7 +513,7 @@ export const AsciiNoiseEffect = ({
       vignette,
       vignetteSoftness,
       zRate,
-    ],
+    ]
   );
 
   useEffect(() => {
@@ -522,7 +525,9 @@ export const AsciiNoiseEffect = ({
     canvas.width = Math.floor(canvas.clientWidth * dpr);
     canvas.height = Math.floor(canvas.clientHeight * dpr);
     resRef.current = init(gl, canvas.width, canvas.height);
-    rafRef.current = window.requestAnimationFrame(render);
+    if (!disabled) {
+      rafRef.current = window.requestAnimationFrame(render);
+    }
     const onResize = () => {
       const c = canvasRef.current;
       const rr = resRef.current;
@@ -544,7 +549,7 @@ export const AsciiNoiseEffect = ({
         0,
         gl.RGBA,
         gl.UNSIGNED_BYTE,
-        null,
+        null
       );
       gl.bindTexture(gl.TEXTURE_2D, null);
     };
@@ -553,7 +558,20 @@ export const AsciiNoiseEffect = ({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", onResize);
     };
-  }, [init, render]);
+  }, [init, render, disabled]);
+
+  useEffect(() => {
+    if (disabled) {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    } else {
+      if (!rafRef.current && canvasRef.current && resRef.current) {
+        rafRef.current = window.requestAnimationFrame(render);
+      }
+    }
+  }, [disabled, render]);
 
   return (
     <div className={"relative h-dvh w-full bg-black " + (className ?? "")}>
