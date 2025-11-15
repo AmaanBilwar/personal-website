@@ -10,6 +10,7 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react";
+import Link from "next/link";
 import {
   Card,
   CardDescription,
@@ -79,10 +80,180 @@ const page = () => {
           </button>
         </div>
         <div className="flex flex-row items-center justify-center gap-2 h-screen text-white text-center sticky top-0">
-          <div className="flex-1">
-            <h1 className="text-4xl font-bold">hi im amaan</h1>
-            <p className="mt-6 text-lg">i love building, music and dancing.</p>
-            <div className="flex flex-row items-center justify-center gap-4 mt-6">
+          <div className="flex-1 flex flex-col items-center justify-center px-8">
+            <div className="max-w-2xl w-full space-y-8">
+              <h1 className="text-8xl font-bold mb-12 text-center">
+                hi im amaan
+              </h1>
+
+              {/* About Section */}
+              <section className="pt-4 border-t border-white/20">
+                <h2 className="text-2xl font-semibold mb-4 text-left">
+                  about:
+                </h2>
+                <ul className="space-y-4 text-left text-lg">
+                  <li className="pl-4 border-l-2 border-white/30">
+                    im currently a junior studying computer engineering at UC.
+                  </li>
+                  <li className="pl-4 border-l-2 border-white/30">
+                    i love building, music and dancing.
+                  </li>
+                  <li className="pl-4 border-l-2 border-white/30">
+                    <span className="line-through">building an ai browser</span>{" "}
+                    im not writting all that c++, more of a 🦀 guy.
+                  </li>
+                  <li className="pl-4 border-l-2 border-white/30">
+                    web dev lead of one of the{" "}
+                    <a
+                      className="font-bold underline transition-colors"
+                      href="https://revolutionuc.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      largest student hackathons
+                    </a>
+                    .
+                  </li>
+                  <li className="pl-4 border-l-2 border-white/30">
+                    data acquisition & telemetry work on a{" "}
+                    <a
+                      href="https://www.instagram.com/bearcats_electric_racing/"
+                      className="font-bold underline transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      formula electric racecar
+                    </a>{" "}
+                    . i can get you all the data from it. wirelessly. yes a real
+                    car. built by students.
+                  </li>
+                  <li className="pl-4 border-l-2 border-white/30"></li>
+                </ul>
+              </section>
+
+              {/* Previously Section */}
+              <section className="pt-4 border-t border-white/20">
+                <h2 className="text-2xl font-semibold mb-4 text-left">
+                  previously:
+                </h2>
+                <ul className="space-y-4 text-left text-lg">
+                  <li className="pl-4 border-l-2 border-white/30">
+                    interned 2x @{" "}
+                    <a
+                      href="https://www.honeywell.com/us/en"
+                      className="underline transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Honeywell
+                    </a>
+                    , and an sf startup called{" "}
+                    <a
+                      href="https://www.story.com/"
+                      className="underline transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Story.com
+                    </a>
+                    . both cool places to work at.
+                  </li>
+                  <li className="pl-4 border-l-2 border-white/30">
+                    participated in my first ever{" "}
+                    <a
+                      href="https://www.calhacks.io/"
+                      className="underline transition-colors"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      hackathon
+                    </a>{" "}
+                    and won:
+                    <ul className="ml-4 mt-2 space-y-1">
+                      <li className="font-semibold">
+                        • the most technically impressive prize
+                      </li>
+                      <li className="font-semibold">
+                        • the best use of aws category
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="pl-4 border-l-2 border-white/30">
+                    participated in{" "}
+                    <a href="" className="underline transition-colors">
+                      calhacks
+                    </a>{" "}
+                    & won the{" "}
+                    <a href="" className="underline transition-colors">
+                      snapchat ar glasses track
+                    </a>
+                  </li>
+                </ul>
+              </section>
+            </div>
+          </div>
+          <div className="flex-1 ">
+            <div className="flex flex-col items-center gap-4">
+              <Link href="#">
+                <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                      Scene AI
+                      <MoveUpRight
+                        className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
+                        aria-hidden="true"
+                      />
+                    </CardTitle>
+                    <CardDescription>
+                      ai powered video editor, upload your videos and let your
+                      prompts dictate the edit for you. No technical burden. Now
+                      there's no excuse for not posting.
+                      <span className="font-bold underline underline-offset-2">
+                        {" "}
+                        my biggest project yet.
+                      </span>
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+              <Link href="https://soarailabs.com" target="_blank">
+                <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                      Soar AI Labs
+                      <MoveUpRight
+                        className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
+                        aria-hidden="true"
+                      />
+                    </CardTitle>
+                    <CardDescription>
+                      context engine for your version control. it learns your
+                      git habits and helps you with issues like merge conflicts.
+                      <span className="font-bold underline underline-offset-2">
+                        {" "}
+                        fine-tuned models, mcps and agents. the whole jazz.
+                      </span>
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+              {/* <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                    Pollen
+                    <MoveUpRight
+                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
+                      aria-hidden="true"
+                    />
+                  </CardTitle>
+                  <CardDescription>
+                    a social media platform for sharing your thoughts and ideas.
+                  </CardDescription>
+                </CardHeader>
+              </Card> */}
+            </div>
+            {/* Social Links */}
+            <div className="flex flex-row items-center justify-center gap-4 mt-8">
               {[
                 {
                   href: "https://github.com/amaanbilwar",
@@ -116,63 +287,6 @@ const page = () => {
                   <Icon className="w-5 h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
                 </a>
               ))}
-            </div>
-          </div>
-          <div className="flex-1 ">
-            <div className="flex flex-col items-center gap-4">
-              <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between gap-2 text-xl">
-                    Scene AI
-                    <MoveUpRight
-                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
-                      aria-hidden="true"
-                    />
-                  </CardTitle>
-                  <CardDescription>
-                    ai powered video editor, upload your videos and let your
-                    prompts dictate the edit for you. No technical burden. Now
-                    there's no excuse for not posting.
-                    <span className="font-bold underline underline-offset-2">
-                      {" "}
-                      my biggest project yet.
-                    </span>
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between gap-2 text-xl">
-                    Soar AI Labs
-                    <MoveUpRight
-                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
-                      aria-hidden="true"
-                    />
-                  </CardTitle>
-                  <CardDescription>
-                    context engine for your version control. it learns your git
-                    habits and helps you with issues like merge conflicts.
-                    <span className="font-bold underline underline-offset-2">
-                      {" "}
-                      fine-tuned models, mcps and agents. the whole jazz.
-                    </span>
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-              {/* <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between gap-2 text-xl">
-                    Pollen
-                    <MoveUpRight
-                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
-                      aria-hidden="true"
-                    />
-                  </CardTitle>
-                  <CardDescription>
-                    a social media platform for sharing your thoughts and ideas.
-                  </CardDescription>
-                </CardHeader>
-              </Card> */}
             </div>
           </div>
         </div>
