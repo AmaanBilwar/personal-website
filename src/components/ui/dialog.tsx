@@ -40,14 +40,14 @@ export function DialogContent({
   return (
     <div
       className={cn(
-        "bg-white/10 backdrop-blur-[8px] border border-white/20 rounded-md p-6 shadow-lg",
+        "bg-white/10 backdrop-blur-[8px] border border-white/20 rounded-md p-4 sm:p-6 shadow-lg",
         className
       )}
     >
       {onClose && (
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 transition-all duration-300 hover:cursor-pointer"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 transition-all duration-300 hover:cursor-pointer"
           aria-label="Close"
         >
           <X className="w-4 h-4 text-white" />
@@ -74,7 +74,7 @@ interface DialogTitleProps {
 
 export function DialogTitle({ children, className }: DialogTitleProps) {
   return (
-    <h2 className={cn("text-xl font-bold text-white", className)}>
+    <h2 className={cn("text-lg sm:text-xl font-bold text-white", className)}>
       {children}
     </h2>
   );
@@ -90,6 +90,6 @@ export function DialogDescription({
   className,
 }: DialogDescriptionProps) {
   return (
-    <p className={cn("text-white/80 text-sm mt-2", className)}>{children}</p>
+    <p className={cn("text-white/80 text-xs sm:text-sm mt-2", className)}>{children}</p>
   );
 }

@@ -60,7 +60,7 @@ const page = () => {
         <div className="fixed top-4 right-4 z-50">
           <button
             onClick={toggleAnimation}
-            className="group/card w-12 h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
+            className="group/card w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
             aria-label={
               animationEnabled
                 ? "Disable background animation"
@@ -73,25 +73,37 @@ const page = () => {
             }
           >
             {animationEnabled ? (
-              <Eye className="w-5 h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+              <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
             ) : (
-              <EyeOff className="w-5 h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+              <EyeOff className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
             )}
           </button>
         </div>
-        <div className="flex flex-row items-center justify-center gap-2 h-screen text-white text-center sticky top-0">
-          <div className="flex-1 flex flex-col items-center justify-center px-8">
-            <div className="max-w-2xl w-full space-y-8">
-              <h1 className="text-8xl font-bold mb-12 text-center">
-                hi im amaan
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-2 min-h-screen py-8 lg:py-0 lg:h-screen text-white text-center lg:sticky top-0">
+          <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 w-full">
+            <div className="max-w-2xl w-full space-y-6 sm:space-y-8">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 sm:mb-8 lg:mb-12 text-center">
+                hi im{" "}
+                {/* <span
+                  className="underline underline-offset-4"
+                  style={{ textDecorationThickness: "4px" }}
+                >
+                  amaan
+                </span> */}
+                <img
+                  src="/badge.png"
+                  alt="Badge"
+                  className="inline-block align-middle mr-8 h-48 lg:h-64 rotate-12"
+                  style={{ verticalAlign: "middle" }}
+                />
               </h1>
 
               {/* About Section */}
-              <section className="pt-4 border-t border-white/20">
-                <h2 className="text-2xl font-semibold mb-4 text-left">
+              <section className="pt-2 border-t border-white/20">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-left">
                   about:
                 </h2>
-                <ul className="space-y-4 text-left text-lg">
+                <ul className="space-y-3 sm:space-y-4 text-left text-base sm:text-lg">
                   <li className="pl-4 border-l-2 border-white/30">
                     im currently a junior studying computer engineering at UC.
                   </li>
@@ -110,7 +122,7 @@ const page = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      largest student hackathons
+                      largest student hackathons in the midwest
                     </a>
                     .
                   </li>
@@ -133,10 +145,10 @@ const page = () => {
 
               {/* Previously Section */}
               <section className="pt-4 border-t border-white/20">
-                <h2 className="text-2xl font-semibold mb-4 text-left">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-left">
                   previously:
                 </h2>
-                <ul className="space-y-4 text-left text-lg">
+                <ul className="space-y-3 sm:space-y-4 text-left text-base sm:text-lg">
                   <li className="pl-4 border-l-2 border-white/30">
                     interned 2x @{" "}
                     <a
@@ -171,11 +183,9 @@ const page = () => {
                     and won:
                     <ul className="ml-4 mt-2 space-y-1">
                       <li className="font-semibold">
-                        • the most technically impressive prize
+                        • the most technically impressive
                       </li>
-                      <li className="font-semibold">
-                        • the best use of aws category
-                      </li>
+                      <li className="font-semibold">• the best use of aws</li>
                     </ul>
                   </li>
                   <li className="pl-4 border-l-2 border-white/30">
@@ -192,19 +202,19 @@ const page = () => {
               </section>
             </div>
           </div>
-          <div className="flex-1 ">
-            <div className="flex flex-col items-center gap-4">
-              <Link href="#">
-                <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+          <div className="flex-1 w-full lg:w-auto">
+            <div className="flex flex-col items-center gap-4 px-4 sm:px-0">
+              <Link href="#" className="w-full max-w-sm lg:max-w-none lg:w-80">
+                <Card className="group/card w-full lg:w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
                   <CardHeader>
-                    <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                    <CardTitle className="flex items-center justify-between gap-2 text-lg sm:text-xl">
                       Scene AI
                       <MoveUpRight
                         className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
                         aria-hidden="true"
                       />
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-sm sm:text-base">
                       ai powered video editor, upload your videos and let your
                       prompts dictate the edit for you. No technical burden. Now
                       there's no excuse for not posting.
@@ -216,17 +226,21 @@ const page = () => {
                   </CardHeader>
                 </Card>
               </Link>
-              <Link href="https://soarailabs.com" target="_blank">
-                <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+              <Link
+                href="https://soarailabs.com"
+                target="_blank"
+                className="w-full max-w-sm lg:max-w-none lg:w-80"
+              >
+                <Card className="group/card w-full lg:w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
                   <CardHeader>
-                    <CardTitle className="flex items-center justify-between gap-2 text-xl">
+                    <CardTitle className="flex items-center justify-between gap-2 text-lg sm:text-xl">
                       Soar AI Labs
                       <MoveUpRight
                         className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
                         aria-hidden="true"
                       />
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-sm sm:text-base">
                       context engine for your version control. it learns your
                       git habits and helps you with issues like merge conflicts.
                       <span className="font-bold underline underline-offset-2">
@@ -253,7 +267,7 @@ const page = () => {
               </Card> */}
             </div>
             {/* Social Links */}
-            <div className="flex flex-row items-center justify-center gap-4 mt-8">
+            <div className="flex flex-row items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8">
               {[
                 {
                   href: "https://github.com/amaanbilwar",
@@ -281,10 +295,10 @@ const page = () => {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/card w-12 h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
+                  className="group/card w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
                   aria-label={label}
                 >
-                  <Icon className="w-5 h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
                 </a>
               ))}
             </div>
