@@ -173,7 +173,7 @@ const page = () => {
                   <li className="pl-4 border-l-2 border-white/30">
                     participated in my first ever{" "}
                     <a
-                      href="https://www.calhacks.io/"
+                      href="https://www.revolutionuc.com/"
                       className="underline transition-colors"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -190,11 +190,17 @@ const page = () => {
                   </li>
                   <li className="pl-4 border-l-2 border-white/30">
                     participated in{" "}
-                    <a href="" className="underline transition-colors">
+                    <a
+                      href="https://calhacks.io"
+                      className="underline transition-colors"
+                    >
                       calhacks
                     </a>{" "}
                     & won the{" "}
-                    <a href="" className="underline transition-colors">
+                    <a
+                      href="https://devpost.com/software/memary"
+                      className="underline transition-colors"
+                    >
                       snapchat ar glasses track
                     </a>
                   </li>
