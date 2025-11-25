@@ -42,12 +42,6 @@ const NotFound = () => {
           >
             ← Back to Home
           </Link>
-          <Link
-            href="/projects"
-            className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/20 transition-all duration-200 hover:scale-105"
-          >
-            View Projects
-          </Link>
         </div>
 
         {/* Fun Interactive Element */}
