@@ -139,6 +139,18 @@ const page = () => {
                     . i can get you all the data from it. wirelessly. yes a real
                     car. built by students.
                   </li>
+                  <li className="pl-4 border-l-2 border-white/30 hover:cursor-pointer transition-colors">
+                    Read my{" "}
+                    <a
+                      className="underline"
+                      href="https://blog.amaandoes.tech"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Blog
+                    </a>
+                    .
+                  </li>
                   <li className="pl-4 border-l-2 border-white/30"></li>
                 </ul>
               </section>
