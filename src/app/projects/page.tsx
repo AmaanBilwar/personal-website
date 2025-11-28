@@ -1,163 +1,110 @@
 "use client";
-
-import React, { useState } from "react";
+import Link from "next/link";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
-import Link from "next/link";
+import { MoveUpRight, Eye, EyeOff } from "lucide-react";
+import { useAnimation } from "@/contexts/AnimationContext";
 
-const page = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+const PROJECTS = [
+  {
+    title: "Scene AI",
+    description:
+      "AI powered video editor. let your prompts dictate the edit for you. Now there's no excuse for not posting. My biggest project yet.",
+    link: "#",
+    external: false,
+  },
+  {
+    title: "Soar AI Labs",
+    description:
+      "CLI tool with context + memory engine to resolve github merge conflicts.",
+    link: "https://soarailabs.com",
+  },
+  {
+    title: `"We have Claude Code at home"`,
+    description: "Coding agent in the CLI, made by me. Written in Rust.",
+    link: "#",
+    external: false,
+  },
+];
 
-  const projects = [
-    {
-      title: "placeholder",
-      description: "placeholder",
-      tech: ["placeholder"],
-      status: "placeholder",
-      link: "placeholder",
-    },
-    {
-      title: "placeholder",
-      description: "placeholder",
-      tech: ["placeholder"],
-      status: "placeholder",
-      link: "placeholder",
-    },
-    {
-      title: "placeholder",
-      description: "placeholder",
-      tech: ["placeholder"],
-      status: "placeholder",
-      link: "placeholder",
-    },
-    {
-      title: "placeholder",
-      description: "placeholder",
-      tech: ["placeholder"],
-      status: "placeholder",
-      link: "placeholder",
-    },
-    {
-      title: "placeholder",
-      description: "placeholder",
-      tech: ["placeholder"],
-      status: "placeholder",
-      link: "placeholder",
-    },
-    {
-      title: "placeholder",
-      description: "placeholder",
-      tech: ["placeholder"],
-      status: "placeholder",
-      link: "placeholder",
-    },
-  ];
+const Projects = () => {
+  const { animationEnabled, toggleAnimation } = useAnimation();
 
   return (
-    <main className="relative w-full min-h-screen pt-20 pb-20">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 text-white">Projects</h1>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">
-            A collection of my side-quests. I love building things.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {projects.map((project, index) => (
-            <Card
-              key={index}
-              className={`group bg-white/10 backdrop-blur-[2px] border-white/20 transition-all duration-300 rounded-none relative ${
-                hoveredIndex === null
-                  ? "hover:bg-white/15 hover:scale-102"
-                  : hoveredIndex === index
-                    ? "bg-white/15 scale-102"
-                    : "opacity-50"
-              }`}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              {index === 0 && (
-                <div className="absolute -top-2 -left-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
-                  +
-                </div>
-              )}
-              {index === 2 && (
-                <div className="absolute -bottom-2 -right-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
-                  +
-                </div>
-              )}
-              {index === 4 && (
-                <>
-                  <div className="absolute -top-2 -left-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
-                    +
-                  </div>
-                  <div className="absolute -bottom-2 -right-2 w-4 h-4 flex items-center justify-center text-white font-bold text-lg">
-                    +
-                  </div>
-                </>
-              )}
-              <CardHeader>
-                <CardTitle className="text-white text-xl">
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="text-white/70">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs border border-blue-400/30 rounded-none"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </CardContent>
-              <CardFooter>
-                <div className="flex items-center justify-between w-full">
-                  <div className="relative">
-                    <Link
-                      href={project.link}
-                      className="text-sm text-white/60 hover:text-white transition-colors duration-300 relative"
-                    >
-                      Status: {project.status}
-                      {/* Animated underline */}
-                      <span
-                        className="absolute bottom-0 left-0 h-0.5 bg-white transform scale-x-0 transition-transform duration-300 ease-in-out origin-left w-full hover:scale-x-100"
-                        style={{
-                          backgroundImage: `repeating-linear-gradient(
-                             90deg,
-                             transparent 0px,
-                             transparent 1px,
-                             white 1px,
-                             white 2px,
-                             transparent 2px,
-                             transparent 3px
-                           )`,
-                          imageRendering: "pixelated",
-                        }}
-                      />
-                    </Link>
-                  </div>
-                  <div className="w-2 h-2 bg-green-700 rounded-none"></div>
-                </div>
-              </CardFooter>
-            </Card>
-          ))}
+    <main className="relative w-full min-h-screen px-4 py-12 flex flex-col items-center text-white">
+      <div className="fixed top-4 right-4 z-50">
+        <button
+          onClick={toggleAnimation}
+          className="group/card w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
+          aria-label={
+            animationEnabled
+              ? "Disable background animation"
+              : "Enable background animation"
+          }
+          title={
+            animationEnabled
+              ? "Disable background animation"
+              : "Enable background animation"
+          }
+        >
+          {animationEnabled ? (
+            <Eye className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+          ) : (
+            <EyeOff className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/card:scale-110 transition-transform duration-200" />
+          )}
+        </button>
+      </div>
+      <div className="max-w-6xl w-full">
+        <h1 className="text-3xl md:text-4xl font-bold mb-10 pb-24 text-center">
+          Projects
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          {PROJECTS.map((project, idx) => {
+            const CardContent = (
+              <Card className="group/card h-full bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between gap-2 text-lg sm:text-xl">
+                    {project.title}
+                    <MoveUpRight
+                      className="size-4 opacity-0 -translate-y-1 translate-x-1 transition-all duration-200 group-hover/card:opacity-100 group-hover/card:-translate-y-2 group-hover/card:translate-x-2"
+                      aria-hidden="true"
+                    />
+                  </CardTitle>
+                  <div className="my-3 border-t border-white/20"></div>
+                  <CardDescription className="text-sm sm:text-base">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            );
+            return project.external ? (
+              <a
+                key={project.title}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full h-full block"
+              >
+                {CardContent}
+              </a>
+            ) : (
+              <Link
+                key={project.title}
+                href={project.link}
+                className="w-full h-full block"
+              >
+                {CardContent}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </main>
   );
 };
 
-export default page;
+export default Projects;
