@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 
 const ROOT_DOMAIN = "amaandoes.tech";
 const BLOG_SUBDOMAIN = "blog";
+const PROJECT_SUBDOMAIN = "projects"
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
@@ -30,12 +31,23 @@ export function middleware(request: NextRequest) {
       if (subdomain === BLOG_SUBDOMAIN) {
         const pathname = url.pathname;
         
-        console.log(`[Middleware] Blog subdomain detected: ${hostname} -> rewriting to /blog`);
-        
         if (pathname === "/" || pathname === "") {
           url.pathname = "/blog";
         } else if (!pathname.startsWith("/blog")) {
           url.pathname = `/blog${pathname}`;
+        }
+        
+        return NextResponse.rewrite(url);
+      }
+      
+      // Route projects subdomain to /projects
+      if (subdomain === PROJECT_SUBDOMAIN) {
+        const pathname = url.pathname;
+        
+        if (pathname === "/" || pathname === "") {
+          url.pathname = "/projects";
+        } else if (!pathname.startsWith("/projects")) {
+          url.pathname = `/projects${pathname}`;
         }
         
         return NextResponse.rewrite(url);
@@ -66,6 +78,19 @@ export function middleware(request: NextRequest) {
       url.pathname = "/blog";
     } else if (!pathname.startsWith("/blog")) {
       url.pathname = `/blog${pathname}`;
+    }
+
+    return NextResponse.rewrite(url);
+  }
+
+  // Route projects subdomain traffic to the /projects app directory.
+  if (subdomain === PROJECT_SUBDOMAIN) {
+    const pathname = url.pathname;
+
+    if (pathname === "/" || pathname === "") {
+      url.pathname = "/projects";
+    } else if (!pathname.startsWith("/projects")) {
+      url.pathname = `/projects${pathname}`;
     }
 
     return NextResponse.rewrite(url);
