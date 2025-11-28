@@ -265,7 +265,10 @@ const page = () => {
                   </CardHeader>
                 </Card>
               </Link>
-              <Link className="underline underline-offset-4" href="/projects">
+              <Link
+                className="underline underline-offset-4"
+                href="https://projects.amaandoes.tech"
+              >
                 <span className="flex flex-row items-center gap-2 text-muted-foreground hover:text-foreground">
                   projects i'm currently working on
                   <MoveUpRight className="size-4" aria-hidden="true" />
