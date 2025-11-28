@@ -57,7 +57,7 @@ const page = () => {
         </DialogContent>
       </Dialog>
       <main className="relative w-full min-h-screen">
-        <div className="fixed top-4 right-4 z-50">
+        <div className="fixed top-4 right-4 z-50 ">
           <button
             onClick={toggleAnimation}
             className="group/card w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-md bg-white/10 border border-white/20 backdrop-blur-[4px] hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30 transition-all duration-300"
@@ -79,10 +79,10 @@ const page = () => {
             )}
           </button>
         </div>
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-2 min-h-screen py-8 lg:py-0 lg:h-screen text-white text-center lg:sticky top-0">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-2 min-h-screen py-8 lg:pt-16 lg:pb-0 lg:h-screen text-white text-center lg:sticky top-0">
           <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 w-full">
             <div className="max-w-2xl w-full space-y-6 sm:space-y-8">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 sm:mb-8 lg:mb-12 text-center">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-2 sm:mb-3 lg:mb-4 text-center">
                 hi im{" "}
                 {/* <span
                   className="underline underline-offset-4"
@@ -99,7 +99,7 @@ const page = () => {
               </h1>
 
               {/* About Section */}
-              <section className="pt-2 border-t border-white/20">
+              <section className="pt-1 border-t border-white/20">
                 <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-left">
                   about:
                 </h2>
@@ -156,7 +156,7 @@ const page = () => {
               </section>
 
               {/* Previously Section */}
-              <section className="pt-4 border-t border-white/20">
+              <section className="pt-4 pb-20 border-t border-white/20">
                 <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-left">
                   previously:
                 </h2>
@@ -259,15 +259,17 @@ const page = () => {
                       />
                     </CardTitle>
                     <CardDescription className="text-sm sm:text-base">
-                      context engine for your version control. it learns your
-                      git habits and helps you with issues like merge conflicts.
-                      <span className="font-bold underline underline-offset-2">
-                        {" "}
-                        fine-tuned models, mcps and agents. the whole jazz.
-                      </span>
+                      CLI tool with context + memory engine to resolve github
+                      merge conflicts. Written in Rust
                     </CardDescription>
                   </CardHeader>
                 </Card>
+              </Link>
+              <Link className="underline underline-offset-4" href="/projects">
+                <span className="flex flex-row items-center gap-2 text-muted-foreground hover:text-foreground">
+                  projects i'm currently working on
+                  <MoveUpRight className="size-4" aria-hidden="true" />
+                </span>
               </Link>
               {/* <Card className="group/card w-80 bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md relative hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
                 <CardHeader>
