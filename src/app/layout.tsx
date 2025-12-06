@@ -9,6 +9,8 @@ import {
 import "./globals.css";
 import { AnimationProvider } from "@/contexts/AnimationContext";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { AnimationToggle } from "@/components/AnimationToggle";
+
 const inter = Inter({
   subsets: ["latin"],
 });
@@ -63,8 +65,14 @@ export default function RootLayout({
             </div>
           </div> */}
 
+          {/* Global Animation Toggle - bottom-right */}
+          <div className="fixed bottom-4 right-4 z-50">
+            <AnimationToggle variant="default" />
+          </div>
+
           {/* Page Content */}
           <div className="relative z-10">{children}</div>
+
           {/* <Footer /> */}
         </AnimationProvider>
       </body>

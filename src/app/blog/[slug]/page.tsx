@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { getBlogPostBySlug, getAllBlogPosts } from "@/lib/blog";
+import { prepareMarkdown } from "@/lib/markdown";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -101,9 +102,16 @@ export default async function BlogPostPage({ params }: Props) {
                     {...props}
                   />
                 ),
+
+                pre: ({ node, ...props }) => (
+                  <pre
+                    className="bg-white/10 px-4 py-3 rounded text-sm font-mono whitespace-pre-wrap break-words overflow-x-auto border border-white/20"
+                    {...props}
+                  />
+                ),
                 code: ({ node, ...props }) => (
                   <code
-                    className="bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono"
+                    className="bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono whitespace-normal break-words"
                     {...props}
                   />
                 ),
@@ -115,7 +123,7 @@ export default async function BlogPostPage({ params }: Props) {
                 ),
               }}
             >
-              {post.content}
+              {prepareMarkdown(post.content)}
             </ReactMarkdown>
           </div>
         </article>
