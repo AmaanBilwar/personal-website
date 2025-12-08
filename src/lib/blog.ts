@@ -66,7 +66,7 @@ export const blogPosts: BlogPost[] = [
       - Simplicity, because most people don’t want to learn a new cockpit to post a 30-second clip.
       - Kindness, because guardrails, privacy, and a nudge of confidence matter when you’re putting yourself out there.
 
-      If any of this resonates - if you’ve got a club recap, a hackathon demo, a meme that deserves life outside your camera roll, come along. Join the waitlist, DM me ideas, send me weird edge cases.
+      If any of this resonates - if you’ve got a club recap, a hackathon demo, a meme that deserves life outside your camera roll, come along. Join the <a href="https://tally.so/r/wk4GLe"> waitlist</a>, DM me ideas, send me weird edge cases.
 
       I won’t **overpromise**; <u>I’ll ship, listen, and iterate</u>.
 
