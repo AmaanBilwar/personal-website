@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
 import { getAllBlogPosts } from "@/lib/blog";
 
 const formatDate = (dateString: string) => {
@@ -12,50 +11,36 @@ const formatDate = (dateString: string) => {
   });
 };
 
-type Props = {};
-
-const page = (props: Props) => {
+const BlogPage = () => {
   const blogPosts = getAllBlogPosts();
 
   return (
-    <main className="text-white flex flex-col items-center justify-center min-h-screen px-6 py-12">
-      <div className="w-full max-w-6xl flex flex-col items-center gap-8">
-        {/* Back to Home button */}
-        <Link
-          href="https://amaandoes.tech"
-          className="text-white/70 hover:text-white transition-colors self-start"
-        >
-          ← Back to Home
-        </Link>
-
-        <div className="w-full flex flex-col items-center gap-4">
-          <h1 className="font-bold text-6xl pb-4">Blog</h1>
-
+    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 py-12 text-black bg-white">
+      <div className="max-w-3xl">
+        <h1 className="text-2xl sm:text-3xl font-bold mt-8 mb-6">Blog</h1>
+        <ul className="space-y-4 sm:space-y-3 text-sm sm:text-base">
           {blogPosts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="w-full max-w-3xl min-w-[320px] group/card"
-            >
-              <Card className="w-full bg-white/10 backdrop-blur-[4px] border-white/20 transition-all duration-300 rounded-md hover:cursor-pointer hover:bg-white/20 hover:backdrop-blur-[8px] hover:border-white/30">
-                <div className="px-6 py-4 flex items-center justify-between gap-4">
-                  <div className="flex flex-col gap-1 min-w-0">
-                    <h2 className="text-lg sm:text-xl font-semibold truncate">
-                      {post.title}
-                    </h2>
-                    <p className="text-sm text-white/70">{post.author}</p>
-                  </div>
-                  <div className="text-sm text-white/70 flex-shrink-0">
-                    {formatDate(post.date)}
-                  </div>
-                </div>
-              </Card>
-            </Link>
+            <li key={post.slug} className="flex items-start">
+              <span className="mr-2 mt-0.5 flex-shrink-0">•</span>
+              <div className="flex-1 min-w-0">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="font-semibold underline hover:text-gray-600"
+                >
+                  {post.title}
+                </Link>
+                <span className="hidden sm:inline">: </span>
+                <br className="sm:hidden" />
+                <span className="text-black/80 sm:text-black">
+                  {post.author} - {formatDate(post.date)}
+                </span>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </main>
   );
 };
 
-export default page;
+export default BlogPage;

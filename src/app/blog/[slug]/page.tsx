@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import { getBlogPostBySlug, getAllBlogPosts } from "@/lib/blog";
 import { prepareMarkdown } from "@/lib/markdown";
 
@@ -34,22 +35,14 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   return (
-    <main className="text-white flex flex-col items-center justify-center min-h-screen px-6 py-12">
-      <div className="w-full max-w-4xl flex flex-col gap-8">
-        {/* Back button */}
-        <Link
-          href="/blog"
-          className="text-white/70 hover:text-white transition-colors self-start"
-        >
-          ← Back to Blog
-        </Link>
-
+    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 py-12 text-black bg-white flex justify-center">
+      <div className="max-w-4xl w-full">
         {/* Blog post content */}
         <article className="flex flex-col gap-6">
           {/* Header */}
-          <header className="flex flex-col gap-4 pb-6 border-b border-white/20">
-            <h1 className="text-4xl sm:text-5xl font-bold">{post.title}</h1>
-            <div className="flex items-center gap-4 text-sm text-white/70">
+          <header className="flex flex-col gap-2 pb-6 border-b border-black/20">
+            <h1 className="text-2xl sm:text-3xl font-bold">{post.title}</h1>
+            <div className="flex items-center gap-4 text-sm text-black/70">
               <span>By {post.author}</span>
               <span>•</span>
               <time dateTime={post.date}>{formatDate(post.date)}</time>
@@ -57,30 +50,31 @@ export default async function BlogPostPage({ params }: Props) {
           </header>
 
           {/* Content */}
-          <div className="prose prose-invert max-w-none prose-headings:text-white prose-p:text-white/90 prose-strong:text-white prose-ul:text-white/90 prose-li:text-white/90 prose-a:text-white prose-a:underline prose-code:text-white prose-pre:bg-white/10 prose-pre:border prose-pre:border-white/20">
+          <div className="prose prose-neutral max-w-none prose-headings:text-black prose-p:text-black/90 prose-strong:text-black prose-ul:text-black/90 prose-li:text-black/90 prose-a:text-black prose-a:underline prose-code:text-black prose-pre:bg-black/5 prose-pre:border prose-pre:border-black/20">
             <ReactMarkdown
+              rehypePlugins={[rehypeRaw]}
               components={{
                 h1: ({ node, ...props }) => (
                   <h1
-                    className="text-3xl sm:text-4xl font-bold mt-8 mb-4"
+                    className="text-2xl sm:text-3xl font-bold mt-8 mb-4"
                     {...props}
                   />
                 ),
                 h2: ({ node, ...props }) => (
                   <h2
-                    className="text-2xl sm:text-3xl font-bold mt-6 mb-3"
+                    className="text-xl sm:text-2xl font-bold mt-6 mb-3"
                     {...props}
                   />
                 ),
                 h3: ({ node, ...props }) => (
                   <h3
-                    className="text-xl sm:text-2xl font-semibold mt-4 mb-2"
+                    className="text-lg sm:text-xl font-semibold mt-4 mb-2"
                     {...props}
                   />
                 ),
                 p: ({ node, ...props }) => (
                   <p
-                    className="text-base sm:text-lg leading-relaxed mb-4"
+                    className="text-sm sm:text-base leading-relaxed mb-4"
                     {...props}
                   />
                 ),
@@ -98,26 +92,26 @@ export default async function BlogPostPage({ params }: Props) {
                 ),
                 li: ({ node, ...props }) => (
                   <li
-                    className="text-base sm:text-lg leading-relaxed"
+                    className="text-sm sm:text-base leading-relaxed"
                     {...props}
                   />
                 ),
 
                 pre: ({ node, ...props }) => (
                   <pre
-                    className="bg-white/10 px-4 py-3 rounded text-sm font-mono whitespace-pre-wrap break-words overflow-x-auto border border-white/20"
+                    className="bg-black/5 px-4 py-3 rounded text-sm font-mono whitespace-pre-wrap break-words overflow-x-auto border border-black/20"
                     {...props}
                   />
                 ),
                 code: ({ node, ...props }) => (
                   <code
-                    className="bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono whitespace-normal break-words"
+                    className="bg-black/5 px-1.5 py-0.5 rounded text-sm font-mono whitespace-normal break-words"
                     {...props}
                   />
                 ),
                 a: ({ node, ...props }) => (
                   <a
-                    className="text-white underline hover:text-white/80 transition-colors"
+                    className="text-black underline hover:text-gray-600 transition-colors"
                     {...props}
                   />
                 ),
