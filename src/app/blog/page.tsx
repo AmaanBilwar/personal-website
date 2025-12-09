@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { getAllBlogPosts } from "@/lib/blog";
 
@@ -25,14 +24,14 @@ const BlogPage = () => {
               <div className="flex-1 min-w-0">
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="font-semibold underline hover:text-gray-600"
+                  className="font-semibold hover:underline "
                 >
                   {post.title}
                 </Link>
-                <span className="hidden sm:inline">: </span>
                 <br className="sm:hidden" />
                 <span className="text-black/80 sm:text-black">
-                  {post.author} - {formatDate(post.date)}
+                  {" "}
+                  — {formatDate(post.date)}
                 </span>
               </div>
             </li>

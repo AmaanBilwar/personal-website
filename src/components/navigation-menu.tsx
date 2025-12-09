@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
@@ -35,7 +34,7 @@ const NavigationMenuDemo = () => {
                 <NavigationMenuLink asChild>
                   <Link
                     href={item.href}
-                    className="px-3 py-2 rounded-md hover:bg-black/10 transition-colors"
+                    className="px-3 py-2 rounded-none text-black hover:!text-black hover:bg-black/20 hover:rounded-none"
                   >
                     {item.label}
                   </Link>
@@ -91,7 +90,7 @@ const NavigationMenuDemo = () => {
                 key={item.href}
                 href={item.href}
                 onClick={closeMenu}
-                className="py-4 px-4 text-lg font-medium text-black hover:bg-black/10 rounded-md transition-colors"
+                className="py-4 px-4 text-lg font-medium text-black rounded-none"
               >
                 {item.label}
               </Link>

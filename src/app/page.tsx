@@ -28,8 +28,14 @@ const page = () => {
                 <li>i love building, music, and dancing</li>
                 <li>
                   <span className="line-through">building an ai browser</span>{" "}
-                  im not writing all that c++, more of a{" "}
-                  <a href="https://doc.rust-lang.org/book/">🦀</a> guy
+                  im not writing allat C++, more of a{" "}
+                  <a
+                    className="underline"
+                    href="https://doc.rust-lang.org/book/"
+                  >
+                    Rust
+                  </a>{" "}
+                  guy
                 </li>
                 <li>web dev lead @ RevolutionUC</li>
                 <li>data acquisition & telemetry @ Bearcats Electric Racing</li>
@@ -72,9 +78,23 @@ const page = () => {
               </h2>
               <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-sm sm:text-base">
                 <li>
-                  RevolutionUC — most technically impressive, best use of AWS
+                  <a
+                    className="underline "
+                    href="https://devpost.com/software/realitycheck-t35pxd"
+                  >
+                    RevolutionUC
+                  </a>{" "}
+                  — most technically impressive, best use of AWS
                 </li>
-                <li>CalHacks — Snapchat AR glasses track winner</li>
+                <li>
+                  <a
+                    className="underline "
+                    href="https://devpost.com/software/memary"
+                  >
+                    CalHacks
+                  </a>{" "}
+                  — Snapchat AR glasses track winner
+                </li>
               </ul>
             </section>
 

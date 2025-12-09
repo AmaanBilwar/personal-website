@@ -10,11 +10,10 @@ export type BlogPost = {
 export const blogPosts: BlogPost[] = [
   {
     slug: "fastest-video-rag",
-    title: "Building the Fastest Video RAG. ever.",
+    title: "Building the Fastest Video RAG. EVER",
     author: "Amaan",
     date: "2025-11-25",
-    content: `
-# Coming Soon
+    content: `this is taking longer than i expected
     `.trim(),
   },
   {
@@ -76,6 +75,13 @@ export const blogPosts: BlogPost[] = [
 
     `.trim(),
   },
+  // {
+  //   slug: "test",
+  //   title: "Test",
+  //   author: "Amaan",
+  //   date: "2025-12-10",
+  //   content: ``,
+  // },
 ];
 
 // Helper function to get a blog post by slug
