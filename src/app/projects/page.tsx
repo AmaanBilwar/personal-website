@@ -55,7 +55,7 @@ const PROJECTS: Project[] = [
   {
     title: `"We got Claude Code at home"`,
     description: "Coding agent in the CLI, written in Rust + Ratatui",
-    link: "https://github.com/SoarAILabs/",
+    link: "https://github.com/AmaanBilwar/coding-agent",
   },
   {
     title: "Soar AI Labs",
