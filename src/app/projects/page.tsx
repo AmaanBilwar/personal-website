@@ -105,7 +105,7 @@ const Projects = () => {
               username="AmaanBilwar"
               colorScheme="light"
               fontSize={12}
-              blockSize={11}
+              blockSize={10}
               blockMargin={4}
             />
           </div>
