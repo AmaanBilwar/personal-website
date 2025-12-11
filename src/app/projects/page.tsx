@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { GitHubCalendar } from "react-github-calendar";
 
 interface Project {
   title: string;
@@ -93,6 +94,22 @@ const Projects = () => {
             </li>
           ))}
         </ul>
+
+        {/* GitHub Contributions Graph */}
+        <section className="mt-12">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">
+            GitHub Contributions
+          </h2>
+          <div className="overflow-x-auto pb-2">
+            <GitHubCalendar
+              username="AmaanBilwar"
+              colorScheme="light"
+              fontSize={12}
+              blockSize={11}
+              blockMargin={4}
+            />
+          </div>
+        </section>
       </div>
     </main>
   );
