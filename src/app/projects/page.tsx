@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { GitHubCalendar } from "react-github-calendar";
 
 interface Project {
+  pre?: string;
   title: string;
   description: ReactNode;
   link: string;
@@ -11,17 +12,20 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
+    pre: "[In Progress]",
     title: "Scene AI",
     description: "AI powered video editor",
     link: "#",
   },
   {
+    pre: "[In Progress]",
     title: "google docs but for terminal",
     description:
       "multiple people editing a doc at the same time in your terminal ",
     link: "https://github.com/AmaanBilwar/google-docs-but-its-your-terminal",
   },
   {
+    pre: "[In Progress]",
     title: "Sky-Clone",
     description: (
       <>
@@ -48,23 +52,27 @@ const PROJECTS: Project[] = [
     link: "https://github.com/AmaanBilwar/sky-clone",
   },
   {
+    pre: "[In Progress]",
     title: "Rush",
     description:
       "Quickest way to transfer files between ur phone and laptop/computer",
     link: "https://github.com/AmaanBilwar/Rush",
   },
   {
+    pre: "[In Progress]",
     title: "Fuse",
     description: "SDK to unify your api keys",
     link: "https://github.com/AmaanBilwar/Fuse",
   },
 
   {
+    pre: "[In Progress]",
     title: `"We got Claude Code at home"`,
     description: "Coding agent in the CLI, written in Rust + Ratatui",
     link: "https://github.com/AmaanBilwar/coding-agent",
   },
   {
+    pre: "[In Progress]",
     title: "Soar AI Labs",
     description: "CLI tool to resolve github merge conflicts",
     link: "https://soarailabs.com",
@@ -81,6 +89,9 @@ const Projects = () => {
             <li key={project.title} className="flex items-start">
               <span className="mr-2 mt-0.5 flex-shrink-0">•</span>
               <div className="flex-1">
+                {project.pre && (
+                  <span className="text-black/60 mr-2">{project.pre}</span>
+                )}
                 <span className="font-semibold">{project.title}</span>
                 <span className="hidden sm:inline">: </span>
                 <span className="text-black/80 sm:text-black">
