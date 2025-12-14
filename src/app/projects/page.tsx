@@ -16,10 +16,10 @@ const PROJECTS: Project[] = [
     link: "#",
   },
   {
-    title: "Rush",
+    title: "google docs but for terminal",
     description:
-      "Quickest way to transfer files between ur phone and laptop/computer",
-    link: "https://github.com/AmaanBilwar/Rush",
+      "multiple people editing a doc at the same time in your terminal ",
+    link: "https://github.com/AmaanBilwar/google-docs-but-its-your-terminal",
   },
   {
     title: "Sky-Clone",
@@ -46,6 +46,12 @@ const PROJECTS: Project[] = [
       </>
     ),
     link: "https://github.com/AmaanBilwar/sky-clone",
+  },
+  {
+    title: "Rush",
+    description:
+      "Quickest way to transfer files between ur phone and laptop/computer",
+    link: "https://github.com/AmaanBilwar/Rush",
   },
   {
     title: "Fuse",
