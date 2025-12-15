@@ -5,6 +5,7 @@ import { GitHubCalendar } from "react-github-calendar";
 
 interface Project {
   pre?: string;
+  updates?: ReactNode;
   title: string;
   description: ReactNode;
   link: string;
@@ -22,6 +23,14 @@ const PROJECTS: Project[] = [
     title: "google docs but for terminal",
     description:
       "multiple people editing a doc at the same time in your terminal ",
+    updates: (
+      <ul className="list-disc space-y-1">
+        <li>
+          added a working editor in the terminal now with search! Go check it
+          out
+        </li>
+      </ul>
+    ),
     link: "https://github.com/AmaanBilwar/google-docs-but-its-your-terminal",
   },
   {
@@ -107,6 +116,11 @@ const Projects = () => {
                   {" "}
                   link
                 </Link>
+                {project.updates && (
+                  <div className="pt-2 pl-4 text-black/70 text-sm">
+                    {project.updates}
+                  </div>
+                )}
               </div>
             </li>
           ))}
