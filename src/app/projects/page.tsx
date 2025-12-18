@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 import { GitHubCalendar } from "react-github-calendar";
 
 interface Project {
-  pre?: string;
   updates?: ReactNode;
   title: string;
   description: ReactNode;
@@ -13,29 +12,40 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    pre: "[In Progress]",
     title: "Scene AI",
     description: "AI powered video editor",
     link: "#",
+    updates: "Almost Done",
   },
   {
-    pre: "[In Progress]",
     title: "google docs but for terminal",
     description:
       "multiple people editing a doc at the same time in your terminal ",
-    updates: (
-      <ul className="list-disc space-y-1">
-        <li>
-          added a working editor in the terminal now with search! Go check it
-          out
-        </li>
-      </ul>
-    ),
     link: "https://github.com/AmaanBilwar/google-docs-but-its-your-terminal",
+    updates:
+      "added a working editor in the terminal now with search! Go check it out",
+  },
+  // {
+  //   title: "Rush",
+  //   description:
+  //     "Quickest way to transfer files between ur phone and laptop/computer",
+  //   link: "https://github.com/AmaanBilwar/Rush",
+  //   updates: "Ideation",
+  // },
+  {
+    title: "Claude Code at home",
+    description: "Coding agent in the CLI, written in Rust + Ratatui",
+    link: "https://github.com/AmaanBilwar/coding-agent",
+    updates: "In Progress",
   },
   {
-    pre: "[In Progress]",
-    title: "Sky-Clone",
+    title: "Soar AI Labs",
+    description: "CLI tool to resolve github merge conflicts",
+    updates: "Rust rewrite with new Context Engine",
+    link: "https://soarailabs.com",
+  },
+  {
+    title: "Sky clone",
     description: (
       <>
         <a
@@ -46,45 +56,12 @@ const PROJECTS: Project[] = [
         >
           Sky
         </a>{" "}
-        is an ai assistant that lives on your mac, using{" "}
-        <a
-          href="https://gpui.rs"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline "
-        >
-          GPUI
-        </a>{" "}
-        to make one in Rust for Windows
+        is an ai assistant that lives on your mac, trying to make one in Rust
+        for Windows
       </>
     ),
     link: "https://github.com/AmaanBilwar/sky-clone",
-  },
-  {
-    pre: "[In Progress]",
-    title: "Rush",
-    description:
-      "Quickest way to transfer files between ur phone and laptop/computer",
-    link: "https://github.com/AmaanBilwar/Rush",
-  },
-  {
-    pre: "[In Progress]",
-    title: "Fuse",
-    description: "SDK to unify your api keys",
-    link: "https://github.com/AmaanBilwar/Fuse",
-  },
-
-  {
-    pre: "[In Progress]",
-    title: `"We got Claude Code at home"`,
-    description: "Coding agent in the CLI, written in Rust + Ratatui",
-    link: "https://github.com/AmaanBilwar/coding-agent",
-  },
-  {
-    pre: "[In Progress]",
-    title: "Soar AI Labs",
-    description: "CLI tool to resolve github merge conflicts",
-    link: "https://soarailabs.com",
+    updates: "debating learning GPUI vs using Tauri",
   },
 ];
 
@@ -98,9 +75,6 @@ const Projects = () => {
             <li key={project.title} className="flex items-start">
               <span className="mr-2 mt-0.5 flex-shrink-0">•</span>
               <div className="flex-1">
-                {project.pre && (
-                  <span className="text-black/60 mr-2">{project.pre}</span>
-                )}
                 <span className="font-semibold">{project.title}</span>
                 <span className="hidden sm:inline">: </span>
                 <span className="text-black/80 sm:text-black">
