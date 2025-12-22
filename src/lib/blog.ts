@@ -22,8 +22,8 @@ export const blogPosts: BlogPost[] = [
 - [Why Jia](#why-jia)
 - [How do I do this?](#how-do-i-do-this)
 - [But I don't want you to have my data](#but-i-dont-want-you-to-have-my-data)
+- [Final Thoughts](#final-thoughts)
 
-    
     # What is Jia?
     Imagine this, you upload something to google drive, and think to yourself *"thank god for cloud storage, I can view this from anywhere I need"*. A few days later,  you need that file(it could image, video, or a pdf) again but cannot remember the name of the file for the life of you. Now what? Sort by date? Probably. You're stressed, and miss it even after a few scrolls up and down the page. Now what? Did you actually think you'd remember the name of the file with random characters at the end combined with your incredibly abysmal way of naming things? especially if they're important?
 
@@ -45,18 +45,28 @@ export const blogPosts: BlogPost[] = [
     In this way, if you remember anything in or about the file, we can find it for you. 
     
     # Why Jia
-    google drive is ass, don't even get me started on the search functionality.
+    Google Drive is ass, don't even get me started on the search functionality.
 
     # How do I do this?
 
-    Preprocessing pipeline. more information coming soon.
+    Preprocessing pipeline. more information coming soon. 
+    
+    Currently, the functionality is limited to videos, which might seem crazy because videos are the most difficult file type to index because they're dynamic and multimodal.
+
+    I am very close with getting the video search tool working decently, which means images, files like pdfs and word docs should be way easier to preprocess.
 
     # But I don't want you to have my data
-    No worries, I have no interest in your data. I'm committed to building software that's private, efficient, and treats users with respect. I always prioritize people first and follow strict standards. There's absolutely no hidden agenda here.
+    No worries, I have no interest in your data either. I'm committed to building software that's private, efficient, and treats users with respect. I always prioritize people first and follow strict standards. There's absolutely no hidden agenda here.
     
     **No data retention by default, not as a hidden option.**
 
-    I'm designing this in a way where I cannot read or access any information about the user or their files unless I have a confirmation, which will be asked for when or If a user reports a bug that requires me to look into their data.
+    I'm designing this in a way where I cannot read or access any information about the user or their files unless I have a confirmation, which will be asked for when or if a user reports a bug that requires me to look at their data.
+
+    # Final Thoughts
+    
+    more soon
+
+
     `
   }, 
   {
@@ -126,13 +136,6 @@ export const blogPosts: BlogPost[] = [
 
     `.trim(),
   },
-  // {
-  //   slug: "test",
-  //   title: "Test",
-  //   author: "Amaan",
-  //   date: "2025-12-10",
-  //   content: ``,
-  // },
 ];
 
 // Helper function to get a blog post by slug
