@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import rehypeSlug from "rehype-slug";
 import { getBlogPostBySlug, getAllBlogPosts } from "@/lib/blog";
 import { prepareMarkdown } from "@/lib/markdown";
 
@@ -52,7 +53,7 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Content */}
           <div className="prose prose-neutral max-w-none prose-headings:text-black prose-p:text-black/90 prose-strong:text-black prose-ul:text-black/90 prose-li:text-black/90 prose-a:text-black prose-a:underline prose-code:text-black prose-pre:bg-black/5 prose-pre:border prose-pre:border-black/20">
             <ReactMarkdown
-              rehypePlugins={[rehypeRaw]}
+              rehypePlugins={[rehypeSlug, rehypeRaw]}
               components={{
                 h1: ({ node, ...props }) => (
                   <h1
