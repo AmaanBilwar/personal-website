@@ -9,19 +9,70 @@ export type BlogPost = {
 // Your blog posts - add new posts here!
 export const blogPosts: BlogPost[] = [
   {
-    slug: "fastest-video-rag",
-    title: "Building the Fastest Video RAG. EVER",
+    slug: "introducing-Jia",
+    title: "Introducing Jia — the Search Engine for Everything",
     author: "Amaan",
-    date: "2025-11-25",
-    content: `this is taking longer than i expected
-    `.trim(),
-  },
+    date: "2025-12-022",
+    content: `
+    
+    # Table of contents
+
+- [What is Jia?](#what-is-jia)
+- [How does Jia help?](#how-does-jia-help)
+- [Why Jia](#why-jia)
+- [How do I do this?](#how-do-i-do-this)
+- [But I don't want you to have my data](#but-i-dont-want-you-to-have-my-data)
+
+    
+    # What is Jia?
+    Imagine this, you upload something to google drive, and think to yourself *"thank god for cloud storage, I can view this from anywhere I need"*. A few days later,  you need that file(it could image, video, or a pdf) again but cannot remember the name of the file for the life of you. Now what? Sort by date? Probably. You're stressed, and miss it even after a few scrolls up and down the page. Now what? Did you actually think you'd remember the name of the file with random characters at the end combined with your incredibly abysmal way of naming things? especially if they're important?
+
+    Silly enough, you find that file a couple of days later and in shock you say "*Of course I named it that ughh*"
+
+    # How does Jia help?
+
+    We don't just store and host your files for you, we **understand** what your file is about, despite the format. If it's a video: 
+    - who's in the video
+    - where is it taking place 
+    - what are the objects in the video
+    - the vibes. <br />
+    <br />
+    
+    **You get the point.** 
+    
+    Similarly, if it's a pdf, for example, we extract the content to process it. On top of this, you can attach your own tags to the file you're uploading. Like "homework", "college", "trip to hawaii" etc.
+
+    In this way, if you remember anything in or about the file, we can find it for you. 
+    
+    # Why Jia
+    google drive is ass, don't even get me started on the search functionality.
+
+    # How do I do this?
+
+    Preprocessing pipeline. more information coming soon.
+
+    # But I don't want you to have my data
+    No worries, I have no interest in your data. I'm committed to building software that's private, efficient, and treats users with respect. I always prioritize people first and follow strict standards. There's absolutely no hidden agenda here.
+    
+    **No data retention by default, not as a hidden option.**
+
+    I'm designing this in a way where I cannot read or access any information about the user or their files unless I have a confirmation, which will be asked for when or If a user reports a bug that requires me to look into their data.
+    `
+  }, 
   {
     slug: "scene-ai-when",
     title: "Scene AI When?",
     author: "Amaan",
     date: "2025-12-05",
     content: `
+    # Table of contents
+
+- [Scene AI when?](#scene-ai-when)
+- [Where it all began?](#where-it-all-began)
+- [Where it is now](#where-it-is-now)
+- [Final Thoughts](#final-thoughts)
+- [Note](#note)
+
       # Scene AI when?
 
       I know you all have heard it by now, but if you haven't here I am to introduce you to Scene AI.
