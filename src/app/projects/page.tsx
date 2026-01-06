@@ -67,38 +67,39 @@ const PROJECTS: Project[] = [
 
 const Projects = () => {
   return (
-    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 py-12 text-black bg-white overflow-x-auto">
+    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 py-12 text-black bg-white overflow-x-hidden">
       <div className="max-w-3xl">
         <h1 className="text-2xl sm:text-3xl font-bold mt-8 mb-6">Projects</h1>
-        <ul className="space-y-4 sm:space-y-3 text-sm sm:text-base whitespace-nowrap">
+        <div className="space-y-6">
           {PROJECTS.map((project) => (
-            <li key={project.title} className="flex items-start">
-              <span className="mr-2 mt-0.5 flex-shrink-0">•</span>
-              <div className="flex-1">
-                <span className="font-semibold">{project.title}</span>
-                <span className="hidden sm:inline">: </span>
-                <span className="text-black/80 sm:text-black">
-                  {project.description}
-                </span>{" "}
-                —{" "}
+            <div
+              key={project.title}
+              className="border border-black/10 rounded-none p-4 sm:p-5 hover:border-black/30 transition-colors"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                <h3 className="font-semibold text-base sm:text-lg">
+                  {project.title}
+                </h3>
                 <Link
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline inline-block"
+                  className="text-sm underline text-black/70 hover:text-black"
                 >
-                  {" "}
-                  link
+                  View project →
                 </Link>
-                {project.updates && (
-                  <div className="pt-2 pl-4 text-black/70 text-sm">
-                    {project.updates}
-                  </div>
-                )}
               </div>
-            </li>
+              <p className="text-black/80 text-sm sm:text-base mb-2">
+                {project.description}
+              </p>
+              {project.updates && (
+                <p className="text-black/60 text-sm italic">
+                  Status: {project.updates}
+                </p>
+              )}
+            </div>
           ))}
-        </ul>
+        </div>
 
         {/* GitHub Contributions Graph */}
         <section className="mt-12">
