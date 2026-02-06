@@ -9,7 +9,7 @@ export type BlogPost = {
 // Your blog posts - add new posts here!
 export const blogPosts: BlogPost[] = [
   {
-    slug: "introducing-Jia",
+    slug: "introducing-jia",
     title: "Introducing Jia — the Search Engine for Everything",
     author: "Amaan",
     date: "2025-12-23",
