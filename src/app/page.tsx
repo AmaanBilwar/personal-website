@@ -37,7 +37,7 @@ const page = () => {
                   </a>{" "}
                   guy
                 </li>
-                <li>web dev lead @ RevolutionUC</li>
+                <li><span className="font-bold">Absolutely carried</span> <a className="underline" href="https://www.revolutionuc.com" target="_blank">RevolutionUC 2026</a> as Web Dev Lead</li>
                 <li>data acquisition & telemetry @ Bearcats Electric Racing</li>
               </ul>
             </section>
