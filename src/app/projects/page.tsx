@@ -12,40 +12,23 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    title: "Scene AI",
+    title: "the-search-thing",
+    description: "fastest semantic search tool for your OS",
+    link: "https://github.com/AmaanBilwar/the-search-thing",
+    updates: "In-progress",
+  },
+  {  title: "openresolve",
+    description: "opencode fork designed to resolve merge conflicts",
+    link: "https://github.com/AmaanBilwar/openresolve",
+    updates: "In-progress",
+  },
+  {  title: "Scene AI",
     description: "AI powered video editor",
     link: "#",
     updates: "Almost Done",
   },
   {
-    title: "google docs but for terminal",
-    description:
-      "multiple people editing a doc at the same time in your terminal ",
-    link: "https://github.com/AmaanBilwar/google-docs-but-its-your-terminal",
-    updates:
-      "added a working editor in the terminal now with search! Go check it out",
-  },
-  // {
-  //   title: "Rush",
-  //   description:
-  //     "Quickest way to transfer files between ur phone and laptop/computer",
-  //   link: "https://github.com/AmaanBilwar/Rush",
-  //   updates: "Ideation",
-  // },
-  {
-    title: "Claude Code at home",
-    description: "Coding agent in the CLI, written in Rust + Ratatui",
-    link: "https://github.com/AmaanBilwar/coding-agent",
-    updates: "In Progress",
-  },
-  {
-    title: "Soar AI Labs",
-    description: "CLI tool to resolve github merge conflicts",
-    updates: "Rust rewrite with new Context Engine",
-    link: "https://soarailabs.com",
-  },
-  {
-    title: "Sky clone",
+    title: "agentic personal assistant - im bad at naming things(sky-clone)",
     description: (
       <>
         <a
@@ -56,12 +39,11 @@ const PROJECTS: Project[] = [
         >
           Sky
         </a>{" "}
-        is an ai assistant that lives on your mac, trying to make one in Rust
-        for Windows
+        is an ai assistant that lives on your computer
       </>
     ),
     link: "https://github.com/AmaanBilwar/sky-clone",
-    updates: "debating learning GPUI vs using Tauri",
+    updates: "research",
   },
 ];
 

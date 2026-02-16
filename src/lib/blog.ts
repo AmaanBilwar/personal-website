@@ -8,7 +8,14 @@ export type BlogPost = {
 
 // Your blog posts - add new posts here!
 export const blogPosts: BlogPost[] = [
-  {
+    // {
+    // slug:"why-search-imp",
+    // title: "why is search so important anyway?",
+    // author: "Amaan",
+    // date: "2026-2-17",
+    // content: ``
+    //},
+    {
     slug: "introducing-jia",
     title: "Introducing Jia — the Search Engine for Everything",
     author: "Amaan",
