@@ -26,10 +26,10 @@ const page = () => {
               <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-sm sm:text-base">
                 <li>junior - computer engineering at ucincinnati</li>
                 <li>
-		<a href="https://doc.rust-lang.org/book/">rust</a>,<a href="https://www.helix-db.com/">helixdb</a>, <a href="https://github.com/AmaanBilwar/nvim-configs">nvim</a>, <a href="https://zed.dev">zed</a> enjoyer
+		<a className="underline"href="https://doc.rust-lang.org/book/">rust</a>, <a className="underline"href="https://www.helix-db.com/">helixdb</a>, <a className="underline"href="https://github.com/AmaanBilwar/nvim-configs">nvim</a>, <a className="underline"href="https://zed.dev">zed</a> enjoyer
 		</li>
                 <li>web lead for <a className="underline" href="https://www.revolutionuc.com" target="_blank">RevolutionUC 2026</a></li>
-                <li>built a data acquisition & telemetry system for <a href="https://www.bearcatsracing.org/ev-home">Bearcats Electric Racing</a></li>
+                <li>built a data acquisition & telemetry system for <a className="underline" href="https://www.bearcatsracing.org/ev-home">Bearcats Electric Racing</a></li>
               </ul>
             </section>
 
