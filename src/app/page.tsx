@@ -24,21 +24,12 @@ const page = () => {
                 about:
               </h2>
               <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-sm sm:text-base">
-                <li>junior studying computer engineering at UC</li>
-                <li>i love building, music, and dancing</li>
+                <li>junior - computer engineering at ucincinnati</li>
                 <li>
-                  <span className="line-through">building an ai browser</span>{" "}
-                  im not writing allat C++, more of a{" "}
-                  <a
-                    className="underline"
-                    href="https://doc.rust-lang.org/book/"
-                  >
-                    Rust
-                  </a>{" "}
-                  guy
-                </li>
-                <li><span className="font-bold">Absolutely carried</span> <a className="underline" href="https://www.revolutionuc.com" target="_blank">RevolutionUC 2026</a> as Web Dev Lead</li>
-                <li>data acquisition & telemetry @ Bearcats Electric Racing</li>
+		<a href="https://doc.rust-lang.org/book/">rust</a>,<a href="https://www.helix-db.com/">helixdb</a>, <a href="https://github.com/AmaanBilwar/nvim-configs">nvim</a>, <a href="https://zed.dev">zed</a> enjoyer
+		</li>
+                <li>web lead for <a className="underline" href="https://www.revolutionuc.com" target="_blank">RevolutionUC 2026</a></li>
+                <li>built a data acquisition & telemetry system for <a href="https://www.bearcatsracing.org/ev-home">Bearcats Electric Racing</a></li>
               </ul>
             </section>
 
@@ -80,20 +71,20 @@ const page = () => {
                 <li>
                   <a
                     className="underline "
-                    href="https://devpost.com/software/realitycheck-t35pxd"
-                  >
-                    RevolutionUC
-                  </a>{" "}
-                  — most technically impressive, best use of AWS
-                </li>
-                <li>
-                  <a
-                    className="underline "
-                    href="https://devpost.com/software/memary"
+                    href="https://www.linkedin.com/posts/amaanbilwar_we-won-at-calhacks-because-of-a-non-team-activity-7388631874379800576-3N91?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD6CRZEBddecKFUeZqS7s8HAXqDXvhaUCB8"
                   >
                     CalHacks
                   </a>{" "}
                   — Snapchat AR glasses track winner
+                </li>
+	      <li>
+                  <a
+                    className="underline "
+                    href="https://devpost.com/software/realitycheck-t35pxd"
+                  >
+                    RevolutionUC
+                  </a>{" "}
+                  — most technically impressive + best use of AWS
                 </li>
               </ul>
             </section>
