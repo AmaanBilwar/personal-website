@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Space_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import NavigationMenuDemo from "@/components/navigation-menu";
 
 const inter = Inter({
   subsets: ["latin"],
+});
+
+const mono = Space_Mono({
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} antialiased overflow-x-hidden`}>
+      <body className={`${mono.className} antialiased overflow-x-hidden`}>
         {/* Navigation Menu */}
         <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50">
           <NavigationMenuDemo />

@@ -17,18 +17,20 @@ const PROJECTS: Project[] = [
     link: "https://github.com/AmaanBilwar/the-search-thing",
     updates: "In-progress",
   },
-  {  title: "openresolve",
+  {
+    title: "openresolve",
     description: "opencode fork designed to resolve merge conflicts",
     link: "https://github.com/AmaanBilwar/openresolve",
     updates: "In-progress",
   },
-  {  title: "Scene AI",
+  {
+    title: "Scene AI",
     description: "AI powered video editor",
     link: "#",
     updates: "Almost Done",
   },
   {
-    title: "agentic personal assistant - im bad at naming things(sky-clone)",
+    title: "personal assistant - (sky clone)",
     description: (
       <>
         <a
