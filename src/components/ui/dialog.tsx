@@ -32,16 +32,12 @@ interface DialogContentProps {
   onClose?: () => void;
 }
 
-export function DialogContent({
-  children,
-  className,
-  onClose,
-}: DialogContentProps) {
+export function DialogContent({ children, className, onClose }: DialogContentProps) {
   return (
     <div
       className={cn(
         "bg-white/10 backdrop-blur-[8px] border border-white/20 rounded-md p-4 sm:p-6 shadow-lg",
-        className
+        className,
       )}
     >
       {onClose && (
@@ -73,11 +69,7 @@ interface DialogTitleProps {
 }
 
 export function DialogTitle({ children, className }: DialogTitleProps) {
-  return (
-    <h2 className={cn("text-lg sm:text-xl font-bold text-white", className)}>
-      {children}
-    </h2>
-  );
+  return <h2 className={cn("text-lg sm:text-xl font-bold text-white", className)}>{children}</h2>;
 }
 
 interface DialogDescriptionProps {
@@ -85,11 +77,6 @@ interface DialogDescriptionProps {
   className?: string;
 }
 
-export function DialogDescription({
-  children,
-  className,
-}: DialogDescriptionProps) {
-  return (
-    <p className={cn("text-white/80 text-xs sm:text-sm mt-2", className)}>{children}</p>
-  );
+export function DialogDescription({ children, className }: DialogDescriptionProps) {
+  return <p className={cn("text-white/80 text-xs sm:text-sm mt-2", className)}>{children}</p>;
 }

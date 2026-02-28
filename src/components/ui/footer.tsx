@@ -8,10 +8,7 @@ type FooterProps = React.ComponentProps<"footer"> & {
 
 export function Footer({ className, ...props }: Omit<FooterProps, "children">) {
   return (
-    <footer
-      className={cn("relative border-t text-white", className)}
-      {...props}
-    >
+    <footer className={cn("relative border-t text-white", className)} {...props}>
       {/* Bottom white gradient overlay */}
       {/* <div
         aria-hidden="true"
@@ -69,10 +66,7 @@ function LinksGroup({ title, links }: LinksGroupProps) {
       <ul>
         {links.map((link) => (
           <li key={link.title}>
-            <a
-              href={link.href}
-              className="text-white/70 hover:text-white text-xs"
-            >
+            <a href={link.href} className="text-white/70 hover:text-white text-xs">
               {link.title}
             </a>
           </li>

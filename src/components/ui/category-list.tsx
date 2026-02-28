@@ -40,13 +40,9 @@ export const CategoryList = ({
               {headerIcon}
             </div>
           )}
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight">
-            {title}
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 tracking-tight">{title}</h1>
           {subtitle && (
-            <h2 className="text-4xl md:text-5xl font-bold text-muted-foreground">
-              {subtitle}
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-muted-foreground">{subtitle}</h2>
           )}
         </div>
 
@@ -89,12 +85,8 @@ export const CategoryList = ({
                     <h3
                       className={cn(
                         "font-bold transition-colors duration-300",
-                        category.featured
-                          ? "text-2xl md:text-3xl"
-                          : "text-xl md:text-2xl",
-                        hoveredItem === category.id
-                          ? "text-primary"
-                          : "text-foreground",
+                        category.featured ? "text-2xl md:text-3xl" : "text-xl md:text-2xl",
+                        hoveredItem === category.id ? "text-primary" : "text-foreground",
                       )}
                     >
                       {category.title}
