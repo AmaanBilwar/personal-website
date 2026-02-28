@@ -52,9 +52,7 @@ export function stripIndent(md: string): string {
   }
 
   // Remove the common leading indentation
-  const deindented = lines
-    .map((l) => (l.length >= minIndent ? l.slice(minIndent) : l))
-    .join("\n");
+  const deindented = lines.map((l) => (l.length >= minIndent ? l.slice(minIndent) : l)).join("\n");
 
   return deindented.trim();
 }
@@ -98,7 +96,7 @@ export function prepareMarkdown(md: string): string {
     // Preserve headings, lists, and blockquotes without stripping
     const trimmed = line.trimStart();
     const isHeading = /^#{1,6}\s/.test(trimmed);
-    const isList = /^(\-|\*|\+)\s/.test(trimmed) || /^\d+\.\s/.test(trimmed);
+    const isList = /^(-|\*|\+)\s/.test(trimmed) || /^\d+\.\s/.test(trimmed);
     const isBlockquote = /^>\s?/.test(trimmed);
 
     if (isHeading || isList || isBlockquote) {
