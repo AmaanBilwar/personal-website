@@ -14,8 +14,8 @@ const PROJECTS: Project[] = [
   {
     title: "the-search-thing",
     description: "fastest semantic search tool for your OS",
-    link: "https://github.com/AmaanBilwar/the-search-thing",
-    updates: "In-progress",
+    link: "https://github.com/the-search-thing/the-search-thing",
+    updates: "so close",
   },
   {
     title: "openresolve",
@@ -24,10 +24,10 @@ const PROJECTS: Project[] = [
     updates: "In-progress",
   },
   {
-    title: "Scene AI",
-    description: "AI powered video editor",
-    link: "#",
-    updates: "Almost Done",
+    title: "discord-coding-agent",
+    description: "open prs and write features via a discord coding agent",
+    link: "https://github.com/AmaanBilwar/openresolve",
+    updates: "almost there",
   },
   {
     title: "personal assistant - (sky clone)",
@@ -61,9 +61,7 @@ const Projects = () => {
               className="border border-black/10 rounded-none p-4 sm:p-5 hover:border-black/30 transition-colors"
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                <h3 className="font-semibold text-base sm:text-lg">
-                  {project.title}
-                </h3>
+                <h3 className="font-semibold text-base sm:text-lg">{project.title}</h3>
                 <Link
                   href={project.link}
                   target="_blank"
@@ -73,13 +71,9 @@ const Projects = () => {
                   View project →
                 </Link>
               </div>
-              <p className="text-black/80 text-sm sm:text-base mb-2">
-                {project.description}
-              </p>
+              <p className="text-black/80 text-sm sm:text-base mb-2">{project.description}</p>
               {project.updates && (
-                <p className="text-black/60 text-sm italic">
-                  Status: {project.updates}
-                </p>
+                <p className="text-black/60 text-sm italic">Status: {project.updates}</p>
               )}
             </div>
           ))}
@@ -87,9 +81,7 @@ const Projects = () => {
 
         {/* GitHub Contributions Graph */}
         <section className="mt-12">
-          <h2 className="text-xl sm:text-2xl font-bold mb-6">
-            GitHub Contributions
-          </h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">GitHub Contributions</h2>
           <div className="overflow-x-auto pb-2">
             <GitHubCalendar
               username="AmaanBilwar"
