@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 import { ReactNode } from "react";
+import { ExternalLink } from "lucide-react";
 import { GitHubCalendar } from "react-github-calendar";
 
 interface Project {
@@ -30,20 +30,8 @@ const PROJECTS: Project[] = [
     updates: "almost there",
   },
   {
-    title: "personal assistant - (sky clone)",
-    description: (
-      <>
-        <a
-          href="https://x.com/skybysoftware/status/1927760056122036511?s=20"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline"
-        >
-          Sky
-        </a>{" "}
-        is an ai assistant that lives on your computer
-      </>
-    ),
+    title: "personal assistant - (Sky clone)",
+    description: "Sky is an ai assistant that lives on your computer, they were recently acquired by OpenAI",
     link: "https://github.com/AmaanBilwar/sky-clone",
     updates: "research",
   },
@@ -56,26 +44,22 @@ const Projects = () => {
         <h1 className="text-2xl sm:text-3xl font-bold mt-8 mb-6">Projects</h1>
         <div className="space-y-6">
           {PROJECTS.map((project) => (
-            <div
+            <a
               key={project.title}
-              className="border border-black/10 rounded-none p-4 sm:p-5 hover:border-black/30 transition-colors"
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block border border-black/10 rounded-none p-4 sm:p-5 hover:border-black/30 transition-colors cursor-pointer"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+              <div className="flex items-start justify-between gap-2 mb-2">
                 <h3 className="font-semibold text-base sm:text-lg">{project.title}</h3>
-                <Link
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm underline text-black/70 hover:text-black"
-                >
-                  View project →
-                </Link>
+                <ExternalLink className="w-4 h-4 shrink-0 text-black/40 mt-1" />
               </div>
               <p className="text-black/80 text-sm sm:text-base mb-2">{project.description}</p>
               {project.updates && (
                 <p className="text-black/60 text-sm italic">Status: {project.updates}</p>
               )}
-            </div>
+            </a>
           ))}
         </div>
 
