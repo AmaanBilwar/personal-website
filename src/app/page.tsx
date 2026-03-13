@@ -29,6 +29,21 @@ const zedMergedPRs = [
     description: "Directories with quotes would't load env variables of a project on Windows.",
   },
 ];
+const zedUnderReviewPrs = [
+  {
+    title: "git_ui: Fix git panel::toggleFocus to update current context stack via cmd palette",
+    url: "https://github.com/zed-industries/zed/pull/50920",
+    description: "Context stack doesnt update when git is not init in a project when switch to git panel from cmd pallete.",
+  },
+
+]
+const helixdbUnmergedPrs = [
+  {
+    title: "feat: Hybrid Search with RRF (SearchBM25 + SearchV)",
+    url: "https://github.com/HelixDB/helix-db/pull/837",
+    description: "implements a new SearchHybrid opeerator that runs both vector(HSNW) and BM25 keyword search."
+  }
+]
 
 type PreviewLinkProps = React.ComponentProps<"a"> & {
   previewImage: string;
@@ -81,7 +96,7 @@ const page = () => {
                 about:
               </h2>
               <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-sm sm:text-base">
-                <li>junior - computer engineering at ucincinnati</li>
+                <li>junior - computer engineering at <a className="underline" target="_blank" href="https://www.ceas.uc.edu/academics/departments/electrical-computer-engineering/degrees-programs/computer-engineering-bachelor-of-science.html">ucincinnati</a></li>
                 <li>
                   <a
                     className="underline"
@@ -125,8 +140,8 @@ const page = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Zed,
-                  </a>{" "}
+                    Zed
+                  </a>{", "}
                   <a
                     className="underline"
                     href="https://github.com/jesseduffield/lazygit"
@@ -238,7 +253,7 @@ const page = () => {
                 <li>
                   <DropdownMenu>
                     <DropdownMenuTrigger className="underline inline-flex items-center gap-1 cursor-pointer focus:outline-none group">
-                      Zed Industries (click me)
+                      Zed Industries
                       <ChevronRight className="w-3.5 h-3.5 inline transition-transform duration-200 group-data-[state=open]:rotate-90" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start" className="w-80">
@@ -246,6 +261,57 @@ const page = () => {
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
                         {zedMergedPRs.map((pr) => (
+                          <DropdownMenuItem key={pr.url} asChild>
+                            <a
+                              href={pr.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between gap-2 cursor-pointer"
+                            >
+                              <div className="flex flex-col">
+                                <span className="font-medium">{pr.title}</span>
+                                <span className="text-xs text-muted-foreground">{pr.description}</span>
+                              </div>
+                              <ExternalLink className="w-3.5 h-3.5 shrink-0 text-muted-foreground" />
+                            </a>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuGroup>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuLabel>Under Review PRs</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        {zedUnderReviewPrs.map((pr) => (
+                          <DropdownMenuItem key={pr.url} asChild>
+                            <a
+                              href={pr.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between gap-2 cursor-pointer"
+                            >
+                              <div className="flex flex-col">
+                                <span className="font-medium">{pr.title}</span>
+                                <span className="text-xs text-muted-foreground">{pr.description}</span>
+                              </div>
+                              <ExternalLink className="w-3.5 h-3.5 shrink-0 text-muted-foreground" />
+                            </a>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </li>
+                <li>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="underline inline-flex items-center gap-1 cursor-pointer focus:outline-none group">
+                      HelixDB
+                      <ChevronRight className="w-3.5 h-3.5 inline transition-transform duration-200 group-data-[state=open]:rotate-90" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-80">
+                      <DropdownMenuLabel>Under Review PRs</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuGroup>
+                        {helixdbUnmergedPrs.map((pr) => (
                           <DropdownMenuItem key={pr.url} asChild>
                             <a
                               href={pr.url}
