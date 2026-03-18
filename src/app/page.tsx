@@ -16,35 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Add your merged PRs here — update this array when you have new ones
-const zedMergedPRs = [
-  {
-    title: "workspace: Fix opening closed projects randomly when Zed restarts",
-    url: "https://github.com/zed-industries/zed/pull/50961",
-    description: "closed projects reopening due to session_id not being cleared after a workspace was closed.",
-  },
-  {
-    title: "util: Fix env load issue on Windows due to quoting",
-    url: "https://github.com/zed-industries/zed/pull/50782",
-    description: "Directories with quotes would't load env variables of a project on Windows.",
-  },
-];
-const zedUnderReviewPrs = [
-  {
-    title: "git_ui: Fix git panel::toggleFocus to update current context stack via cmd palette",
-    url: "https://github.com/zed-industries/zed/pull/50920",
-    description: "Context stack doesnt update when git is not init in a project when switch to git panel from cmd pallete.",
-  },
-
-]
-const helixdbUnmergedPrs = [
-  {
-    title: "feat: Hybrid Search with RRF (SearchBM25 + SearchV)",
-    url: "https://github.com/HelixDB/helix-db/pull/837",
-    description: "implements a new SearchHybrid opeerator that runs both vector(HSNW) and BM25 keyword search."
-  }
-]
-
 type PreviewLinkProps = React.ComponentProps<"a"> & {
   previewImage: string;
   previewAlt: string;
@@ -244,126 +215,23 @@ const page = () => {
               </ul>
             </section>
 
-            {/* oss section 1 */}
             <section className="text-left">
               <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
                 Open-source contributions
               </h2>
               <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-sm sm:text-base">
                 <li>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="underline inline-flex items-center gap-1 cursor-pointer focus:outline-none group">
-                      Zed Industries
-                      <ChevronRight className="w-3.5 h-3.5 inline transition-transform duration-200 group-data-[state=open]:rotate-90" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start" className="w-80">
-                      <DropdownMenuLabel>Merged PRs</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        {zedMergedPRs.map((pr) => (
-                          <DropdownMenuItem key={pr.url} asChild>
-                            <a
-                              href={pr.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-between gap-2 cursor-pointer"
-                            >
-                              <div className="flex flex-col">
-                                <span className="font-medium">{pr.title}</span>
-                                <span className="text-xs text-muted-foreground">{pr.description}</span>
-                              </div>
-                              <ExternalLink className="w-3.5 h-3.5 shrink-0 text-muted-foreground" />
-                            </a>
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuGroup>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuLabel>Under Review PRs</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        {zedUnderReviewPrs.map((pr) => (
-                          <DropdownMenuItem key={pr.url} asChild>
-                            <a
-                              href={pr.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-between gap-2 cursor-pointer"
-                            >
-                              <div className="flex flex-col">
-                                <span className="font-medium">{pr.title}</span>
-                                <span className="text-xs text-muted-foreground">{pr.description}</span>
-                              </div>
-                              <ExternalLink className="w-3.5 h-3.5 shrink-0 text-muted-foreground" />
-                            </a>
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+		<a className="underline" target="_blank" href="https://github.com/zed-industries/zed/pulls?q=is%3Apr+author%3AAmaanBilwar">
+		Zed Industries
+		</a>
                 </li>
                 <li>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="underline inline-flex items-center gap-1 cursor-pointer focus:outline-none group">
-                      HelixDB
-                      <ChevronRight className="w-3.5 h-3.5 inline transition-transform duration-200 group-data-[state=open]:rotate-90" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start" className="w-80">
-                      <DropdownMenuLabel>Under Review PRs</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuGroup>
-                        {helixdbUnmergedPrs.map((pr) => (
-                          <DropdownMenuItem key={pr.url} asChild>
-                            <a
-                              href={pr.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-between gap-2 cursor-pointer"
-                            >
-                              <div className="flex flex-col">
-                                <span className="font-medium">{pr.title}</span>
-                                <span className="text-xs text-muted-foreground">{pr.description}</span>
-                              </div>
-                              <ExternalLink className="w-3.5 h-3.5 shrink-0 text-muted-foreground" />
-                            </a>
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+		<a className="underline" target="_blank" href="https://github.com/HelixDB/helix-db/pulls?q=is%3Apr+author%3AAmaanBilwar">
+		Helix DB
+		</a>
                 </li>
               </ul>
             </section>
-
-            {/* oss section 2*/}
-            {/* <section className="text-left"> */}
-            {/*   <h2 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3"> */}
-            {/*     Open source work: */}
-            {/*   </h2> */}
-            {/*   <ul className="list-disc list-inside space-y-1.5 sm:space-y-2 text-sm sm:text-base"> */}
-            {/*     <li> */}
-            {/*       <a */}
-            {/*         className="underline" */}
-            {/*         href="https://www.linkedin.com/posts/amaanbilwar_we-won-at-calhacks-because-of-a-non-team-activity-7388631874379800576-3N91?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD6CRZEBddecKFUeZqS7s8HAXqDXvhaUCB8" */}
-            {/*         target="_blank" */}
-            {/*         rel="noopener noreferrer" */}
-            {/*       > */}
-            {/*         Zed Industries */}
-            {/*       </a>{" "} */}
-            {/*       — Snapchat AR glasses track winner */}
-            {/*     </li> */}
-            {/*     <li> */}
-            {/*       <a */}
-            {/*         className="underline" */}
-            {/*         href="https://devpost.com/software/realitycheck-t35pxd" */}
-            {/*         target="_blank" */}
-            {/*         rel="noopener noreferrer" */}
-            {/*       > */}
-            {/*         HelixDB */}
-            {/*       </a>{" "} */}
-            {/*       — most technically impressive + best use of AWS */}
-            {/*     </li> */}
-            {/*   </ul> */}
-            {/* </section> */}
 
             {/* Social Links */}
             <div className="flex flex-row items-center justify-start gap-2 sm:gap-3 md:gap-4 pt-4 pb-12">
