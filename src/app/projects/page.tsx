@@ -19,19 +19,19 @@ const PROJECTS: Project[] = [
   },
   {
     title: "openresolve",
-    description: "opencode fork designed to resolve merge conflicts",
+    description: "opencode fork specifically designed to resolve merge conflicts",
     link: "https://github.com/AmaanBilwar/openresolve",
     updates: "In-progress",
   },
   {
     title: "discord-coding-agent",
-    description: "open prs and write features via a discord coding agent",
+    description: "write featuers, open, review & merge PRs all via a discord coding agent",
     link: "https://github.com/AmaanBilwar/openresolve",
     updates: "almost there",
   },
   {
-    title: "personal assistant - (Sky clone)",
-    description: "Sky is an ai assistant that lives on your computer, they were recently acquired by OpenAI",
+    title: "Desktop Assistant - (Sky clone)",
+    description: "Sky is an AI assistant that lives on your computer, they were recently acquired by OpenAI",
     link: "https://github.com/AmaanBilwar/sky-clone",
     updates: "research",
   },
@@ -39,10 +39,11 @@ const PROJECTS: Project[] = [
 
 const Projects = () => {
   return (
-    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 py-12 text-black bg-white overflow-x-hidden">
+    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 pt-20 sm:pt-24 pb-12 text-black bg-white overflow-x-hidden">
       <div className="max-w-3xl">
         <h1 className="text-2xl sm:text-3xl font-bold mt-8 mb-6">Projects</h1>
-        <div className="space-y-6">
+        <div className="text-black/60 pb-6">I work on many projects at the same time, these are some of them.</div>
+	<div className="space-y-6">
           {PROJECTS.map((project) => (
             <a
               key={project.title}
