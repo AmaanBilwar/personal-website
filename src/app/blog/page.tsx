@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { getAllBlogPosts } from "@/lib/blog";
+import Link from "next/link";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -15,17 +15,17 @@ const BlogPage = () => {
   const blogPosts = getAllBlogPosts();
 
   return (
-    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 py-12 text-black bg-white">
+    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 pt-20 sm:pt-24 pb-12 text-black bg-white">
       <div className="max-w-3xl">
         <h1 className="text-2xl sm:text-3xl font-bold mt-8 mb-6">Blog</h1>
         <ul className="space-y-4 sm:space-y-3 text-sm sm:text-base">
           {blogPosts.map((post) => (
             <li key={post.slug} className="flex items-start">
-              <span className="mr-2 mt-0.5 flex-shrink-0">•</span>
+              <span className="mr-2 mt-0.5 shrink-0">•</span>
               <div className="flex-1 min-w-0">
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="font-semibold hover:underline "
+                  className="font-semibold hover:underline"
                 >
                   {post.title}
                 </Link>

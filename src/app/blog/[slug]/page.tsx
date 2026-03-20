@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
@@ -37,7 +36,7 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   return (
-    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 py-12 text-black bg-white flex justify-center">
+    <main className="relative w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-24 pt-20 sm:pt-24 pb-12 text-black bg-white flex justify-center">
       <div className="max-w-4xl w-full">
         {/* Blog post content */}
         <article className="flex flex-col gap-6">
@@ -56,62 +55,41 @@ export default async function BlogPostPage({ params }: Props) {
             <ReactMarkdown
               rehypePlugins={[rehypeSlug, rehypeRaw]}
               components={{
-                h1: ({ node, ...props }) => (
-                  <h1
-                    className="text-2xl sm:text-3xl font-bold mt-8 mb-4"
-                    {...props}
-                  />
+                h1: ({ ...props }) => (
+                  <h1 className="text-2xl sm:text-3xl font-bold mt-8 mb-4" {...props} />
                 ),
-                h2: ({ node, ...props }) => (
-                  <h2
-                    className="text-xl sm:text-2xl font-bold mt-6 mb-3"
-                    {...props}
-                  />
+                h2: ({ ...props }) => (
+                  <h2 className="text-xl sm:text-2xl font-bold mt-6 mb-3" {...props} />
                 ),
-                h3: ({ node, ...props }) => (
-                  <h3
-                    className="text-lg sm:text-xl font-semibold mt-4 mb-2"
-                    {...props}
-                  />
+                h3: ({ ...props }) => (
+                  <h3 className="text-lg sm:text-xl font-semibold mt-4 mb-2" {...props} />
                 ),
-                p: ({ node, ...props }) => (
-                  <p
-                    className="text-sm sm:text-base leading-relaxed mb-4"
-                    {...props}
-                  />
+                p: ({ ...props }) => (
+                  <p className="text-sm sm:text-base leading-relaxed mb-4" {...props} />
                 ),
-                ul: ({ node, ...props }) => (
-                  <ul
-                    className="list-disc list-inside mb-4 space-y-2 ml-4"
-                    {...props}
-                  />
+                ul: ({ ...props }) => (
+                  <ul className="list-disc list-inside mb-4 space-y-2 ml-4" {...props} />
                 ),
-                ol: ({ node, ...props }) => (
-                  <ol
-                    className="list-decimal list-inside mb-4 space-y-2 ml-4"
-                    {...props}
-                  />
+                ol: ({ ...props }) => (
+                  <ol className="list-decimal list-inside mb-4 space-y-2 ml-4" {...props} />
                 ),
-                li: ({ node, ...props }) => (
-                  <li
-                    className="text-sm sm:text-base leading-relaxed"
-                    {...props}
-                  />
+                li: ({ ...props }) => (
+                  <li className="text-sm sm:text-base leading-relaxed" {...props} />
                 ),
 
-                pre: ({ node, ...props }) => (
+                pre: ({ ...props }) => (
                   <pre
                     className="bg-black/5 px-4 py-3 rounded text-sm font-mono whitespace-pre-wrap break-words overflow-x-auto border border-black/20"
                     {...props}
                   />
                 ),
-                code: ({ node, ...props }) => (
+                code: ({ ...props }) => (
                   <code
                     className="bg-black/5 px-1.5 py-0.5 rounded text-sm font-mono whitespace-normal break-words"
                     {...props}
                   />
                 ),
-                a: ({ node, ...props }) => (
+                a: ({ ...props }) => (
                   <a
                     className="text-black underline hover:text-gray-600 transition-colors"
                     {...props}
