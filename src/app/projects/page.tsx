@@ -4,7 +4,7 @@ import { ExternalLink } from "lucide-react";
 import { GitHubCalendar } from "react-github-calendar";
 
 interface Project {
-  updates?: ReactNode;
+  status?: ReactNode;
   title: string;
   description: ReactNode;
   link: string;
@@ -15,25 +15,31 @@ const PROJECTS: Project[] = [
     title: "the-search-thing",
     description: "fastest semantic search tool for your OS",
     link: "https://github.com/the-search-thing/the-search-thing",
-    updates: "so close",
+    status: "working on audio indexer right now",
+  },
+  {
+    title: "better vscode",
+    description: "private, faster and debloated VSCode",
+    link: "https://github.com/AmaanBilwar/better-vscode",
+    status: "building this with patches so users can pick & choose what they want to keep and what they don't",
   },
   {
     title: "openresolve",
     description: "opencode fork specifically designed to resolve merge conflicts",
     link: "https://github.com/AmaanBilwar/openresolve",
-    updates: "In-progress",
+    status: "ast + treesitter work done",
   },
   {
-    title: "discord-coding-agent",
-    description: "write featuers, open, review & merge PRs all via a discord coding agent",
+    title: "discord coding agent",
+    description: "write features, open, review & merge PRs all via a discord coding agent",
     link: "https://github.com/AmaanBilwar/openresolve",
-    updates: "almost there",
+    status: "works paused cuz im on ai detox",
   },
   {
     title: "Desktop Assistant - (Sky clone)",
     description: "Sky is an AI assistant that lives on your computer, they were recently acquired by OpenAI",
     link: "https://github.com/AmaanBilwar/sky-clone",
-    updates: "research",
+    status: "research",
   },
 ];
 
@@ -57,8 +63,8 @@ const Projects = () => {
                 <ExternalLink className="w-4 h-4 shrink-0 text-black/40 mt-1" />
               </div>
               <p className="text-black/80 text-sm sm:text-base mb-2">{project.description}</p>
-              {project.updates && (
-                <p className="text-black/60 text-sm italic">Status: {project.updates}</p>
+              {project.status && (
+                <p className="text-black/60 text-sm italic">Notes: {project.status}</p>
               )}
             </a>
           ))}
